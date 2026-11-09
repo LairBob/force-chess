@@ -61,3 +61,54 @@ Writing the first runner found two places where `contract/fixtures/README.md` di
 - **`exposes_king` is a no-legal-moves code.** The schema let a piece's `noLegalMoves` reason be `blocked`, `pinned`, `king_in_check`, `king_into_attack` or `mixed`, but a pawn whose push is blocked and whose only move is an en passant capture that opens a line to its king fits none of them: it is not pinned (two pieces stand on the line), its king is not in check, and it is not the king. The reference implementation produced `exposes_king` for it, matching the code its excluded move carries at L1, and the schema refused the document. The code was added to `NoLegalMovesCode` in both schemas, with a new fixture, `en-passant-only-move-exposes-king`.
 - **Blocked squares do not make a reason mixed.** Already implied by `pin-along-file` (a pinned knight with one square held by its own pawn reports `pinned`), now said in the schema: the reason is drawn from the moves the piece could make if its king's safety did not matter, and `blocked` is reported only when there are none.
 - Contract version bumped to 0.3.0, a minor version because a consumer that switches on the code list must handle the new value. The fixture format stays at 0.1: the change widens an enum and every existing fixture remains valid.
+
+## 2026-11-08, reference implementation in Rust (`core/`, force-core 0.1.0, shakmaty 0.30.2)
+
+Implementation decisions the contract left open, and chess fine points settled while writing the reference implementation. Each fine point was decided against the standard rules (P7). Where a targeted fixture pins it down, the fixture is named; otherwise the whole-board snapshots hold it.
+
+### Rules bought, and where they are not
+
+- **shakmaty 0.30.2, pinned exactly.** It supplies FEN reading, the attack tables, check detection on hypothetical boards, and legal move generation.
+- **When one king is in check, the other side's moves come from our own generator.** shakmaty refuses to build a position in which the side not to move is in check, but the force state asks for both sides' moves whoever holds the move (concept 3). In that one case a small generator in `core/src/moves.rs` produces the moves from shakmaty's attack tables and the L1 test. It is checked against shakmaty on every position shakmaty accepts, which is several thousand sides in `tests/invariants.rs`.
+- **A king is never captured, so capturing the king is never a legal move.** With white in check from the rook on e8, black's rook has no move to e4, although its reach onto e4 is still a legal L1 edge. That edge is the check itself (`through-enemy-king`, `tests/invariants.rs`).
+- **shakmaty's "impossible check" and "too much material" refusals are ignored.** The force state of such a board is still well defined.
+
+### Configurations refused
+
+The configuration is refused with a plain-words sentence, rather than analysed, when it is not a board any game can reach:
+- a side without exactly one king;
+- a pawn on the first or last rank;
+- both kings in check (the schema allowed refusing this);
+- an en passant square that no pawn could just have created: not on the third or sixth rank, no pawn that made the double step, or the passed-over or starting square occupied.
+
+An en passant square that a pawn did create, but that no enemy pawn stands beside to take, is dropped as the contract says, not refused.
+
+### L1 fine points
+
+- **A piece reaching its own king's square is legal at L1.** The single test removes whatever stands on the target, which here is the king itself, so no king is left to be attacked. A king is never captured, so this "recapture" never happens in a game; the literal reading of the contract was kept because none of the four reason codes describes it and it does no harm to the counts. It only changes anything when the king is in check: the queen beside a checked king still counts as its defender at L1.
+- **The king-into-attack explanation names the pieces that would attack the square once the king stood there**: direct attackers first, then the back piece of any battery behind them (`queen-bishop-battery`).
+- **King moves use the board after the move.** The king is lifted from its square, so a line through it is open, and the king's safety is tested with standard attacks. This matches the enemy's L0 reach including `through_king` edges (`through-enemy-king`).
+
+### Constraints and special moves
+
+- **No legal moves.** The reason is drawn from the moves a piece could make if its king's safety did not matter: pattern squares not held by its own side, pawn pushes, pawn captures and en passant. Castling is left out, and so is the enemy king's square. With no such moves the code is `blocked`. With one code across all of them, that code. With several, `mixed`, and the text lists each move's own sentence.
+- **Castling** is reported on both kings in every configuration, with the destination square (g1, c1, g8, c8) as its target even when unavailable. The reasons are checked in this order: `no_right`, then `path_blocked` (any piece between king and rook, b1 included on the queenside), then `in_check`, then `path_attacked` (the king's crossing and landing squares, tested with the king lifted).
+- **En passant** on a pawn that cannot take the target reports `no_target` with a null target. On the pawn that can, the target is the en passant square and the reason, when it is unavailable, is the L1 code of the capture.
+- **Promotion.** A pawn not on its seventh rank reports `not_on_rank` with a null target. A pawn on it reports `blocked` with a null target when it has no push and no capture. When all its promotions fail the king-safety test, it reports the first one's L1 code and destination.
+
+### Ordering, so that one configuration always gives the same bytes
+
+- Pieces and squares are listed in board order: a1, b1, ... h1, a2, ... h8.
+- Edges are grouped by piece in board order, and each piece's edges are ordered by target square name: a1, a2, ... h8.
+- Legal moves and their lookahead entries are ordered by the moving piece in board order, then destination by name, then promotion piece (knight, bishop, rook, queen). A castling move is placed with the king's moves; its king entry comes first, then its rook entry.
+- Pins are ordered by the pinned piece. X-rays and batteries are ordered by the piece looking through, in board order, then by direction.
+- Checkers are ordered by square name.
+- The two-kings example in `contract/schema/examples/` is reproduced exactly, apart from the wording of its sentences.
+
+### L2 bookkeeping
+
+- **A piece's `defendedBy.L2` leaves out its own moves.** This includes, for a rook, the castling move it takes part in: a piece moving away does not defend the square it leaves. Square records keep every entry, as the two-kings example shows.
+
+### Snapshots
+
+- One pretty-printed document per targeted fixture, named by the fixture id, compared byte for byte. They are rewritten only with `FORCE_CORE_UPDATE_SNAPSHOTS=1`, and a rewrite is reviewed in git like any other change in behaviour.
