@@ -66,8 +66,10 @@ describe("tallies by layer", () => {
       { meaning: "threat", count: 2 },
       { meaning: "defence", count: 1 },
     ]);
+    // At L1 the queen's reach through the bishop is line_blocked, so only
+    // the bishop threatens g7 (contract v0.4.0, queen-bishop-battery).
     expect(tallies(snapshot("queen-bishop-battery"), "g7", "L1")).toEqual([
-      { meaning: "threat", count: 2 },
+      { meaning: "threat", count: 1 },
     ]);
   });
 });

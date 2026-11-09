@@ -35,7 +35,7 @@ test("the starting position shows the L0 tallies the fixture describes", async (
   await expect(page.locator("[data-square]")).toHaveCount(64);
   await expect(page.locator("[data-piece]")).toHaveCount(32);
   await expect(page.locator("#status")).toContainText("White to move");
-  await expect(page.locator("html")).toHaveAttribute("data-contract-version", "0.3.0");
+  await expect(page.locator("html")).toHaveAttribute("data-contract-version", "0.4.0");
 
   // Empty squares reached by pawns: side-coloured marks, one per piece.
   expect(await marks(page, "d3", "white")).toBe(2);
@@ -137,6 +137,13 @@ test("a pasted FEN loads, and a pinned rook loses its off-line reach at L1", asy
   await page.getByLabel("L1, legality").check();
   await expect(square(page, "c2").locator(".mark")).toHaveCount(0);
   expect(await marks(page, "a3", "black")).toBe(1);
+  // At L0 the black rook x-rays through the pinned rook to e1, one threat to
+  // the white king. At L1 that line is blocked by the rook on e2, so the king
+  // shows no threat (contract v0.4.0, pinned-piece-still-defends).
+  await page.getByLabel("L0, geometry").check();
+  expect(await marks(page, "e1", "threat")).toBe(1);
+  await page.getByLabel("L1, legality").check();
+  await expect(square(page, "e1").locator('[data-tally="threat"] .mark')).toHaveCount(0);
   await square(page, "e2").click();
   await expect(page.locator("#piece-panel")).toContainText("Pinned by the black rook on e8 against its king on e1.");
   await screenshot(page, "pinned-rook-L1");
