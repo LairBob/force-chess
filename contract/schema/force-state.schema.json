@@ -155,7 +155,7 @@
         "kingSquare": { "$ref": "#/$defs/Square" },
         "inCheck": { "type": "boolean" },
         "checkers": {
-          "description": "The enemy pieces currently attacking this side's king. Empty when not in check; two entries is a double check.",
+          "description": "The enemy pieces with a direct L0 attack on this side's king square. An xray, battery or through_king edge onto the king square is not a check. Empty when not in check; two entries is a double check.",
           "type": "array",
           "items": { "$ref": "#/$defs/Piece" }
         },
