@@ -39,6 +39,19 @@
   --destination: rgb(31 95 209 / 0.5);
   --check: #b3261e;
 
+  /* The control lens (docs/DECISIONS.md, 2026-11-09): a tint in the leading side's colour over the square, in three
+     steps that deepen with the lead, and a hatch of fine lines on a contested square. The hatch is ink on a white
+     or even square and light on a black-tinted one, so it reads on either. Nothing here is a new hue. */
+  --control-white-1: rgb(255 255 255 / 0.35);
+  --control-white-2: rgb(255 255 255 / 0.6);
+  --control-white-3: rgb(255 255 255 / 0.85);
+  --control-black-1: rgb(22 24 27 / 0.3);
+  --control-black-2: rgb(22 24 27 / 0.5);
+  --control-black-3: rgb(22 24 27 / 0.7);
+  --control-hatch-ink: rgb(22 24 27 / 0.3);
+  --control-hatch-light: rgb(255 255 255 / 0.45);
+  --coordinate-on-black: rgb(255 255 255 / 0.65);
+
   /* Type */
   --font-sans: "IBM Plex Sans", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "DejaVu Sans Mono", monospace;
@@ -103,17 +116,20 @@ button:disabled { cursor: default; }
 #board-column { flex: 0 1 580px; min-width: 0; display: flex; flex-direction: column; gap: var(--space-3); }
 #side-column { flex: 999 1 420px; min-width: 0; display: flex; flex-direction: column; gap: var(--space-4); }
 
-/* The layer selector reads first, because it changes every mark; the Flip board button sits at the end of its row. */
+/* The layer selector reads first, because it changes every mark; the lens selector beside it picks the projection
+   that draws the board; the Flip board button sits at the end of the row. */
 #toolbar { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-2) var(--space-4); }
-#layer-fieldset { margin: 0; padding: 0; border: 0; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
-#layer-fieldset legend { padding: 0; }
-#layer-selector { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--border); border-radius: 2px; width: max-content; max-width: 100%; }
-.layer-option { display: flex; align-items: center; height: 44px; padding: 0 var(--space-4); font-size: var(--fs-body); color: var(--text-2); cursor: pointer; border-right: 1px solid var(--border); }
-.layer-option:last-child { border-right: 0; }
-.layer-option input { margin: 0 var(--space-2) 0 0; accent-color: var(--selected); }
+#layer-fieldset, #lens-fieldset { margin: 0; padding: 0; border: 0; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+#layer-fieldset legend, #lens-fieldset legend { padding: 0; }
+#lens-fieldset { margin-right: auto; }
+#layer-selector, #lens-selector { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--border); border-radius: 2px; width: max-content; max-width: 100%; }
+.layer-option, .lens-option { display: flex; align-items: center; height: 44px; padding: 0 var(--space-4); font-size: var(--fs-body); color: var(--text-2); cursor: pointer; border-right: 1px solid var(--border); }
+.layer-option:last-child, .lens-option:last-child { border-right: 0; }
+.layer-option input, .lens-option input { margin: 0 var(--space-2) 0 0; accent-color: var(--selected); }
 .layer-option .layer-code { font-family: var(--font-mono); font-weight: 500; white-space: pre; }
-.layer-option.active { color: var(--text); background: var(--selected-tint); box-shadow: inset 0 -3px 0 var(--selected); }
-#layer-note { margin: 0; font-size: var(--fs-small); line-height: 1.5; color: var(--text-2); }
+.layer-option.active, .lens-option.active { color: var(--text); background: var(--selected-tint); box-shadow: inset 0 -3px 0 var(--selected); }
+#layer-note, #lens-note { margin: 0; font-size: var(--fs-small); line-height: 1.5; color: var(--text-2); }
+#lens-note[hidden] { display: none; }
 .board-scroll { overflow-x: auto; max-width: 100%; }
 
 /* The board: 64 squares of 72px inside a 2px frame. Every square carries its own name. */
@@ -127,8 +143,25 @@ button:disabled { cursor: default; }
   user-select: none;
 }
 .square { position: relative; width: var(--square); height: var(--square); cursor: default; }
-.square.light { background: var(--light-square); }
-.square.dark { background: var(--dark-square); }
+.square.light, .swatch-half.light { background-color: var(--light-square); }
+.square.dark, .swatch-half.dark { background-color: var(--dark-square); }
+
+/* The control lens: the fill is painted as background layers of the square itself, under the inset edges of the
+   shell state and under the piece, the marks and the name. The tint is the leader's colour at the step's alpha;
+   the hatch, on a contested square, lies over the tint. A square with no leader and no contest has no layer. */
+.square, .swatch-half { background-image: var(--square-hatch, none), var(--square-tint, none); }
+.fill-white-1 { --square-tint: linear-gradient(var(--control-white-1), var(--control-white-1)); }
+.fill-white-2 { --square-tint: linear-gradient(var(--control-white-2), var(--control-white-2)); }
+.fill-white-3 { --square-tint: linear-gradient(var(--control-white-3), var(--control-white-3)); }
+.fill-black-1 { --square-tint: linear-gradient(var(--control-black-1), var(--control-black-1)); }
+.fill-black-2 { --square-tint: linear-gradient(var(--control-black-2), var(--control-black-2)); }
+.fill-black-3 { --square-tint: linear-gradient(var(--control-black-3), var(--control-black-3)); }
+.contested { --square-hatch: repeating-linear-gradient(-45deg, var(--control-hatch-ink) 0 1px, transparent 1px 7px); }
+.contested.fill-black-1, .contested.fill-black-2, .contested.fill-black-3 {
+  --square-hatch: repeating-linear-gradient(-45deg, var(--control-hatch-light) 0 1px, transparent 1px 7px);
+}
+/* The name stays readable on a deep black tint by turning light. */
+.fill-black-2 .coordinate, .fill-black-3 .coordinate, .square.dark.fill-black-1 .coordinate { color: var(--coordinate-on-black); }
 .square.movable { cursor: pointer; }
 .square.destination-move, .square.destination-capture { cursor: pointer; }
 /* Shell state, one channel each (none of it is force state): an inset edge for the selection, the hover and
@@ -183,6 +216,9 @@ button:disabled { cursor: default; }
 #legend dt { display: flex; align-items: center; gap: var(--space-2); }
 #legend dd { margin: 0; }
 #legend .mark { width: 11px; height: 11px; }
+/* A fill's swatch shows it over a light square and over a dark one, so the legend says what the lens does on both. */
+#legend .swatch { display: inline-flex; flex: none; width: 22px; height: 11px; outline: 1px solid var(--border); }
+.swatch-half { display: block; width: 11px; height: 11px; }
 
 #side-column { display: flex; flex-direction: column; gap: var(--space-4); }
 /* Panels grow with their content; nothing scrolls inside them. */

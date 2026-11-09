@@ -2,7 +2,7 @@
 // scene; this file decides only colours, shapes, sizes and glyphs.
 
 import type { Color, PieceType, Square } from "../contract/index.ts";
-import type { BoardScene, Readout, SquareScene, TallyRow } from "../projections/index.ts";
+import type { BoardScene, ControlFill, Readout, SquareScene, TallyRow } from "../projections/index.ts";
 import { el, replaceChildren, svg } from "./dom.ts";
 
 /**
@@ -59,6 +59,39 @@ export function markNode(meaning: TallyRow["meaning"]): SVGSVGElement {
   );
 }
 
+/**
+ * The control lens names a fill as data; here it becomes classes and data
+ * attributes. `data-fill` is the leader (white or black), "even" for a
+ * contested square with no leader, or "none"; `data-fill-step` is the
+ * lead's step; `data-contested` marks the hatching. The colours come from
+ * the stylesheet by these classes, so a swatch in the legend can carry the
+ * same ones.
+ */
+export function fillAttributes(fill: ControlFill): { classes: string[]; data: Record<string, string> } {
+  const classes: string[] = [];
+  if (fill.leader !== null) classes.push(`fill-${fill.leader}-${fill.step}`);
+  if (fill.control === "contested") classes.push("contested");
+  return {
+    classes,
+    data: {
+      "data-fill": fill.leader ?? (fill.control === "contested" ? "even" : "none"),
+      "data-fill-step": String(fill.step),
+      "data-contested": fill.control === "contested" ? "true" : "false",
+    },
+  };
+}
+
+/** A small square carrying a fill, for the legend: the fill over a light square and over a dark one, side by side. */
+export function swatchNode(fill: Pick<ControlFill, "control" | "leader" | "step">): HTMLElement {
+  const { classes } = fillAttributes({ ...fill, net: 0 });
+  return el(
+    "span",
+    { className: "swatch", "aria-hidden": "true" },
+    el("span", { className: ["swatch-half", "light", ...classes].join(" ") }),
+    el("span", { className: ["swatch-half", "dark", ...classes].join(" ") }),
+  );
+}
+
 export interface BoardHandlers {
   onSquareClick(square: Square): void;
   onSquareHover(square: Square | null): void;
@@ -90,6 +123,8 @@ function renderSquare(scene: SquareScene, handlers: BoardHandlers): HTMLElement 
   if (scene.destination) classes.push(`destination-${scene.destination}`);
   if (scene.movable) classes.push("movable");
   if (scene.inCheck) classes.push("in-check");
+  const fill = scene.fill ? fillAttributes(scene.fill) : null;
+  if (fill) classes.push(...fill.classes);
   const file = scene.square[0] ?? "a";
   const node = el(
     "div",
@@ -97,6 +132,7 @@ function renderSquare(scene: SquareScene, handlers: BoardHandlers): HTMLElement 
       className: classes.join(" "),
       "data-square": scene.square,
       "data-file": file,
+      ...(fill?.data ?? {}),
       role: "button",
       tabindex: "-1",
       "aria-label": scene.piece
