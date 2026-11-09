@@ -1,5 +1,5 @@
 // Flipping the board is a change of viewpoint and nothing else: the same 64
-// squares are drawn from black's side with the labels on the correct edges,
+// squares are drawn from black's side, each still carrying its own name,
 // every square keeps its marks, the selection and the panels stay as they
 // were, and no position is analysed again.
 
@@ -40,13 +40,14 @@ async function box(locator: Locator): Promise<{ x: number; y: number }> {
   return { x: rect.x, y: rect.y };
 }
 
-test("white is at the bottom by default, with a8 top left and the labels a to h and 8 down to 1", async ({ page }) => {
+test("white is at the bottom by default, with a8 top left and every square named", async ({ page }) => {
   await ready(page);
   const order = await drawingOrder(page);
   expect(order[0]).toBe("a8");
   expect(order[63]).toBe("h1");
-  await expect(page.locator("#file-labels")).toHaveText("abcdefgh");
-  await expect(page.locator("#rank-labels")).toHaveText("87654321");
+  await expect(square(page, "a8").locator(".coordinate")).toHaveText("a8");
+  await expect(square(page, "h1").locator(".coordinate")).toHaveText("h1");
+  await expect(page.locator("#board .coordinate")).toHaveCount(64);
   await expect(page.locator("#board-frame")).toHaveAttribute("data-bottom", "white");
   await expect(page.locator("#flip-board")).toHaveAttribute("title", /White is at the bottom/);
 });
@@ -79,15 +80,9 @@ test("flipping draws the board from black's side and changes nothing about the s
   expect(h8.x).toBeCloseTo(h1.x, 0);
   expect(a1.y).toBeCloseTo(h1.y, 0);
   expect(a1.x).toBeCloseTo(a8.x, 0);
-  // The labels are on the correct edges: h to a left to right, 1 to 8 top to bottom.
-  await expect(page.locator("#file-labels")).toHaveText("hgfedcba");
-  await expect(page.locator("#rank-labels")).toHaveText("12345678");
-  const one = await box(page.locator("[data-rank-label='1']"));
-  const eight = await box(page.locator("[data-rank-label='8']"));
-  expect(one.y).toBeLessThan(eight.y);
-  expect(one.y).toBeCloseTo(h1.y, -1);
-  const hLabel = await box(page.locator("[data-file-label='h']"));
-  expect(hLabel.x).toBeCloseTo(h1.x, -1);
+  // Each square still carries its own name, so the top left square now reads h1.
+  await expect(square(page, "h1").locator(".coordinate")).toHaveText("h1");
+  await expect(page.locator("#board [data-square]").first().locator(".coordinate")).toHaveText("h1");
   await expect(page.locator("#board-frame")).toHaveAttribute("data-bottom", "black");
   await expect(page.locator("#flip-board")).toHaveAttribute("title", /Black is at the bottom/);
 

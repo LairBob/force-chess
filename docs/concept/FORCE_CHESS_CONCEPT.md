@@ -1,6 +1,6 @@
 # Force Chess: top-level concept specification
 
-Version 0.4, 2026-11-08. Concept bracketed: every position in this document is confirmed by Laurent or follows from one that is.
+Version 0.5, 2026-11-09 (0.4, 2026-11-08). Concept bracketed: every position in this document is confirmed by Laurent or follows from one that is.
 
 How to read this: the positions in section 10 were first taken as defaults so the spec would be complete, and were all accepted by Laurent on 2026-11-08. They remain listed there so the reasoning behind each stays visible. This document says what the thing is. It does not say how to build it or in what order.
 
@@ -108,7 +108,7 @@ A projection may expose settings (which layer, which colour, thresholds). Those 
 
 ### 7.1 The raw-values projection comes first
 
-Every quantity the model computes is visible in raw form from the day it is computed, before any designed visual exists for it. The vehicle is a raw-values projection. On each square that has anything to report it shows the counts as tallies: a row of small red squares, one per threat, and a row of small green squares, one per defence. One mark per unit, no scaling, no thresholds, no interpretation; a row of three red marks means exactly three. Squares with nothing to report show nothing. The exact figures also appear as label-value pairs, for example `Threats: 3` and `Defenses: 1`, in the info panels for the current piece and current square, and on hover. The projection has a layer selector and no other design.
+Every quantity the model computes is visible in raw form from the day it is computed, before any designed visual exists for it. The vehicle is a raw-values projection. On each square that has anything to report it shows the counts as tallies: a row of small red squares, one per threat, and a row of small green squares, one per defence. One mark per unit, no scaling, no thresholds, no interpretation; a row of three red marks means exactly three. A mark has a shape as well as a colour, saying the same thing twice: a threat points down onto the piece, a defence points up under it, and a side's reach onto an empty square is a plain square, so the marks still read without colour. Squares with nothing to report show nothing. The exact figures also appear as label-value pairs, for example `Threats: 3` and `Defenses: 1`, in the info panels for the current piece and current square, and on hover. The projection has a layer selector and no other design.
 
 Tallies need one semantic rule. On an occupied square, red is enemy attackers of the occupant and green is friendly defenders of it. On an empty square there is no occupant to threaten or defend, so the marks are coloured by side instead (accepted by Laurent for now, 2026-11-08): one row of white-side attackers, one row of black-side attackers, in the two side colours rather than red and green. This keeps red and green meaning "danger to" and "support for" a specific piece, and keeps side colours meaning "who reaches here".
 

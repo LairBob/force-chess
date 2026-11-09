@@ -89,24 +89,17 @@ body { margin: 0; background: var(--page); }
 #layer-note { margin: 0; color: var(--muted); font-size: 0.85rem; flex-basis: 100%; }
 #flip-board { padding: 4px 10px; font: inherit; font-size: 0.9rem; cursor: pointer; }
 
-/* The board with its edge labels: rank digits down the left, file letters along the bottom. */
-#board-frame { display: grid; grid-template-columns: 18px max-content; grid-template-rows: max-content 18px; width: max-content; }
-#rank-labels { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; padding: 2px 0; }
-#file-labels { grid-column: 2; grid-row: 2; display: flex; flex-direction: row; padding: 0 2px; }
-#board { grid-column: 2; grid-row: 1; }
-.edge-label { display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--muted); }
-#rank-labels .edge-label { height: 72px; width: 18px; }
-#file-labels .edge-label { width: 72px; height: 18px; }
-
+/* The board: 64 squares of 72px inside a 2px frame. Every square carries its own name. */
+#board-frame { width: max-content; }
 #board {
   display: grid;
-  grid-template-columns: repeat(8, 72px);
-  grid-template-rows: repeat(8, 72px);
+  grid-template-columns: repeat(8, var(--square));
+  grid-template-rows: repeat(8, var(--square));
   border: 2px solid var(--board-frame);
   width: max-content;
   user-select: none;
 }
-.square { position: relative; width: 72px; height: 72px; cursor: default; }
+.square { position: relative; width: var(--square); height: var(--square); cursor: default; }
 .square.light { background: var(--light-square); }
 .square.dark { background: var(--dark-square); }
 .square.movable { cursor: pointer; }
@@ -128,17 +121,24 @@ body { margin: 0; background: var(--page); }
 .destination-mark { position: absolute; left: 50%; top: 50%; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; background: var(--destination); pointer-events: none; }
 .destination-capture .destination-mark { width: 62px; height: 62px; margin: -31px 0 0 -31px; background: transparent; border: 5px solid var(--destination); }
 
-.coordinate { position: absolute; right: 3px; top: 2px; font-size: 10px; color: var(--coordinate-light); pointer-events: none; }
+/* The square's name, top right, in the one place Inter is used: translucent ink, so it reads as a deeper shade of the square. */
+.coordinate {
+  position: absolute; right: 3px; top: 1px;
+  font-family: var(--font-coordinate); font-size: 12px; font-weight: 800; line-height: 14px; letter-spacing: 0.01em;
+  color: var(--coordinate-light); pointer-events: none;
+}
 .square.dark .coordinate { color: var(--coordinate-dark); }
 
-/* Tallies: one 7px mark per unit, rows stacked at the bottom of the square. */
-.tallies { position: absolute; left: 3px; right: 3px; bottom: 3px; display: flex; flex-direction: column; gap: 2px; pointer-events: none; }
-.tally-row { display: flex; flex-wrap: wrap; gap: 2px; }
-.mark { display: inline-block; width: 7px; height: 7px; border: 1px solid transparent; }
-.tally-threat .mark, .legend-red { background: var(--threat); border-color: var(--threat-edge); }
-.tally-defence .mark, .legend-green { background: var(--defence); border-color: var(--defence-edge); }
-.tally-white .mark, .legend-white { background: var(--white-side); border-color: var(--white-side-edge); }
-.tally-black .mark, .legend-black { background: var(--black-side); border-color: var(--black-side-edge); }
+/* Tallies: one 8px mark per unit, 2px apart, wrapping after six (58px), rows stacked upward from
+   3px above the bottom edge, in the fixed order the scene gives: threats above defences, white above black. */
+.tallies { position: absolute; left: 3px; bottom: 3px; width: calc(6 * var(--mark) + 5 * var(--mark-gap)); display: flex; flex-direction: column; gap: var(--mark-gap); pointer-events: none; }
+.tally-row { display: flex; flex-wrap: wrap; gap: var(--mark-gap); }
+.mark { display: block; flex: none; width: var(--mark); height: var(--mark); }
+.mark polygon { stroke-width: 1; stroke-linejoin: round; }
+.mark-threat polygon { fill: var(--threat); stroke: var(--threat-edge); }
+.mark-defence polygon { fill: var(--defence); stroke: var(--defence-edge); }
+.mark-white polygon { fill: var(--white-side); stroke: var(--white-side-edge); }
+.mark-black polygon { fill: var(--black-side); stroke: var(--black-side-edge); }
 
 .hover-card {
   position: absolute; top: 0; z-index: 10; min-width: 180px;
@@ -155,7 +155,7 @@ body { margin: 0; background: var(--page); }
 #legend { display: grid; grid-template-columns: max-content 1fr; gap: 2px 10px; margin: 4px 0 0; font-size: 0.8rem; color: var(--muted); }
 #legend dt { display: flex; align-items: center; gap: 6px; }
 #legend dd { margin: 0; }
-#legend .mark { width: 9px; height: 9px; }
+#legend .mark { width: 11px; height: 11px; }
 
 #side-column { display: flex; flex-direction: column; gap: 12px; }
 .panel, #record { background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: 10px 12px; }

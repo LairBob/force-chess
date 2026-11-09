@@ -133,13 +133,18 @@ export function boardScene(state: ForceState, context: InteractionContext): Boar
   return { squares, files: layout.files, ranks: layout.ranks };
 }
 
+/** One line of the legend: the meaning of a mark, so the shell can draw the mark itself beside the words. */
+export interface TallyLegendEntry extends LabelValue {
+  readonly meaning: TallyRow["meaning"];
+}
+
 /** A one-line summary of what the tallies mean, for the legend. */
-export function tallyLegend(): LabelValue[] {
+export function tallyLegend(): TallyLegendEntry[] {
   return [
-    { label: "Red mark", value: "one enemy piece reaching the piece on this square" },
-    { label: "Green mark", value: "one friendly piece reaching the piece on this square" },
-    { label: "White mark", value: "one white piece reaching this empty square" },
-    { label: "Black mark", value: "one black piece reaching this empty square" },
+    { meaning: "threat", label: "Red mark, pointing down", value: "one enemy piece reaching the piece on this square" },
+    { meaning: "defence", label: "Green mark, pointing up", value: "one friendly piece reaching the piece on this square" },
+    { meaning: "white", label: "White mark", value: "one white piece reaching this empty square" },
+    { meaning: "black", label: "Black mark", value: "one black piece reaching this empty square" },
   ];
 }
 

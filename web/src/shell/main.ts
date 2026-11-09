@@ -37,7 +37,7 @@ import {
 } from "../record/game-record.ts";
 import { createPositionCache } from "./cache.ts";
 import { el, replaceChildren } from "./dom.ts";
-import { renderBoard } from "./render-board.ts";
+import { markNode, renderBoard } from "./render-board.ts";
 import { renderPanel } from "./render-panels.ts";
 import "./fonts.ts";
 
@@ -127,9 +127,7 @@ async function start(): Promise<void> {
   const layerNote = el("p", { id: "layer-note" });
   const flipButton = el("button", { type: "button", id: "flip-board" }, "Flip board");
   const boardNode = el("div", { id: "board", role: "grid", "aria-label": "Board" });
-  const fileLabels = el("div", { id: "file-labels", "aria-hidden": "true" });
-  const rankLabels = el("div", { id: "rank-labels", "aria-hidden": "true" });
-  const boardFrame = el("div", { id: "board-frame" }, rankLabels, boardNode, fileLabels);
+  const boardFrame = el("div", { id: "board-frame" }, boardNode);
   const navigation = el("div", { id: "navigation" });
   const gameLine = el("p", { id: "game-headers" });
   const moveList = el("ol", { id: "move-list" });
@@ -139,10 +137,7 @@ async function start(): Promise<void> {
   const legend = el(
     "dl",
     { id: "legend" },
-    ...tallyLegend().flatMap((pair) => [
-      el("dt", {}, el("span", { className: `mark legend-${pair.label.split(" ")[0]?.toLowerCase() ?? ""}` }), pair.label),
-      el("dd", {}, pair.value),
-    ]),
+    ...tallyLegend().flatMap((entry) => [el("dt", {}, markNode(entry.meaning), entry.label), el("dd", {}, entry.value)]),
   );
 
   replaceChildren(
@@ -396,7 +391,7 @@ async function start(): Promise<void> {
     document.documentElement.dataset["analysedPositions"] = String(cache.size);
     const toMove = sideToMove(currentFen(shell.record));
     renderBoard(
-      { squares: boardNode, files: fileLabels, ranks: rankLabels },
+      boardNode,
       boardScene(state, {
         layer: shell.layer,
         selected: shell.selected,
