@@ -1,0 +1,7663 @@
+{
+  "contractVersion": "0.3.0",
+  "configuration": {
+    "key": "f64a3ad7b7f2bc1b46923e4ac672a5d1e2be244d0adf261e55a1262ee8c0159a",
+    "keyAlgorithm": "sha256-hex",
+    "canonical": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR KQkq -",
+    "placement": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR",
+    "castling": {
+      "white": {
+        "kingside": true,
+        "queenside": true
+      },
+      "black": {
+        "kingside": true,
+        "queenside": true
+      }
+    },
+    "enPassant": null
+  },
+  "valuationScale": {
+    "pawn": 1,
+    "knight": 3,
+    "bishop": 3,
+    "rook": 5,
+    "queen": 9,
+    "king": 0
+  },
+  "sides": {
+    "white": {
+      "kingSquare": "e1",
+      "inCheck": false,
+      "checkers": [],
+      "status": "normal",
+      "legalMoveCount": 20
+    },
+    "black": {
+      "kingSquare": "e8",
+      "inCheck": false,
+      "checkers": [],
+      "status": "normal",
+      "legalMoveCount": 20
+    }
+  },
+  "pieces": {
+    "a1": {
+      "color": "white",
+      "type": "rook",
+      "attacks": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          0,
+          1
+        ],
+        "L1": {
+          "legal": [
+            0,
+            1
+          ],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "lookaheads": [],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": {
+          "code": "blocked",
+          "text": "The white rook on a1 cannot move: every square it could go to is off the board or blocked by a piece of its own side."
+        }
+      },
+      "mobility": 0,
+      "specialMoves": {}
+    },
+    "b1": {
+      "color": "white",
+      "type": "knight",
+      "attacks": {
+        "L0": [
+          2,
+          3
+        ],
+        "L1": {
+          "legal": [
+            2,
+            3
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          4
+        ],
+        "L1": {
+          "legal": [
+            4
+          ],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          1
+        ],
+        "L1": {
+          "legal": [
+            1
+          ],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "lookaheads": [
+        0,
+        1
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {}
+    },
+    "c1": {
+      "color": "white",
+      "type": "bishop",
+      "attacks": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          5,
+          6
+        ],
+        "L1": {
+          "legal": [
+            5,
+            6
+          ],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          7
+        ],
+        "L1": {
+          "legal": [
+            7
+          ],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "lookaheads": [],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": {
+          "code": "blocked",
+          "text": "The white bishop on c1 cannot move: every square it could go to is off the board or blocked by a piece of its own side."
+        }
+      },
+      "mobility": 0,
+      "specialMoves": {}
+    },
+    "d1": {
+      "color": "white",
+      "type": "queen",
+      "attacks": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "L1": {
+          "legal": [
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          12
+        ],
+        "L1": {
+          "legal": [
+            12
+          ],
+          "excluded": []
+        },
+        "L2": [
+          1
+        ]
+      },
+      "lookaheads": [],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": {
+          "code": "blocked",
+          "text": "The white queen on d1 cannot move: every square it could go to is off the board or blocked by a piece of its own side."
+        }
+      },
+      "mobility": 0,
+      "specialMoves": {}
+    },
+    "e1": {
+      "color": "white",
+      "type": "king",
+      "attacks": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          12,
+          13,
+          14,
+          15,
+          16
+        ],
+        "L1": {
+          "legal": [
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          10
+        ],
+        "L1": {
+          "legal": [
+            10
+          ],
+          "excluded": []
+        },
+        "L2": [
+          2
+        ]
+      },
+      "lookaheads": [],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": {
+          "code": "blocked",
+          "text": "The white king on e1 cannot move: every square it could go to is off the board or blocked by a piece of its own side."
+        }
+      },
+      "mobility": 0,
+      "specialMoves": {
+        "castleKingside": {
+          "available": false,
+          "target": "g1",
+          "reason": {
+            "code": "path_blocked",
+            "text": "Castling kingside needs f1 and g1 empty, but the white bishop on f1 and the white knight on g1 stand in the way."
+          }
+        },
+        "castleQueenside": {
+          "available": false,
+          "target": "c1",
+          "reason": {
+            "code": "path_blocked",
+            "text": "Castling queenside needs d1, c1 and b1 empty, but the white queen on d1, the white bishop on c1 and the white knight on b1 stand in the way."
+          }
+        }
+      }
+    },
+    "f1": {
+      "color": "white",
+      "type": "bishop",
+      "attacks": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          17,
+          18
+        ],
+        "L1": {
+          "legal": [
+            17,
+            18
+          ],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          15
+        ],
+        "L1": {
+          "legal": [
+            15
+          ],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "lookaheads": [],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": {
+          "code": "blocked",
+          "text": "The white bishop on f1 cannot move: every square it could go to is off the board or blocked by a piece of its own side."
+        }
+      },
+      "mobility": 0,
+      "specialMoves": {}
+    },
+    "g1": {
+      "color": "white",
+      "type": "knight",
+      "attacks": {
+        "L0": [
+          20,
+          21
+        ],
+        "L1": {
+          "legal": [
+            20,
+            21
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          19
+        ],
+        "L1": {
+          "legal": [
+            19
+          ],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          22
+        ],
+        "L1": {
+          "legal": [
+            22
+          ],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "lookaheads": [
+        2,
+        3
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {}
+    },
+    "h1": {
+      "color": "white",
+      "type": "rook",
+      "attacks": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          22,
+          23
+        ],
+        "L1": {
+          "legal": [
+            22,
+            23
+          ],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "lookaheads": [],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": {
+          "code": "blocked",
+          "text": "The white rook on h1 cannot move: every square it could go to is off the board or blocked by a piece of its own side."
+        }
+      },
+      "mobility": 0,
+      "specialMoves": {}
+    },
+    "a2": {
+      "color": "white",
+      "type": "pawn",
+      "attacks": {
+        "L0": [
+          24
+        ],
+        "L1": {
+          "legal": [
+            24
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          0
+        ],
+        "L1": {
+          "legal": [
+            0
+          ],
+          "excluded": []
+        },
+        "L2": [
+          1
+        ]
+      },
+      "lookaheads": [
+        4,
+        5
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {
+        "enPassant": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "no_target",
+            "text": "The white pawn on a2 has no en passant capture: en passant (capturing a pawn that has just moved two squares as if it had moved one) is only possible right after an enemy pawn makes that two-square move and lands beside this one."
+          }
+        },
+        "promotion": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "not_on_rank",
+            "text": "The white pawn on a2 is not one step from promotion: a white pawn promotes on reaching rank 8, so it must first stand on rank 7. (Promotion: a pawn reaching the far end of the board is replaced by a queen, rook, bishop or knight of its own colour.)"
+          }
+        }
+      }
+    },
+    "b2": {
+      "color": "white",
+      "type": "pawn",
+      "attacks": {
+        "L0": [
+          25,
+          26
+        ],
+        "L1": {
+          "legal": [
+            25,
+            26
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          5
+        ],
+        "L1": {
+          "legal": [
+            5
+          ],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "lookaheads": [
+        6,
+        7
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {
+        "enPassant": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "no_target",
+            "text": "The white pawn on b2 has no en passant capture: en passant (capturing a pawn that has just moved two squares as if it had moved one) is only possible right after an enemy pawn makes that two-square move and lands beside this one."
+          }
+        },
+        "promotion": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "not_on_rank",
+            "text": "The white pawn on b2 is not one step from promotion: a white pawn promotes on reaching rank 8, so it must first stand on rank 7. (Promotion: a pawn reaching the far end of the board is replaced by a queen, rook, bishop or knight of its own colour.)"
+          }
+        }
+      }
+    },
+    "c2": {
+      "color": "white",
+      "type": "pawn",
+      "attacks": {
+        "L0": [
+          27,
+          28
+        ],
+        "L1": {
+          "legal": [
+            27,
+            28
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          8
+        ],
+        "L1": {
+          "legal": [
+            8
+          ],
+          "excluded": []
+        },
+        "L2": [
+          0
+        ]
+      },
+      "lookaheads": [
+        8,
+        9
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {
+        "enPassant": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "no_target",
+            "text": "The white pawn on c2 has no en passant capture: en passant (capturing a pawn that has just moved two squares as if it had moved one) is only possible right after an enemy pawn makes that two-square move and lands beside this one."
+          }
+        },
+        "promotion": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "not_on_rank",
+            "text": "The white pawn on c2 is not one step from promotion: a white pawn promotes on reaching rank 8, so it must first stand on rank 7. (Promotion: a pawn reaching the far end of the board is replaced by a queen, rook, bishop or knight of its own colour.)"
+          }
+        }
+      }
+    },
+    "d2": {
+      "color": "white",
+      "type": "pawn",
+      "attacks": {
+        "L0": [
+          29,
+          30
+        ],
+        "L1": {
+          "legal": [
+            29,
+            30
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          4,
+          6,
+          9,
+          13
+        ],
+        "L1": {
+          "legal": [
+            4,
+            6,
+            9,
+            13
+          ],
+          "excluded": []
+        },
+        "L2": [
+          2
+        ]
+      },
+      "lookaheads": [
+        10,
+        11
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {
+        "enPassant": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "no_target",
+            "text": "The white pawn on d2 has no en passant capture: en passant (capturing a pawn that has just moved two squares as if it had moved one) is only possible right after an enemy pawn makes that two-square move and lands beside this one."
+          }
+        },
+        "promotion": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "not_on_rank",
+            "text": "The white pawn on d2 is not one step from promotion: a white pawn promotes on reaching rank 8, so it must first stand on rank 7. (Promotion: a pawn reaching the far end of the board is replaced by a queen, rook, bishop or knight of its own colour.)"
+          }
+        }
+      }
+    },
+    "e2": {
+      "color": "white",
+      "type": "pawn",
+      "attacks": {
+        "L0": [
+          31,
+          32
+        ],
+        "L1": {
+          "legal": [
+            31,
+            32
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          11,
+          14,
+          17,
+          19
+        ],
+        "L1": {
+          "legal": [
+            11,
+            14,
+            17,
+            19
+          ],
+          "excluded": []
+        },
+        "L2": [
+          1
+        ]
+      },
+      "lookaheads": [
+        12,
+        13
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {
+        "enPassant": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "no_target",
+            "text": "The white pawn on e2 has no en passant capture: en passant (capturing a pawn that has just moved two squares as if it had moved one) is only possible right after an enemy pawn makes that two-square move and lands beside this one."
+          }
+        },
+        "promotion": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "not_on_rank",
+            "text": "The white pawn on e2 is not one step from promotion: a white pawn promotes on reaching rank 8, so it must first stand on rank 7. (Promotion: a pawn reaching the far end of the board is replaced by a queen, rook, bishop or knight of its own colour.)"
+          }
+        }
+      }
+    },
+    "f2": {
+      "color": "white",
+      "type": "pawn",
+      "attacks": {
+        "L0": [
+          33,
+          34
+        ],
+        "L1": {
+          "legal": [
+            33,
+            34
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          16
+        ],
+        "L1": {
+          "legal": [
+            16
+          ],
+          "excluded": []
+        },
+        "L2": [
+          3
+        ]
+      },
+      "lookaheads": [
+        14,
+        15
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {
+        "enPassant": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "no_target",
+            "text": "The white pawn on f2 has no en passant capture: en passant (capturing a pawn that has just moved two squares as if it had moved one) is only possible right after an enemy pawn makes that two-square move and lands beside this one."
+          }
+        },
+        "promotion": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "not_on_rank",
+            "text": "The white pawn on f2 is not one step from promotion: a white pawn promotes on reaching rank 8, so it must first stand on rank 7. (Promotion: a pawn reaching the far end of the board is replaced by a queen, rook, bishop or knight of its own colour.)"
+          }
+        }
+      }
+    },
+    "g2": {
+      "color": "white",
+      "type": "pawn",
+      "attacks": {
+        "L0": [
+          35,
+          36
+        ],
+        "L1": {
+          "legal": [
+            35,
+            36
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          18
+        ],
+        "L1": {
+          "legal": [
+            18
+          ],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "lookaheads": [
+        16,
+        17
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {
+        "enPassant": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "no_target",
+            "text": "The white pawn on g2 has no en passant capture: en passant (capturing a pawn that has just moved two squares as if it had moved one) is only possible right after an enemy pawn makes that two-square move and lands beside this one."
+          }
+        },
+        "promotion": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "not_on_rank",
+            "text": "The white pawn on g2 is not one step from promotion: a white pawn promotes on reaching rank 8, so it must first stand on rank 7. (Promotion: a pawn reaching the far end of the board is replaced by a queen, rook, bishop or knight of its own colour.)"
+          }
+        }
+      }
+    },
+    "h2": {
+      "color": "white",
+      "type": "pawn",
+      "attacks": {
+        "L0": [
+          37
+        ],
+        "L1": {
+          "legal": [
+            37
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          23
+        ],
+        "L1": {
+          "legal": [
+            23
+          ],
+          "excluded": []
+        },
+        "L2": [
+          2
+        ]
+      },
+      "lookaheads": [
+        18,
+        19
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {
+        "enPassant": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "no_target",
+            "text": "The white pawn on h2 has no en passant capture: en passant (capturing a pawn that has just moved two squares as if it had moved one) is only possible right after an enemy pawn makes that two-square move and lands beside this one."
+          }
+        },
+        "promotion": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "not_on_rank",
+            "text": "The white pawn on h2 is not one step from promotion: a white pawn promotes on reaching rank 8, so it must first stand on rank 7. (Promotion: a pawn reaching the far end of the board is replaced by a queen, rook, bishop or knight of its own colour.)"
+          }
+        }
+      }
+    },
+    "a7": {
+      "color": "black",
+      "type": "pawn",
+      "attacks": {
+        "L0": [
+          38
+        ],
+        "L1": {
+          "legal": [
+            38
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          52
+        ],
+        "L1": {
+          "legal": [
+            52
+          ],
+          "excluded": []
+        },
+        "L2": [
+          37
+        ]
+      },
+      "lookaheads": [
+        20,
+        21
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {
+        "enPassant": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "no_target",
+            "text": "The black pawn on a7 has no en passant capture: en passant (capturing a pawn that has just moved two squares as if it had moved one) is only possible right after an enemy pawn makes that two-square move and lands beside this one."
+          }
+        },
+        "promotion": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "not_on_rank",
+            "text": "The black pawn on a7 is not one step from promotion: a black pawn promotes on reaching rank 1, so it must first stand on rank 2. (Promotion: a pawn reaching the far end of the board is replaced by a queen, rook, bishop or knight of its own colour.)"
+          }
+        }
+      }
+    },
+    "b7": {
+      "color": "black",
+      "type": "pawn",
+      "attacks": {
+        "L0": [
+          39,
+          40
+        ],
+        "L1": {
+          "legal": [
+            39,
+            40
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          57
+        ],
+        "L1": {
+          "legal": [
+            57
+          ],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "lookaheads": [
+        22,
+        23
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {
+        "enPassant": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "no_target",
+            "text": "The black pawn on b7 has no en passant capture: en passant (capturing a pawn that has just moved two squares as if it had moved one) is only possible right after an enemy pawn makes that two-square move and lands beside this one."
+          }
+        },
+        "promotion": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "not_on_rank",
+            "text": "The black pawn on b7 is not one step from promotion: a black pawn promotes on reaching rank 1, so it must first stand on rank 2. (Promotion: a pawn reaching the far end of the board is replaced by a queen, rook, bishop or knight of its own colour.)"
+          }
+        }
+      }
+    },
+    "c7": {
+      "color": "black",
+      "type": "pawn",
+      "attacks": {
+        "L0": [
+          41,
+          42
+        ],
+        "L1": {
+          "legal": [
+            41,
+            42
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          59
+        ],
+        "L1": {
+          "legal": [
+            59
+          ],
+          "excluded": []
+        },
+        "L2": [
+          36
+        ]
+      },
+      "lookaheads": [
+        24,
+        25
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {
+        "enPassant": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "no_target",
+            "text": "The black pawn on c7 has no en passant capture: en passant (capturing a pawn that has just moved two squares as if it had moved one) is only possible right after an enemy pawn makes that two-square move and lands beside this one."
+          }
+        },
+        "promotion": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "not_on_rank",
+            "text": "The black pawn on c7 is not one step from promotion: a black pawn promotes on reaching rank 1, so it must first stand on rank 2. (Promotion: a pawn reaching the far end of the board is replaced by a queen, rook, bishop or knight of its own colour.)"
+          }
+        }
+      }
+    },
+    "d7": {
+      "color": "black",
+      "type": "pawn",
+      "attacks": {
+        "L0": [
+          43,
+          44
+        ],
+        "L1": {
+          "legal": [
+            43,
+            44
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          56,
+          58,
+          61,
+          64
+        ],
+        "L1": {
+          "legal": [
+            56,
+            58,
+            61,
+            64
+          ],
+          "excluded": []
+        },
+        "L2": [
+          38
+        ]
+      },
+      "lookaheads": [
+        26,
+        27
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {
+        "enPassant": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "no_target",
+            "text": "The black pawn on d7 has no en passant capture: en passant (capturing a pawn that has just moved two squares as if it had moved one) is only possible right after an enemy pawn makes that two-square move and lands beside this one."
+          }
+        },
+        "promotion": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "not_on_rank",
+            "text": "The black pawn on d7 is not one step from promotion: a black pawn promotes on reaching rank 1, so it must first stand on rank 2. (Promotion: a pawn reaching the far end of the board is replaced by a queen, rook, bishop or knight of its own colour.)"
+          }
+        }
+      }
+    },
+    "e7": {
+      "color": "black",
+      "type": "pawn",
+      "attacks": {
+        "L0": [
+          45,
+          46
+        ],
+        "L1": {
+          "legal": [
+            45,
+            46
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          62,
+          66,
+          69,
+          71
+        ],
+        "L1": {
+          "legal": [
+            62,
+            66,
+            69,
+            71
+          ],
+          "excluded": []
+        },
+        "L2": [
+          37
+        ]
+      },
+      "lookaheads": [
+        28,
+        29
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {
+        "enPassant": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "no_target",
+            "text": "The black pawn on e7 has no en passant capture: en passant (capturing a pawn that has just moved two squares as if it had moved one) is only possible right after an enemy pawn makes that two-square move and lands beside this one."
+          }
+        },
+        "promotion": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "not_on_rank",
+            "text": "The black pawn on e7 is not one step from promotion: a black pawn promotes on reaching rank 1, so it must first stand on rank 2. (Promotion: a pawn reaching the far end of the board is replaced by a queen, rook, bishop or knight of its own colour.)"
+          }
+        }
+      }
+    },
+    "f7": {
+      "color": "black",
+      "type": "pawn",
+      "attacks": {
+        "L0": [
+          47,
+          48
+        ],
+        "L1": {
+          "legal": [
+            47,
+            48
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          67
+        ],
+        "L1": {
+          "legal": [
+            67
+          ],
+          "excluded": []
+        },
+        "L2": [
+          39
+        ]
+      },
+      "lookaheads": [
+        30,
+        31
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {
+        "enPassant": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "no_target",
+            "text": "The black pawn on f7 has no en passant capture: en passant (capturing a pawn that has just moved two squares as if it had moved one) is only possible right after an enemy pawn makes that two-square move and lands beside this one."
+          }
+        },
+        "promotion": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "not_on_rank",
+            "text": "The black pawn on f7 is not one step from promotion: a black pawn promotes on reaching rank 1, so it must first stand on rank 2. (Promotion: a pawn reaching the far end of the board is replaced by a queen, rook, bishop or knight of its own colour.)"
+          }
+        }
+      }
+    },
+    "g7": {
+      "color": "black",
+      "type": "pawn",
+      "attacks": {
+        "L0": [
+          49,
+          50
+        ],
+        "L1": {
+          "legal": [
+            49,
+            50
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          70
+        ],
+        "L1": {
+          "legal": [
+            70
+          ],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "lookaheads": [
+        32,
+        33
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {
+        "enPassant": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "no_target",
+            "text": "The black pawn on g7 has no en passant capture: en passant (capturing a pawn that has just moved two squares as if it had moved one) is only possible right after an enemy pawn makes that two-square move and lands beside this one."
+          }
+        },
+        "promotion": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "not_on_rank",
+            "text": "The black pawn on g7 is not one step from promotion: a black pawn promotes on reaching rank 1, so it must first stand on rank 2. (Promotion: a pawn reaching the far end of the board is replaced by a queen, rook, bishop or knight of its own colour.)"
+          }
+        }
+      }
+    },
+    "h7": {
+      "color": "black",
+      "type": "pawn",
+      "attacks": {
+        "L0": [
+          51
+        ],
+        "L1": {
+          "legal": [
+            51
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          75
+        ],
+        "L1": {
+          "legal": [
+            75
+          ],
+          "excluded": []
+        },
+        "L2": [
+          38
+        ]
+      },
+      "lookaheads": [
+        34,
+        35
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {
+        "enPassant": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "no_target",
+            "text": "The black pawn on h7 has no en passant capture: en passant (capturing a pawn that has just moved two squares as if it had moved one) is only possible right after an enemy pawn makes that two-square move and lands beside this one."
+          }
+        },
+        "promotion": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "not_on_rank",
+            "text": "The black pawn on h7 is not one step from promotion: a black pawn promotes on reaching rank 1, so it must first stand on rank 2. (Promotion: a pawn reaching the far end of the board is replaced by a queen, rook, bishop or knight of its own colour.)"
+          }
+        }
+      }
+    },
+    "a8": {
+      "color": "black",
+      "type": "rook",
+      "attacks": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          52,
+          53
+        ],
+        "L1": {
+          "legal": [
+            52,
+            53
+          ],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "lookaheads": [],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": {
+          "code": "blocked",
+          "text": "The black rook on a8 cannot move: every square it could go to is off the board or blocked by a piece of its own side."
+        }
+      },
+      "mobility": 0,
+      "specialMoves": {}
+    },
+    "b8": {
+      "color": "black",
+      "type": "knight",
+      "attacks": {
+        "L0": [
+          54,
+          55
+        ],
+        "L1": {
+          "legal": [
+            54,
+            55
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          56
+        ],
+        "L1": {
+          "legal": [
+            56
+          ],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          53
+        ],
+        "L1": {
+          "legal": [
+            53
+          ],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "lookaheads": [
+        36,
+        37
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {}
+    },
+    "c8": {
+      "color": "black",
+      "type": "bishop",
+      "attacks": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          57,
+          58
+        ],
+        "L1": {
+          "legal": [
+            57,
+            58
+          ],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          60
+        ],
+        "L1": {
+          "legal": [
+            60
+          ],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "lookaheads": [],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": {
+          "code": "blocked",
+          "text": "The black bishop on c8 cannot move: every square it could go to is off the board or blocked by a piece of its own side."
+        }
+      },
+      "mobility": 0,
+      "specialMoves": {}
+    },
+    "d8": {
+      "color": "black",
+      "type": "queen",
+      "attacks": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          59,
+          60,
+          61,
+          62,
+          63
+        ],
+        "L1": {
+          "legal": [
+            59,
+            60,
+            61,
+            62,
+            63
+          ],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          65
+        ],
+        "L1": {
+          "legal": [
+            65
+          ],
+          "excluded": []
+        },
+        "L2": [
+          37
+        ]
+      },
+      "lookaheads": [],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": {
+          "code": "blocked",
+          "text": "The black queen on d8 cannot move: every square it could go to is off the board or blocked by a piece of its own side."
+        }
+      },
+      "mobility": 0,
+      "specialMoves": {}
+    },
+    "e8": {
+      "color": "black",
+      "type": "king",
+      "attacks": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          64,
+          65,
+          66,
+          67,
+          68
+        ],
+        "L1": {
+          "legal": [
+            64,
+            65,
+            66,
+            67,
+            68
+          ],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          63
+        ],
+        "L1": {
+          "legal": [
+            63
+          ],
+          "excluded": []
+        },
+        "L2": [
+          38
+        ]
+      },
+      "lookaheads": [],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": {
+          "code": "blocked",
+          "text": "The black king on e8 cannot move: every square it could go to is off the board or blocked by a piece of its own side."
+        }
+      },
+      "mobility": 0,
+      "specialMoves": {
+        "castleKingside": {
+          "available": false,
+          "target": "g8",
+          "reason": {
+            "code": "path_blocked",
+            "text": "Castling kingside needs f8 and g8 empty, but the black bishop on f8 and the black knight on g8 stand in the way."
+          }
+        },
+        "castleQueenside": {
+          "available": false,
+          "target": "c8",
+          "reason": {
+            "code": "path_blocked",
+            "text": "Castling queenside needs d8, c8 and b8 empty, but the black queen on d8, the black bishop on c8 and the black knight on b8 stand in the way."
+          }
+        }
+      }
+    },
+    "f8": {
+      "color": "black",
+      "type": "bishop",
+      "attacks": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          69,
+          70
+        ],
+        "L1": {
+          "legal": [
+            69,
+            70
+          ],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          68
+        ],
+        "L1": {
+          "legal": [
+            68
+          ],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "lookaheads": [],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": {
+          "code": "blocked",
+          "text": "The black bishop on f8 cannot move: every square it could go to is off the board or blocked by a piece of its own side."
+        }
+      },
+      "mobility": 0,
+      "specialMoves": {}
+    },
+    "g8": {
+      "color": "black",
+      "type": "knight",
+      "attacks": {
+        "L0": [
+          72,
+          73
+        ],
+        "L1": {
+          "legal": [
+            72,
+            73
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          71
+        ],
+        "L1": {
+          "legal": [
+            71
+          ],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          74
+        ],
+        "L1": {
+          "legal": [
+            74
+          ],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "lookaheads": [
+        38,
+        39
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {}
+    },
+    "h8": {
+      "color": "black",
+      "type": "rook",
+      "attacks": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          74,
+          75
+        ],
+        "L1": {
+          "legal": [
+            74,
+            75
+          ],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "lookaheads": [],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": {
+          "code": "blocked",
+          "text": "The black rook on h8 cannot move: every square it could go to is off the board or blocked by a piece of its own side."
+        }
+      },
+      "mobility": 0,
+      "specialMoves": {}
+    }
+  },
+  "relations": {
+    "edges": [
+      {
+        "from": "a1",
+        "to": "a2",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "a1",
+        "to": "b1",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b1",
+        "to": "a3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b1",
+        "to": "c3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b1",
+        "to": "d2",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "c1",
+        "to": "b2",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "c1",
+        "to": "d2",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "d1",
+        "to": "c1",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "d1",
+        "to": "c2",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "d1",
+        "to": "d2",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "d1",
+        "to": "e1",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "d1",
+        "to": "e2",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "e1",
+        "to": "d1",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "e1",
+        "to": "d2",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "e1",
+        "to": "e2",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "e1",
+        "to": "f1",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "e1",
+        "to": "f2",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "f1",
+        "to": "e2",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "f1",
+        "to": "g2",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "g1",
+        "to": "e2",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "g1",
+        "to": "f3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "g1",
+        "to": "h3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "h1",
+        "to": "g1",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "h1",
+        "to": "h2",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "a2",
+        "to": "b3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "a3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "c3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "c2",
+        "to": "b3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "c2",
+        "to": "d3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "d2",
+        "to": "c3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "d2",
+        "to": "e3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "e2",
+        "to": "d3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "e2",
+        "to": "f3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "f2",
+        "to": "e3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "f2",
+        "to": "g3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "g2",
+        "to": "f3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "g2",
+        "to": "h3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "h2",
+        "to": "g3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "a7",
+        "to": "b6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b7",
+        "to": "a6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b7",
+        "to": "c6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "c7",
+        "to": "b6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "c7",
+        "to": "d6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "d7",
+        "to": "c6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "d7",
+        "to": "e6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "e7",
+        "to": "d6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "e7",
+        "to": "f6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "f7",
+        "to": "e6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "f7",
+        "to": "g6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "g7",
+        "to": "f6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "g7",
+        "to": "h6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "h7",
+        "to": "g6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "a8",
+        "to": "a7",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "a8",
+        "to": "b8",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b8",
+        "to": "a6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b8",
+        "to": "c6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b8",
+        "to": "d7",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "c8",
+        "to": "b7",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "c8",
+        "to": "d7",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "d8",
+        "to": "c7",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "d8",
+        "to": "c8",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "d8",
+        "to": "d7",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "d8",
+        "to": "e7",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "d8",
+        "to": "e8",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "e8",
+        "to": "d7",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "e8",
+        "to": "d8",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "e8",
+        "to": "e7",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "e8",
+        "to": "f7",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "e8",
+        "to": "f8",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "f8",
+        "to": "e7",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "f8",
+        "to": "g7",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "g8",
+        "to": "e7",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "g8",
+        "to": "f6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "g8",
+        "to": "h6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "h8",
+        "to": "g8",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "h8",
+        "to": "h7",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      }
+    ],
+    "lookaheads": [
+      {
+        "piece": "b1",
+        "move": {
+          "from": "b1",
+          "to": "a3",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "b1",
+          "b5",
+          "c2",
+          "c4"
+        ]
+      },
+      {
+        "piece": "b1",
+        "move": {
+          "from": "b1",
+          "to": "c3",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a2",
+          "a4",
+          "b1",
+          "b5",
+          "d1",
+          "d5",
+          "e2",
+          "e4"
+        ]
+      },
+      {
+        "piece": "g1",
+        "move": {
+          "from": "g1",
+          "to": "f3",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "d2",
+          "d4",
+          "e1",
+          "e5",
+          "g1",
+          "g5",
+          "h2",
+          "h4"
+        ]
+      },
+      {
+        "piece": "g1",
+        "move": {
+          "from": "g1",
+          "to": "h3",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "f2",
+          "f4",
+          "g1",
+          "g5"
+        ]
+      },
+      {
+        "piece": "a2",
+        "move": {
+          "from": "a2",
+          "to": "a3",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "b4"
+        ]
+      },
+      {
+        "piece": "a2",
+        "move": {
+          "from": "a2",
+          "to": "a4",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "b5"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "b3",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a4",
+          "c4"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "b4",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a5",
+          "c5"
+        ]
+      },
+      {
+        "piece": "c2",
+        "move": {
+          "from": "c2",
+          "to": "c3",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "b4",
+          "d4"
+        ]
+      },
+      {
+        "piece": "c2",
+        "move": {
+          "from": "c2",
+          "to": "c4",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "b5",
+          "d5"
+        ]
+      },
+      {
+        "piece": "d2",
+        "move": {
+          "from": "d2",
+          "to": "d3",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "c4",
+          "e4"
+        ]
+      },
+      {
+        "piece": "d2",
+        "move": {
+          "from": "d2",
+          "to": "d4",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "c5",
+          "e5"
+        ]
+      },
+      {
+        "piece": "e2",
+        "move": {
+          "from": "e2",
+          "to": "e3",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "d4",
+          "f4"
+        ]
+      },
+      {
+        "piece": "e2",
+        "move": {
+          "from": "e2",
+          "to": "e4",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "d5",
+          "f5"
+        ]
+      },
+      {
+        "piece": "f2",
+        "move": {
+          "from": "f2",
+          "to": "f3",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "e4",
+          "g4"
+        ]
+      },
+      {
+        "piece": "f2",
+        "move": {
+          "from": "f2",
+          "to": "f4",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "e5",
+          "g5"
+        ]
+      },
+      {
+        "piece": "g2",
+        "move": {
+          "from": "g2",
+          "to": "g3",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "f4",
+          "h4"
+        ]
+      },
+      {
+        "piece": "g2",
+        "move": {
+          "from": "g2",
+          "to": "g4",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "f5",
+          "h5"
+        ]
+      },
+      {
+        "piece": "h2",
+        "move": {
+          "from": "h2",
+          "to": "h3",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "g4"
+        ]
+      },
+      {
+        "piece": "h2",
+        "move": {
+          "from": "h2",
+          "to": "h4",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "g5"
+        ]
+      },
+      {
+        "piece": "a7",
+        "move": {
+          "from": "a7",
+          "to": "a5",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "b4"
+        ]
+      },
+      {
+        "piece": "a7",
+        "move": {
+          "from": "a7",
+          "to": "a6",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "b5"
+        ]
+      },
+      {
+        "piece": "b7",
+        "move": {
+          "from": "b7",
+          "to": "b5",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a4",
+          "c4"
+        ]
+      },
+      {
+        "piece": "b7",
+        "move": {
+          "from": "b7",
+          "to": "b6",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a5",
+          "c5"
+        ]
+      },
+      {
+        "piece": "c7",
+        "move": {
+          "from": "c7",
+          "to": "c5",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "b4",
+          "d4"
+        ]
+      },
+      {
+        "piece": "c7",
+        "move": {
+          "from": "c7",
+          "to": "c6",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "b5",
+          "d5"
+        ]
+      },
+      {
+        "piece": "d7",
+        "move": {
+          "from": "d7",
+          "to": "d5",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "c4",
+          "e4"
+        ]
+      },
+      {
+        "piece": "d7",
+        "move": {
+          "from": "d7",
+          "to": "d6",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "c5",
+          "e5"
+        ]
+      },
+      {
+        "piece": "e7",
+        "move": {
+          "from": "e7",
+          "to": "e5",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "d4",
+          "f4"
+        ]
+      },
+      {
+        "piece": "e7",
+        "move": {
+          "from": "e7",
+          "to": "e6",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "d5",
+          "f5"
+        ]
+      },
+      {
+        "piece": "f7",
+        "move": {
+          "from": "f7",
+          "to": "f5",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "e4",
+          "g4"
+        ]
+      },
+      {
+        "piece": "f7",
+        "move": {
+          "from": "f7",
+          "to": "f6",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "e5",
+          "g5"
+        ]
+      },
+      {
+        "piece": "g7",
+        "move": {
+          "from": "g7",
+          "to": "g5",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "f4",
+          "h4"
+        ]
+      },
+      {
+        "piece": "g7",
+        "move": {
+          "from": "g7",
+          "to": "g6",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "f5",
+          "h5"
+        ]
+      },
+      {
+        "piece": "h7",
+        "move": {
+          "from": "h7",
+          "to": "h5",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "g4"
+        ]
+      },
+      {
+        "piece": "h7",
+        "move": {
+          "from": "h7",
+          "to": "h6",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "g5"
+        ]
+      },
+      {
+        "piece": "b8",
+        "move": {
+          "from": "b8",
+          "to": "a6",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "b4",
+          "b8",
+          "c5",
+          "c7"
+        ]
+      },
+      {
+        "piece": "b8",
+        "move": {
+          "from": "b8",
+          "to": "c6",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a5",
+          "a7",
+          "b4",
+          "b8",
+          "d4",
+          "d8",
+          "e5",
+          "e7"
+        ]
+      },
+      {
+        "piece": "g8",
+        "move": {
+          "from": "g8",
+          "to": "f6",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "d5",
+          "d7",
+          "e4",
+          "e8",
+          "g4",
+          "g8",
+          "h5",
+          "h7"
+        ]
+      },
+      {
+        "piece": "g8",
+        "move": {
+          "from": "g8",
+          "to": "h6",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "f5",
+          "f7",
+          "g4",
+          "g8"
+        ]
+      }
+    ],
+    "pins": [],
+    "xrays": [],
+    "batteries": []
+  },
+  "squares": {
+    "a1": {
+      "occupant": {
+        "color": "white",
+        "type": "rook"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "b1": {
+      "occupant": {
+        "color": "white",
+        "type": "knight"
+      },
+      "attackers": {
+        "white": {
+          "L0": [
+            1
+          ],
+          "L1": {
+            "legal": [
+              1
+            ],
+            "excluded": []
+          },
+          "L2": [
+            0,
+            1
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 5
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 5
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 5
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 5
+          }
+        }
+      }
+    },
+    "c1": {
+      "occupant": {
+        "color": "white",
+        "type": "bishop"
+      },
+      "attackers": {
+        "white": {
+          "L0": [
+            7
+          ],
+          "L1": {
+            "legal": [
+              7
+            ],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        }
+      }
+    },
+    "d1": {
+      "occupant": {
+        "color": "white",
+        "type": "queen"
+      },
+      "attackers": {
+        "white": {
+          "L0": [
+            12
+          ],
+          "L1": {
+            "legal": [
+              12
+            ],
+            "excluded": []
+          },
+          "L2": [
+            1
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 0
+          }
+        }
+      }
+    },
+    "e1": {
+      "occupant": {
+        "color": "white",
+        "type": "king"
+      },
+      "attackers": {
+        "white": {
+          "L0": [
+            10
+          ],
+          "L1": {
+            "legal": [
+              10
+            ],
+            "excluded": []
+          },
+          "L2": [
+            2
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        }
+      }
+    },
+    "f1": {
+      "occupant": {
+        "color": "white",
+        "type": "bishop"
+      },
+      "attackers": {
+        "white": {
+          "L0": [
+            15
+          ],
+          "L1": {
+            "legal": [
+              15
+            ],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 0
+          }
+        }
+      }
+    },
+    "g1": {
+      "occupant": {
+        "color": "white",
+        "type": "knight"
+      },
+      "attackers": {
+        "white": {
+          "L0": [
+            22
+          ],
+          "L1": {
+            "legal": [
+              22
+            ],
+            "excluded": []
+          },
+          "L2": [
+            2,
+            3
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 5
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 5
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 5
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 5
+          }
+        }
+      }
+    },
+    "h1": {
+      "occupant": {
+        "color": "white",
+        "type": "rook"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "a2": {
+      "occupant": {
+        "color": "white",
+        "type": "pawn"
+      },
+      "attackers": {
+        "white": {
+          "L0": [
+            0
+          ],
+          "L1": {
+            "legal": [
+              0
+            ],
+            "excluded": []
+          },
+          "L2": [
+            1
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 5
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 5
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 5
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 5
+          }
+        }
+      }
+    },
+    "b2": {
+      "occupant": {
+        "color": "white",
+        "type": "pawn"
+      },
+      "attackers": {
+        "white": {
+          "L0": [
+            5
+          ],
+          "L1": {
+            "legal": [
+              5
+            ],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 3
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 3
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 3
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 3
+          }
+        }
+      }
+    },
+    "c2": {
+      "occupant": {
+        "color": "white",
+        "type": "pawn"
+      },
+      "attackers": {
+        "white": {
+          "L0": [
+            8
+          ],
+          "L1": {
+            "legal": [
+              8
+            ],
+            "excluded": []
+          },
+          "L2": [
+            0
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        }
+      }
+    },
+    "d2": {
+      "occupant": {
+        "color": "white",
+        "type": "pawn"
+      },
+      "attackers": {
+        "white": {
+          "L0": [
+            4,
+            6,
+            9,
+            13
+          ],
+          "L1": {
+            "legal": [
+              4,
+              6,
+              9,
+              13
+            ],
+            "excluded": []
+          },
+          "L2": [
+            2
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 4,
+            "value": 15
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 4,
+            "value": 15
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 4,
+            "value": 15
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 4,
+            "value": 15
+          }
+        }
+      }
+    },
+    "e2": {
+      "occupant": {
+        "color": "white",
+        "type": "pawn"
+      },
+      "attackers": {
+        "white": {
+          "L0": [
+            11,
+            14,
+            17,
+            19
+          ],
+          "L1": {
+            "legal": [
+              11,
+              14,
+              17,
+              19
+            ],
+            "excluded": []
+          },
+          "L2": [
+            1
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 4,
+            "value": 15
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 4,
+            "value": 15
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 4,
+            "value": 15
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 4,
+            "value": 15
+          }
+        }
+      }
+    },
+    "f2": {
+      "occupant": {
+        "color": "white",
+        "type": "pawn"
+      },
+      "attackers": {
+        "white": {
+          "L0": [
+            16
+          ],
+          "L1": {
+            "legal": [
+              16
+            ],
+            "excluded": []
+          },
+          "L2": [
+            3
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 0
+          }
+        }
+      }
+    },
+    "g2": {
+      "occupant": {
+        "color": "white",
+        "type": "pawn"
+      },
+      "attackers": {
+        "white": {
+          "L0": [
+            18
+          ],
+          "L1": {
+            "legal": [
+              18
+            ],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 3
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 3
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 3
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 3
+          }
+        }
+      }
+    },
+    "h2": {
+      "occupant": {
+        "color": "white",
+        "type": "pawn"
+      },
+      "attackers": {
+        "white": {
+          "L0": [
+            23
+          ],
+          "L1": {
+            "legal": [
+              23
+            ],
+            "excluded": []
+          },
+          "L2": [
+            2
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 5
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 5
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 5
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 5
+          }
+        }
+      }
+    },
+    "a3": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            2,
+            25
+          ],
+          "L1": {
+            "legal": [
+              2,
+              25
+            ],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 2,
+            "value": 4
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 4
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 2,
+            "value": 4
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 4
+          }
+        }
+      }
+    },
+    "b3": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            24,
+            27
+          ],
+          "L1": {
+            "legal": [
+              24,
+              27
+            ],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 2,
+            "value": 2
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 2
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 2,
+            "value": 2
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 2
+          }
+        }
+      }
+    },
+    "c3": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            3,
+            26,
+            29
+          ],
+          "L1": {
+            "legal": [
+              3,
+              26,
+              29
+            ],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 3,
+            "value": 5
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 3,
+            "value": 5
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 3,
+            "value": 5
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 3,
+            "value": 5
+          }
+        }
+      }
+    },
+    "d3": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            28,
+            31
+          ],
+          "L1": {
+            "legal": [
+              28,
+              31
+            ],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 2,
+            "value": 2
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 2
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 2,
+            "value": 2
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 2
+          }
+        }
+      }
+    },
+    "e3": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            30,
+            33
+          ],
+          "L1": {
+            "legal": [
+              30,
+              33
+            ],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 2,
+            "value": 2
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 2
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 2,
+            "value": 2
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 2
+          }
+        }
+      }
+    },
+    "f3": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            20,
+            32,
+            35
+          ],
+          "L1": {
+            "legal": [
+              20,
+              32,
+              35
+            ],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 3,
+            "value": 5
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 3,
+            "value": 5
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 3,
+            "value": 5
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 3,
+            "value": 5
+          }
+        }
+      }
+    },
+    "g3": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            34,
+            37
+          ],
+          "L1": {
+            "legal": [
+              34,
+              37
+            ],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 2,
+            "value": 2
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 2
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 2,
+            "value": 2
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 2
+          }
+        }
+      }
+    },
+    "h3": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            21,
+            36
+          ],
+          "L1": {
+            "legal": [
+              21,
+              36
+            ],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 2,
+            "value": 4
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 4
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 2,
+            "value": 4
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 4
+          }
+        }
+      }
+    },
+    "a4": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            1,
+            6
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            22
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "b4": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            4,
+            8
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            20,
+            24,
+            36,
+            37
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "c4": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            0,
+            6,
+            10
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            22,
+            26
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "d4": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            2,
+            8,
+            12
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            24,
+            28,
+            37
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "e4": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            1,
+            10,
+            14
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            26,
+            30,
+            38
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "f4": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            3,
+            12,
+            16
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            28,
+            32
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "g4": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            14,
+            18
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            30,
+            34,
+            38,
+            39
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "h4": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            2,
+            16
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            32
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "a5": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            7
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            23,
+            37
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "b5": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            0,
+            1,
+            5,
+            9
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            21,
+            25
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "c5": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            7,
+            11
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            23,
+            27,
+            36
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "d5": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            1,
+            9,
+            13
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            25,
+            29,
+            38
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "e5": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            2,
+            11,
+            15
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            27,
+            31,
+            37
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "f5": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            13,
+            17
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            29,
+            33,
+            39
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "g5": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            2,
+            3,
+            15,
+            19
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            31,
+            35
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "h5": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            17
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            33,
+            38
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "a6": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            39,
+            54
+          ],
+          "L1": {
+            "legal": [
+              39,
+              54
+            ],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 2,
+            "value": 4
+          },
+          "net": {
+            "count": -2,
+            "value": -4
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 2,
+            "value": 4
+          },
+          "net": {
+            "count": -2,
+            "value": -4
+          }
+        }
+      }
+    },
+    "b6": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            38,
+            41
+          ],
+          "L1": {
+            "legal": [
+              38,
+              41
+            ],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 2,
+            "value": 2
+          },
+          "net": {
+            "count": -2,
+            "value": -2
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 2,
+            "value": 2
+          },
+          "net": {
+            "count": -2,
+            "value": -2
+          }
+        }
+      }
+    },
+    "c6": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            40,
+            43,
+            55
+          ],
+          "L1": {
+            "legal": [
+              40,
+              43,
+              55
+            ],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 3,
+            "value": 5
+          },
+          "net": {
+            "count": -3,
+            "value": -5
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 3,
+            "value": 5
+          },
+          "net": {
+            "count": -3,
+            "value": -5
+          }
+        }
+      }
+    },
+    "d6": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            42,
+            45
+          ],
+          "L1": {
+            "legal": [
+              42,
+              45
+            ],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 2,
+            "value": 2
+          },
+          "net": {
+            "count": -2,
+            "value": -2
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 2,
+            "value": 2
+          },
+          "net": {
+            "count": -2,
+            "value": -2
+          }
+        }
+      }
+    },
+    "e6": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            44,
+            47
+          ],
+          "L1": {
+            "legal": [
+              44,
+              47
+            ],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 2,
+            "value": 2
+          },
+          "net": {
+            "count": -2,
+            "value": -2
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 2,
+            "value": 2
+          },
+          "net": {
+            "count": -2,
+            "value": -2
+          }
+        }
+      }
+    },
+    "f6": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            46,
+            49,
+            72
+          ],
+          "L1": {
+            "legal": [
+              46,
+              49,
+              72
+            ],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 3,
+            "value": 5
+          },
+          "net": {
+            "count": -3,
+            "value": -5
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 3,
+            "value": 5
+          },
+          "net": {
+            "count": -3,
+            "value": -5
+          }
+        }
+      }
+    },
+    "g6": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            48,
+            51
+          ],
+          "L1": {
+            "legal": [
+              48,
+              51
+            ],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 2,
+            "value": 2
+          },
+          "net": {
+            "count": -2,
+            "value": -2
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 2,
+            "value": 2
+          },
+          "net": {
+            "count": -2,
+            "value": -2
+          }
+        }
+      }
+    },
+    "h6": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            50,
+            73
+          ],
+          "L1": {
+            "legal": [
+              50,
+              73
+            ],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 2,
+            "value": 4
+          },
+          "net": {
+            "count": -2,
+            "value": -4
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 2,
+            "value": 4
+          },
+          "net": {
+            "count": -2,
+            "value": -4
+          }
+        }
+      }
+    },
+    "a7": {
+      "occupant": {
+        "color": "black",
+        "type": "pawn"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            52
+          ],
+          "L1": {
+            "legal": [
+              52
+            ],
+            "excluded": []
+          },
+          "L2": [
+            37
+          ]
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 5
+          },
+          "net": {
+            "count": -1,
+            "value": -5
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 5
+          },
+          "net": {
+            "count": -1,
+            "value": -5
+          }
+        }
+      }
+    },
+    "b7": {
+      "occupant": {
+        "color": "black",
+        "type": "pawn"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            57
+          ],
+          "L1": {
+            "legal": [
+              57
+            ],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 3
+          },
+          "net": {
+            "count": -1,
+            "value": -3
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 3
+          },
+          "net": {
+            "count": -1,
+            "value": -3
+          }
+        }
+      }
+    },
+    "c7": {
+      "occupant": {
+        "color": "black",
+        "type": "pawn"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            59
+          ],
+          "L1": {
+            "legal": [
+              59
+            ],
+            "excluded": []
+          },
+          "L2": [
+            36
+          ]
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 9
+          },
+          "net": {
+            "count": -1,
+            "value": -9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 9
+          },
+          "net": {
+            "count": -1,
+            "value": -9
+          }
+        }
+      }
+    },
+    "d7": {
+      "occupant": {
+        "color": "black",
+        "type": "pawn"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            56,
+            58,
+            61,
+            64
+          ],
+          "L1": {
+            "legal": [
+              56,
+              58,
+              61,
+              64
+            ],
+            "excluded": []
+          },
+          "L2": [
+            38
+          ]
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 4,
+            "value": 15
+          },
+          "net": {
+            "count": -4,
+            "value": -15
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 4,
+            "value": 15
+          },
+          "net": {
+            "count": -4,
+            "value": -15
+          }
+        }
+      }
+    },
+    "e7": {
+      "occupant": {
+        "color": "black",
+        "type": "pawn"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            62,
+            66,
+            69,
+            71
+          ],
+          "L1": {
+            "legal": [
+              62,
+              66,
+              69,
+              71
+            ],
+            "excluded": []
+          },
+          "L2": [
+            37
+          ]
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 4,
+            "value": 15
+          },
+          "net": {
+            "count": -4,
+            "value": -15
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 4,
+            "value": 15
+          },
+          "net": {
+            "count": -4,
+            "value": -15
+          }
+        }
+      }
+    },
+    "f7": {
+      "occupant": {
+        "color": "black",
+        "type": "pawn"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            67
+          ],
+          "L1": {
+            "legal": [
+              67
+            ],
+            "excluded": []
+          },
+          "L2": [
+            39
+          ]
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 0
+          },
+          "net": {
+            "count": -1,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 0
+          },
+          "net": {
+            "count": -1,
+            "value": 0
+          }
+        }
+      }
+    },
+    "g7": {
+      "occupant": {
+        "color": "black",
+        "type": "pawn"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            70
+          ],
+          "L1": {
+            "legal": [
+              70
+            ],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 3
+          },
+          "net": {
+            "count": -1,
+            "value": -3
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 3
+          },
+          "net": {
+            "count": -1,
+            "value": -3
+          }
+        }
+      }
+    },
+    "h7": {
+      "occupant": {
+        "color": "black",
+        "type": "pawn"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            75
+          ],
+          "L1": {
+            "legal": [
+              75
+            ],
+            "excluded": []
+          },
+          "L2": [
+            38
+          ]
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 5
+          },
+          "net": {
+            "count": -1,
+            "value": -5
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 5
+          },
+          "net": {
+            "count": -1,
+            "value": -5
+          }
+        }
+      }
+    },
+    "a8": {
+      "occupant": {
+        "color": "black",
+        "type": "rook"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "b8": {
+      "occupant": {
+        "color": "black",
+        "type": "knight"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            53
+          ],
+          "L1": {
+            "legal": [
+              53
+            ],
+            "excluded": []
+          },
+          "L2": [
+            36,
+            37
+          ]
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 5
+          },
+          "net": {
+            "count": -1,
+            "value": -5
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 5
+          },
+          "net": {
+            "count": -1,
+            "value": -5
+          }
+        }
+      }
+    },
+    "c8": {
+      "occupant": {
+        "color": "black",
+        "type": "bishop"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            60
+          ],
+          "L1": {
+            "legal": [
+              60
+            ],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 9
+          },
+          "net": {
+            "count": -1,
+            "value": -9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 9
+          },
+          "net": {
+            "count": -1,
+            "value": -9
+          }
+        }
+      }
+    },
+    "d8": {
+      "occupant": {
+        "color": "black",
+        "type": "queen"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            65
+          ],
+          "L1": {
+            "legal": [
+              65
+            ],
+            "excluded": []
+          },
+          "L2": [
+            37
+          ]
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 0
+          },
+          "net": {
+            "count": -1,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 0
+          },
+          "net": {
+            "count": -1,
+            "value": 0
+          }
+        }
+      }
+    },
+    "e8": {
+      "occupant": {
+        "color": "black",
+        "type": "king"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            63
+          ],
+          "L1": {
+            "legal": [
+              63
+            ],
+            "excluded": []
+          },
+          "L2": [
+            38
+          ]
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 9
+          },
+          "net": {
+            "count": -1,
+            "value": -9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 9
+          },
+          "net": {
+            "count": -1,
+            "value": -9
+          }
+        }
+      }
+    },
+    "f8": {
+      "occupant": {
+        "color": "black",
+        "type": "bishop"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            68
+          ],
+          "L1": {
+            "legal": [
+              68
+            ],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 0
+          },
+          "net": {
+            "count": -1,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 0
+          },
+          "net": {
+            "count": -1,
+            "value": 0
+          }
+        }
+      }
+    },
+    "g8": {
+      "occupant": {
+        "color": "black",
+        "type": "knight"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [
+            74
+          ],
+          "L1": {
+            "legal": [
+              74
+            ],
+            "excluded": []
+          },
+          "L2": [
+            38,
+            39
+          ]
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 5
+          },
+          "net": {
+            "count": -1,
+            "value": -5
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 5
+          },
+          "net": {
+            "count": -1,
+            "value": -5
+          }
+        }
+      }
+    },
+    "h8": {
+      "occupant": {
+        "color": "black",
+        "type": "rook"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    }
+  }
+}

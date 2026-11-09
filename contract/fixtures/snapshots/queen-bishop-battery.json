@@ -1,0 +1,6215 @@
+{
+  "contractVersion": "0.3.0",
+  "configuration": {
+    "key": "173b2bff4fbe0f016be9e4b79850966911d018b03a40a7f0f7de65efd15b4ba4",
+    "keyAlgorithm": "sha256-hex",
+    "canonical": "6k1/6p1/8/8/8/2B5/1Q6/4K3 - -",
+    "placement": "6k1/6p1/8/8/8/2B5/1Q6/4K3",
+    "castling": {
+      "white": {
+        "kingside": false,
+        "queenside": false
+      },
+      "black": {
+        "kingside": false,
+        "queenside": false
+      }
+    },
+    "enPassant": null
+  },
+  "valuationScale": {
+    "pawn": 1,
+    "knight": 3,
+    "bishop": 3,
+    "rook": 5,
+    "queen": 9,
+    "king": 0
+  },
+  "sides": {
+    "white": {
+      "kingSquare": "e1",
+      "inCheck": false,
+      "checkers": [],
+      "status": "normal",
+      "legalMoveCount": 29
+    },
+    "black": {
+      "kingSquare": "g8",
+      "inCheck": false,
+      "checkers": [],
+      "status": "normal",
+      "legalMoveCount": 6
+    }
+  },
+  "pieces": {
+    "e1": {
+      "color": "white",
+      "type": "king",
+      "attacks": {
+        "L0": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "L1": {
+          "legal": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          33
+        ],
+        "L1": {
+          "legal": [
+            33
+          ],
+          "excluded": []
+        },
+        "L2": [
+          5,
+          8,
+          15,
+          17,
+          18,
+          19,
+          22,
+          23,
+          24
+        ]
+      },
+      "lookaheads": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 5,
+      "specialMoves": {
+        "castleKingside": {
+          "available": false,
+          "target": "g1",
+          "reason": {
+            "code": "no_right",
+            "text": "The white king has no right to castle kingside. Castling (the king moving two squares towards a rook, which jumps over it) is allowed only while neither the king nor that rook has ever moved."
+          }
+        },
+        "castleQueenside": {
+          "available": false,
+          "target": "c1",
+          "reason": {
+            "code": "no_right",
+            "text": "The white king has no right to castle queenside. Castling (the king moving two squares towards a rook, which jumps over it) is allowed only while neither the king nor that rook has ever moved."
+          }
+        }
+      }
+    },
+    "b2": {
+      "color": "white",
+      "type": "queen",
+      "attacks": {
+        "L0": [
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26
+        ],
+        "L1": {
+          "legal": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          17
+        ],
+        "L1": {
+          "legal": [
+            17
+          ],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          29
+        ],
+        "L1": {
+          "legal": [
+            29
+          ],
+          "excluded": []
+        },
+        "L2": [
+          25,
+          26,
+          27,
+          28
+        ]
+      },
+      "lookaheads": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 17,
+      "specialMoves": {}
+    },
+    "c3": {
+      "color": "white",
+      "type": "bishop",
+      "attacks": {
+        "L0": [
+          27,
+          28,
+          30,
+          31,
+          32,
+          34,
+          35,
+          36
+        ],
+        "L1": {
+          "legal": [
+            27,
+            28,
+            30,
+            31,
+            32,
+            34,
+            35,
+            36
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          29,
+          33
+        ],
+        "L1": {
+          "legal": [
+            29,
+            33
+          ],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "defendedBy": {
+        "L0": [
+          17
+        ],
+        "L1": {
+          "legal": [
+            17
+          ],
+          "excluded": []
+        },
+        "L2": [
+          1,
+          5,
+          7,
+          9,
+          10,
+          15,
+          16,
+          17
+        ]
+      },
+      "lookaheads": [
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 7,
+      "specialMoves": {}
+    },
+    "g7": {
+      "color": "black",
+      "type": "pawn",
+      "attacks": {
+        "L0": [
+          37,
+          38
+        ],
+        "L1": {
+          "legal": [
+            37,
+            38
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        }
+      },
+      "attackedBy": {
+        "L0": [
+          25,
+          36
+        ],
+        "L1": {
+          "legal": [
+            25,
+            36
+          ],
+          "excluded": []
+        },
+        "L2": [
+          13,
+          20,
+          25,
+          26,
+          27
+        ]
+      },
+      "defendedBy": {
+        "L0": [
+          41
+        ],
+        "L1": {
+          "legal": [],
+          "excluded": [
+            41
+          ]
+        },
+        "L2": [
+          31,
+          32,
+          33,
+          34
+        ]
+      },
+      "lookaheads": [
+        29,
+        30
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 2,
+      "specialMoves": {
+        "enPassant": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "no_target",
+            "text": "The black pawn on g7 has no en passant capture: en passant (capturing a pawn that has just moved two squares as if it had moved one) is only possible right after an enemy pawn makes that two-square move and lands beside this one."
+          }
+        },
+        "promotion": {
+          "available": false,
+          "target": null,
+          "reason": {
+            "code": "not_on_rank",
+            "text": "The black pawn on g7 is not one step from promotion: a black pawn promotes on reaching rank 1, so it must first stand on rank 2. (Promotion: a pawn reaching the far end of the board is replaced by a queen, rook, bishop or knight of its own colour.)"
+          }
+        }
+      }
+    },
+    "g8": {
+      "color": "black",
+      "type": "king",
+      "attacks": {
+        "L0": [
+          39,
+          40,
+          42,
+          43
+        ],
+        "L1": {
+          "legal": [
+            39,
+            40,
+            42,
+            43
+          ],
+          "excluded": []
+        }
+      },
+      "defends": {
+        "L0": [
+          41
+        ],
+        "L1": {
+          "legal": [],
+          "excluded": [
+            41
+          ]
+        }
+      },
+      "attackedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": [
+          6,
+          9,
+          14
+        ]
+      },
+      "defendedBy": {
+        "L0": [],
+        "L1": {
+          "legal": [],
+          "excluded": []
+        },
+        "L2": []
+      },
+      "lookaheads": [
+        31,
+        32,
+        33,
+        34
+      ],
+      "constraints": {
+        "pinned": null,
+        "inCheck": null,
+        "noLegalMoves": null
+      },
+      "mobility": 4,
+      "specialMoves": {
+        "castleKingside": {
+          "available": false,
+          "target": "g8",
+          "reason": {
+            "code": "no_right",
+            "text": "The black king has no right to castle kingside. Castling (the king moving two squares towards a rook, which jumps over it) is allowed only while neither the king nor that rook has ever moved."
+          }
+        },
+        "castleQueenside": {
+          "available": false,
+          "target": "c8",
+          "reason": {
+            "code": "no_right",
+            "text": "The black king has no right to castle queenside. Castling (the king moving two squares towards a rook, which jumps over it) is allowed only while neither the king nor that rook has ever moved."
+          }
+        }
+      }
+    }
+  },
+  "relations": {
+    "edges": [
+      {
+        "from": "e1",
+        "to": "d1",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "e1",
+        "to": "d2",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "e1",
+        "to": "e2",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "e1",
+        "to": "f1",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "e1",
+        "to": "f2",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "a1",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "a2",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "a3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "b1",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "b3",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "b4",
+        "role": "attack",
+        "kind": "direct",
+        "path": [
+          "b3"
+        ],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "b5",
+        "role": "attack",
+        "kind": "direct",
+        "path": [
+          "b3",
+          "b4"
+        ],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "b6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [
+          "b3",
+          "b4",
+          "b5"
+        ],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "b7",
+        "role": "attack",
+        "kind": "direct",
+        "path": [
+          "b3",
+          "b4",
+          "b5",
+          "b6"
+        ],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "b8",
+        "role": "attack",
+        "kind": "direct",
+        "path": [
+          "b3",
+          "b4",
+          "b5",
+          "b6",
+          "b7"
+        ],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "c1",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "c2",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "c3",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "d2",
+        "role": "attack",
+        "kind": "direct",
+        "path": [
+          "c2"
+        ],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "d4",
+        "role": "attack",
+        "kind": "battery",
+        "path": [
+          "c3"
+        ],
+        "through": "c3",
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "e2",
+        "role": "attack",
+        "kind": "direct",
+        "path": [
+          "c2",
+          "d2"
+        ],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "e5",
+        "role": "attack",
+        "kind": "battery",
+        "path": [
+          "c3",
+          "d4"
+        ],
+        "through": "c3",
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "f2",
+        "role": "attack",
+        "kind": "direct",
+        "path": [
+          "c2",
+          "d2",
+          "e2"
+        ],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "f6",
+        "role": "attack",
+        "kind": "battery",
+        "path": [
+          "c3",
+          "d4",
+          "e5"
+        ],
+        "through": "c3",
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "g2",
+        "role": "attack",
+        "kind": "direct",
+        "path": [
+          "c2",
+          "d2",
+          "e2",
+          "f2"
+        ],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "g7",
+        "role": "attack",
+        "kind": "battery",
+        "path": [
+          "c3",
+          "d4",
+          "e5",
+          "f6"
+        ],
+        "through": "c3",
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "b2",
+        "to": "h2",
+        "role": "attack",
+        "kind": "direct",
+        "path": [
+          "c2",
+          "d2",
+          "e2",
+          "f2",
+          "g2"
+        ],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "c3",
+        "to": "a1",
+        "role": "attack",
+        "kind": "battery",
+        "path": [
+          "b2"
+        ],
+        "through": "b2",
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "c3",
+        "to": "a5",
+        "role": "attack",
+        "kind": "direct",
+        "path": [
+          "b4"
+        ],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "c3",
+        "to": "b2",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "c3",
+        "to": "b4",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "c3",
+        "to": "d2",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "c3",
+        "to": "d4",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "c3",
+        "to": "e1",
+        "role": "defence",
+        "kind": "direct",
+        "path": [
+          "d2"
+        ],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "c3",
+        "to": "e5",
+        "role": "attack",
+        "kind": "direct",
+        "path": [
+          "d4"
+        ],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "c3",
+        "to": "f6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [
+          "d4",
+          "e5"
+        ],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "c3",
+        "to": "g7",
+        "role": "attack",
+        "kind": "direct",
+        "path": [
+          "d4",
+          "e5",
+          "f6"
+        ],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "g7",
+        "to": "f6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "g7",
+        "to": "h6",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "g8",
+        "to": "f7",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "g8",
+        "to": "f8",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "g8",
+        "to": "g7",
+        "role": "defence",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": false,
+          "reason": {
+            "code": "king_into_attack",
+            "text": "The black king on g8 cannot recapture on g7: if the black pawn on g7 were taken, the king would be attacked there by the white bishop on c3 and the white queen on b2 (through the white bishop on c3)."
+          }
+        }
+      },
+      {
+        "from": "g8",
+        "to": "h7",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      },
+      {
+        "from": "g8",
+        "to": "h8",
+        "role": "attack",
+        "kind": "direct",
+        "path": [],
+        "through": null,
+        "L1": {
+          "legal": true,
+          "reason": null
+        }
+      }
+    ],
+    "lookaheads": [
+      {
+        "piece": "e1",
+        "move": {
+          "from": "e1",
+          "to": "d1",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "c1",
+          "c2",
+          "d2",
+          "e1",
+          "e2"
+        ]
+      },
+      {
+        "piece": "e1",
+        "move": {
+          "from": "e1",
+          "to": "d2",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "c1",
+          "c2",
+          "c3",
+          "d1",
+          "d3",
+          "e1",
+          "e2",
+          "e3"
+        ]
+      },
+      {
+        "piece": "e1",
+        "move": {
+          "from": "e1",
+          "to": "e2",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "d1",
+          "d2",
+          "d3",
+          "e1",
+          "e3",
+          "f1",
+          "f2",
+          "f3"
+        ]
+      },
+      {
+        "piece": "e1",
+        "move": {
+          "from": "e1",
+          "to": "f1",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "e1",
+          "e2",
+          "f2",
+          "g1",
+          "g2"
+        ]
+      },
+      {
+        "piece": "e1",
+        "move": {
+          "from": "e1",
+          "to": "f2",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "e1",
+          "e2",
+          "e3",
+          "f1",
+          "f3",
+          "g1",
+          "g2",
+          "g3"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "a1",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a2",
+          "a3",
+          "a4",
+          "a5",
+          "a6",
+          "a7",
+          "a8",
+          "b1",
+          "b2",
+          "c1",
+          "c3",
+          "d1",
+          "e1"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "a2",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a1",
+          "a3",
+          "a4",
+          "a5",
+          "a6",
+          "a7",
+          "a8",
+          "b1",
+          "b2",
+          "b3",
+          "c2",
+          "c4",
+          "d2",
+          "d5",
+          "e2",
+          "e6",
+          "f2",
+          "f7",
+          "g2",
+          "g8",
+          "h2"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "a3",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a1",
+          "a2",
+          "a4",
+          "a5",
+          "a6",
+          "a7",
+          "a8",
+          "b2",
+          "b3",
+          "b4",
+          "c1",
+          "c3",
+          "c5",
+          "d6",
+          "e7",
+          "f8"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "b1",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a1",
+          "a2",
+          "b2",
+          "b3",
+          "b4",
+          "b5",
+          "b6",
+          "b7",
+          "b8",
+          "c1",
+          "c2",
+          "d1",
+          "d3",
+          "e1",
+          "e4",
+          "f5",
+          "g6",
+          "h7"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "b3",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a2",
+          "a3",
+          "a4",
+          "b1",
+          "b2",
+          "b4",
+          "b5",
+          "b6",
+          "b7",
+          "b8",
+          "c2",
+          "c3",
+          "c4",
+          "d1",
+          "d5",
+          "e6",
+          "f7",
+          "g8"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "b4",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a3",
+          "a4",
+          "a5",
+          "b1",
+          "b2",
+          "b3",
+          "b5",
+          "b6",
+          "b7",
+          "b8",
+          "c3",
+          "c4",
+          "c5",
+          "d4",
+          "d6",
+          "e4",
+          "e7",
+          "f4",
+          "f8",
+          "g4",
+          "h4"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "b5",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a4",
+          "a5",
+          "a6",
+          "b1",
+          "b2",
+          "b3",
+          "b4",
+          "b6",
+          "b7",
+          "b8",
+          "c4",
+          "c5",
+          "c6",
+          "d3",
+          "d5",
+          "d7",
+          "e2",
+          "e5",
+          "e8",
+          "f1",
+          "f5",
+          "g5",
+          "h5"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "b6",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a5",
+          "a6",
+          "a7",
+          "b1",
+          "b2",
+          "b3",
+          "b4",
+          "b5",
+          "b7",
+          "b8",
+          "c5",
+          "c6",
+          "c7",
+          "d4",
+          "d6",
+          "d8",
+          "e3",
+          "e6",
+          "f2",
+          "f6",
+          "g1",
+          "g6",
+          "h6"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "b7",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a6",
+          "a7",
+          "a8",
+          "b1",
+          "b2",
+          "b3",
+          "b4",
+          "b5",
+          "b6",
+          "b8",
+          "c6",
+          "c7",
+          "c8",
+          "d5",
+          "d7",
+          "e4",
+          "e7",
+          "f3",
+          "f7",
+          "g2",
+          "g7",
+          "h1"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "b8",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a7",
+          "a8",
+          "b1",
+          "b2",
+          "b3",
+          "b4",
+          "b5",
+          "b6",
+          "b7",
+          "c7",
+          "c8",
+          "d6",
+          "d8",
+          "e5",
+          "e8",
+          "f4",
+          "f8",
+          "g3",
+          "g8",
+          "h2"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "c1",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a1",
+          "a3",
+          "b1",
+          "b2",
+          "c2",
+          "c3",
+          "d1",
+          "d2",
+          "e1",
+          "e3",
+          "f4",
+          "g5",
+          "h6"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "c2",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a2",
+          "a4",
+          "b1",
+          "b2",
+          "b3",
+          "c1",
+          "c3",
+          "d1",
+          "d2",
+          "d3",
+          "e2",
+          "e4",
+          "f2",
+          "f5",
+          "g2",
+          "g6",
+          "h2",
+          "h7"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "d2",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a2",
+          "b2",
+          "c1",
+          "c2",
+          "c3",
+          "d1",
+          "d3",
+          "d4",
+          "d5",
+          "d6",
+          "d7",
+          "d8",
+          "e1",
+          "e2",
+          "e3",
+          "f2",
+          "f4",
+          "g2",
+          "g5",
+          "h2",
+          "h6"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "e2",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a2",
+          "a6",
+          "b2",
+          "b5",
+          "c2",
+          "c4",
+          "d1",
+          "d2",
+          "d3",
+          "e1",
+          "e3",
+          "e4",
+          "e5",
+          "e6",
+          "e7",
+          "e8",
+          "f1",
+          "f2",
+          "f3",
+          "g2",
+          "g4",
+          "h2",
+          "h5"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "f2",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a2",
+          "a7",
+          "b2",
+          "b6",
+          "c2",
+          "c5",
+          "d2",
+          "d4",
+          "e1",
+          "e2",
+          "e3",
+          "f1",
+          "f3",
+          "f4",
+          "f5",
+          "f6",
+          "f7",
+          "f8",
+          "g1",
+          "g2",
+          "g3",
+          "h2",
+          "h4"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "g2",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a2",
+          "a8",
+          "b2",
+          "b7",
+          "c2",
+          "c6",
+          "d2",
+          "d5",
+          "e2",
+          "e4",
+          "f1",
+          "f2",
+          "f3",
+          "g1",
+          "g3",
+          "g4",
+          "g5",
+          "g6",
+          "g7",
+          "h1",
+          "h2",
+          "h3"
+        ]
+      },
+      {
+        "piece": "b2",
+        "move": {
+          "from": "b2",
+          "to": "h2",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a2",
+          "b2",
+          "b8",
+          "c2",
+          "c7",
+          "d2",
+          "d6",
+          "e2",
+          "e5",
+          "f2",
+          "f4",
+          "g1",
+          "g2",
+          "g3",
+          "h1",
+          "h3",
+          "h4",
+          "h5",
+          "h6",
+          "h7",
+          "h8"
+        ]
+      },
+      {
+        "piece": "c3",
+        "move": {
+          "from": "c3",
+          "to": "a5",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "b4",
+          "b6",
+          "c3",
+          "c7",
+          "d2",
+          "d8",
+          "e1"
+        ]
+      },
+      {
+        "piece": "c3",
+        "move": {
+          "from": "c3",
+          "to": "b4",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a3",
+          "a5",
+          "c3",
+          "c5",
+          "d2",
+          "d6",
+          "e1",
+          "e7",
+          "f8"
+        ]
+      },
+      {
+        "piece": "c3",
+        "move": {
+          "from": "c3",
+          "to": "d2",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a5",
+          "b4",
+          "c1",
+          "c3",
+          "e1",
+          "e3",
+          "f4",
+          "g5",
+          "h6"
+        ]
+      },
+      {
+        "piece": "c3",
+        "move": {
+          "from": "c3",
+          "to": "d4",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "a7",
+          "b2",
+          "b6",
+          "c3",
+          "c5",
+          "e3",
+          "e5",
+          "f2",
+          "f6",
+          "g1",
+          "g7"
+        ]
+      },
+      {
+        "piece": "c3",
+        "move": {
+          "from": "c3",
+          "to": "e5",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "b2",
+          "b8",
+          "c3",
+          "c7",
+          "d4",
+          "d6",
+          "f4",
+          "f6",
+          "g3",
+          "g7",
+          "h2"
+        ]
+      },
+      {
+        "piece": "c3",
+        "move": {
+          "from": "c3",
+          "to": "f6",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "b2",
+          "c3",
+          "d4",
+          "d8",
+          "e5",
+          "e7",
+          "g5",
+          "g7",
+          "h4"
+        ]
+      },
+      {
+        "piece": "c3",
+        "move": {
+          "from": "c3",
+          "to": "g7",
+          "kind": "capture",
+          "promotion": null
+        },
+        "attacks": [
+          "b2",
+          "c3",
+          "d4",
+          "e5",
+          "f6",
+          "f8",
+          "h6",
+          "h8"
+        ]
+      },
+      {
+        "piece": "g7",
+        "move": {
+          "from": "g7",
+          "to": "g5",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "f4",
+          "h4"
+        ]
+      },
+      {
+        "piece": "g7",
+        "move": {
+          "from": "g7",
+          "to": "g6",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "f5",
+          "h5"
+        ]
+      },
+      {
+        "piece": "g8",
+        "move": {
+          "from": "g8",
+          "to": "f7",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "e6",
+          "e7",
+          "e8",
+          "f6",
+          "f8",
+          "g6",
+          "g7",
+          "g8"
+        ]
+      },
+      {
+        "piece": "g8",
+        "move": {
+          "from": "g8",
+          "to": "f8",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "e7",
+          "e8",
+          "f7",
+          "g7",
+          "g8"
+        ]
+      },
+      {
+        "piece": "g8",
+        "move": {
+          "from": "g8",
+          "to": "h7",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "g6",
+          "g7",
+          "g8",
+          "h6",
+          "h8"
+        ]
+      },
+      {
+        "piece": "g8",
+        "move": {
+          "from": "g8",
+          "to": "h8",
+          "kind": "normal",
+          "promotion": null
+        },
+        "attacks": [
+          "g7",
+          "g8",
+          "h7"
+        ]
+      }
+    ],
+    "pins": [],
+    "xrays": [],
+    "batteries": [
+      {
+        "front": "c3",
+        "back": "b2",
+        "covered": [
+          "d4",
+          "e5",
+          "f6",
+          "g7"
+        ]
+      },
+      {
+        "front": "b2",
+        "back": "c3",
+        "covered": [
+          "a1"
+        ]
+      }
+    ]
+  },
+  "squares": {
+    "a1": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            5,
+            27
+          ],
+          "L1": {
+            "legal": [
+              5,
+              27
+            ],
+            "excluded": []
+          },
+          "L2": [
+            6,
+            7,
+            8,
+            15
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 2,
+            "value": 12
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 12
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 2,
+            "value": 12
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 12
+          }
+        }
+      }
+    },
+    "b1": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            8
+          ],
+          "L1": {
+            "legal": [
+              8
+            ],
+            "excluded": []
+          },
+          "L2": [
+            5,
+            6,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        }
+      }
+    },
+    "c1": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            15
+          ],
+          "L1": {
+            "legal": [
+              15
+            ],
+            "excluded": []
+          },
+          "L2": [
+            0,
+            1,
+            5,
+            7,
+            8,
+            16,
+            17,
+            24
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        }
+      }
+    },
+    "d1": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            0
+          ],
+          "L1": {
+            "legal": [
+              0
+            ],
+            "excluded": []
+          },
+          "L2": [
+            1,
+            2,
+            5,
+            8,
+            9,
+            15,
+            16,
+            17,
+            18
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 0
+          }
+        }
+      }
+    },
+    "e1": {
+      "occupant": {
+        "color": "white",
+        "type": "king"
+      },
+      "attackers": {
+        "white": {
+          "L0": [
+            33
+          ],
+          "L1": {
+            "legal": [
+              33
+            ],
+            "excluded": []
+          },
+          "L2": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            8,
+            15,
+            17,
+            18,
+            19,
+            22,
+            23,
+            24
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 3
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 3
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 3
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 3
+          }
+        }
+      }
+    },
+    "f1": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            3
+          ],
+          "L1": {
+            "legal": [
+              3
+            ],
+            "excluded": []
+          },
+          "L2": [
+            2,
+            4,
+            11,
+            18,
+            19,
+            20
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 0
+          }
+        }
+      }
+    },
+    "g1": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            3,
+            4,
+            12,
+            19,
+            20,
+            21,
+            25
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "h1": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            13,
+            20,
+            21
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "a2": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            6
+          ],
+          "L1": {
+            "legal": [
+              6
+            ],
+            "excluded": []
+          },
+          "L2": [
+            5,
+            7,
+            8,
+            9,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        }
+      }
+    },
+    "b2": {
+      "occupant": {
+        "color": "white",
+        "type": "queen"
+      },
+      "attackers": {
+        "white": {
+          "L0": [
+            29
+          ],
+          "L1": {
+            "legal": [
+              29
+            ],
+            "excluded": []
+          },
+          "L2": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            25,
+            26,
+            27,
+            28
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 3
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 3
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 3
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 3
+          }
+        }
+      }
+    },
+    "c2": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            16
+          ],
+          "L1": {
+            "legal": [
+              16
+            ],
+            "excluded": []
+          },
+          "L2": [
+            0,
+            1,
+            6,
+            8,
+            9,
+            15,
+            17,
+            18,
+            19,
+            20,
+            21
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        }
+      }
+    },
+    "d2": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            1,
+            18,
+            31
+          ],
+          "L1": {
+            "legal": [
+              1,
+              18,
+              31
+            ],
+            "excluded": []
+          },
+          "L2": [
+            0,
+            2,
+            6,
+            15,
+            16,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 3,
+            "value": 12
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 3,
+            "value": 12
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 3,
+            "value": 12
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 3,
+            "value": 12
+          }
+        }
+      }
+    },
+    "e2": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            2,
+            20
+          ],
+          "L1": {
+            "legal": [
+              2,
+              20
+            ],
+            "excluded": []
+          },
+          "L2": [
+            0,
+            1,
+            3,
+            4,
+            6,
+            11,
+            16,
+            17,
+            19,
+            20,
+            21
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 2,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 2,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 9
+          }
+        }
+      }
+    },
+    "f2": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            4,
+            22
+          ],
+          "L1": {
+            "legal": [
+              4,
+              22
+            ],
+            "excluded": []
+          },
+          "L2": [
+            2,
+            3,
+            6,
+            12,
+            16,
+            17,
+            18,
+            20,
+            21,
+            25
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 2,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 2,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 9
+          }
+        }
+      }
+    },
+    "g2": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            24
+          ],
+          "L1": {
+            "legal": [
+              24
+            ],
+            "excluded": []
+          },
+          "L2": [
+            3,
+            4,
+            6,
+            13,
+            16,
+            17,
+            18,
+            19,
+            21
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        }
+      }
+    },
+    "h2": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            26
+          ],
+          "L1": {
+            "legal": [
+              26
+            ],
+            "excluded": []
+          },
+          "L2": [
+            6,
+            14,
+            16,
+            17,
+            18,
+            19,
+            20,
+            26
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        }
+      }
+    },
+    "a3": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            7
+          ],
+          "L1": {
+            "legal": [
+              7
+            ],
+            "excluded": []
+          },
+          "L2": [
+            5,
+            6,
+            9,
+            10,
+            15,
+            23
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        }
+      }
+    },
+    "b3": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            9
+          ],
+          "L1": {
+            "legal": [
+              9
+            ],
+            "excluded": []
+          },
+          "L2": [
+            6,
+            7,
+            8,
+            10,
+            11,
+            12,
+            13,
+            14,
+            16
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        }
+      }
+    },
+    "c3": {
+      "occupant": {
+        "color": "white",
+        "type": "bishop"
+      },
+      "attackers": {
+        "white": {
+          "L0": [
+            17
+          ],
+          "L1": {
+            "legal": [
+              17
+            ],
+            "excluded": []
+          },
+          "L2": [
+            1,
+            5,
+            7,
+            9,
+            10,
+            15,
+            16,
+            17,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        }
+      }
+    },
+    "d3": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            1,
+            2,
+            8,
+            11,
+            16,
+            17,
+            18
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "e3": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            1,
+            2,
+            4,
+            12,
+            15,
+            17,
+            18,
+            19,
+            24,
+            25
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "f3": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            2,
+            4,
+            13,
+            18,
+            19,
+            20
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "g3": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            4,
+            14,
+            19,
+            20,
+            21,
+            26
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "h3": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            20,
+            21
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "a4": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            5,
+            6,
+            7,
+            9,
+            10,
+            11,
+            16
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "b4": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            10,
+            30
+          ],
+          "L1": {
+            "legal": [
+              10,
+              30
+            ],
+            "excluded": []
+          },
+          "L2": [
+            7,
+            8,
+            9,
+            11,
+            12,
+            13,
+            14,
+            22,
+            24
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 2,
+            "value": 12
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 12
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 2,
+            "value": 12
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 12
+          }
+        }
+      }
+    },
+    "c4": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            6,
+            9,
+            10,
+            11,
+            18
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "d4": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            19,
+            32
+          ],
+          "L1": {
+            "legal": [
+              19,
+              32
+            ],
+            "excluded": []
+          },
+          "L2": [
+            10,
+            12,
+            17,
+            19,
+            26,
+            27,
+            28
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 2,
+            "value": 12
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 12
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 2,
+            "value": 12
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 12
+          }
+        }
+      }
+    },
+    "e4": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            8,
+            10,
+            13,
+            16,
+            18,
+            20
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "f4": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            10,
+            14,
+            15,
+            17,
+            19,
+            21,
+            24,
+            26
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            29
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "g4": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            10,
+            18,
+            20
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "h4": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            10,
+            19,
+            21,
+            27
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            29
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "a5": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            28
+          ],
+          "L1": {
+            "legal": [
+              28
+            ],
+            "excluded": []
+          },
+          "L2": [
+            5,
+            6,
+            7,
+            10,
+            11,
+            12,
+            23,
+            24
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 3
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 3
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 3
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 3
+          }
+        }
+      }
+    },
+    "b5": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            11
+          ],
+          "L1": {
+            "legal": [
+              11
+            ],
+            "excluded": []
+          },
+          "L2": [
+            8,
+            9,
+            10,
+            12,
+            13,
+            14,
+            18
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        }
+      }
+    },
+    "c5": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            7,
+            10,
+            11,
+            12,
+            19,
+            23,
+            25
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "d5": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            6,
+            9,
+            11,
+            13,
+            17,
+            20
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "e5": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            21,
+            34
+          ],
+          "L1": {
+            "legal": [
+              21,
+              34
+            ],
+            "excluded": []
+          },
+          "L2": [
+            11,
+            14,
+            18,
+            21,
+            25,
+            27,
+            28
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 2,
+            "value": 12
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 12
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 2,
+            "value": 12
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 12
+          }
+        }
+      }
+    },
+    "f5": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            8,
+            11,
+            16,
+            19
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            30
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "g5": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            11,
+            15,
+            17,
+            20,
+            24,
+            27
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "h5": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            11,
+            18,
+            21
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            30
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "a6": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            5,
+            6,
+            7,
+            11,
+            12,
+            13,
+            18
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "b6": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            12
+          ],
+          "L1": {
+            "legal": [
+              12
+            ],
+            "excluded": []
+          },
+          "L2": [
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            19,
+            22,
+            25
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        }
+      }
+    },
+    "c6": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            11,
+            12,
+            13,
+            20
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "d6": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            7,
+            10,
+            12,
+            14,
+            17,
+            21,
+            23,
+            26
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "e6": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            6,
+            9,
+            12,
+            18
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            31
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "f6": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            23,
+            35
+          ],
+          "L1": {
+            "legal": [
+              23,
+              35
+            ],
+            "excluded": []
+          },
+          "L2": [
+            12,
+            19,
+            25,
+            26,
+            28
+          ]
+        },
+        "black": {
+          "L0": [
+            37
+          ],
+          "L1": {
+            "legal": [
+              37
+            ],
+            "excluded": []
+          },
+          "L2": [
+            31
+          ]
+        }
+      },
+      "control": {
+        "L0": "contested",
+        "L1": "contested"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 2,
+            "value": 12
+          },
+          "black": {
+            "count": 1,
+            "value": 1
+          },
+          "net": {
+            "count": 1,
+            "value": 11
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 2,
+            "value": 12
+          },
+          "black": {
+            "count": 1,
+            "value": 1
+          },
+          "net": {
+            "count": 1,
+            "value": 11
+          }
+        }
+      }
+    },
+    "g6": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            8,
+            12,
+            16,
+            20
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            31,
+            33
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "h6": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            12,
+            15,
+            17,
+            21,
+            24,
+            28
+          ]
+        },
+        "black": {
+          "L0": [
+            38
+          ],
+          "L1": {
+            "legal": [
+              38
+            ],
+            "excluded": []
+          },
+          "L2": [
+            33
+          ]
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 1
+          },
+          "net": {
+            "count": -1,
+            "value": -1
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 1
+          },
+          "net": {
+            "count": -1,
+            "value": -1
+          }
+        }
+      }
+    },
+    "a7": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            5,
+            6,
+            7,
+            12,
+            13,
+            14,
+            19,
+            25
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "b7": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            13
+          ],
+          "L1": {
+            "legal": [
+              13
+            ],
+            "excluded": []
+          },
+          "L2": [
+            8,
+            9,
+            10,
+            11,
+            12,
+            14,
+            20
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        }
+      }
+    },
+    "c7": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            12,
+            13,
+            14,
+            21,
+            22,
+            26
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "d7": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            11,
+            13,
+            17
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "e7": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            7,
+            10,
+            13,
+            18,
+            23,
+            27
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            31,
+            32
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "f7": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            6,
+            9,
+            13,
+            19
+          ]
+        },
+        "black": {
+          "L0": [
+            39
+          ],
+          "L1": {
+            "legal": [
+              39
+            ],
+            "excluded": []
+          },
+          "L2": [
+            32
+          ]
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 0
+          },
+          "net": {
+            "count": -1,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 0
+          },
+          "net": {
+            "count": -1,
+            "value": 0
+          }
+        }
+      }
+    },
+    "g7": {
+      "occupant": {
+        "color": "black",
+        "type": "pawn"
+      },
+      "attackers": {
+        "white": {
+          "L0": [
+            25,
+            36
+          ],
+          "L1": {
+            "legal": [
+              25,
+              36
+            ],
+            "excluded": []
+          },
+          "L2": [
+            13,
+            20,
+            25,
+            26,
+            27
+          ]
+        },
+        "black": {
+          "L0": [
+            41
+          ],
+          "L1": {
+            "legal": [],
+            "excluded": [
+              41
+            ]
+          },
+          "L2": [
+            31,
+            32,
+            33,
+            34
+          ]
+        }
+      },
+      "control": {
+        "L0": "contested",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 2,
+            "value": 12
+          },
+          "black": {
+            "count": 1,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 12
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 2,
+            "value": 12
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 2,
+            "value": 12
+          }
+        }
+      }
+    },
+    "h7": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            8,
+            16,
+            21
+          ]
+        },
+        "black": {
+          "L0": [
+            42
+          ],
+          "L1": {
+            "legal": [
+              42
+            ],
+            "excluded": []
+          },
+          "L2": [
+            34
+          ]
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 0
+          },
+          "net": {
+            "count": -1,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 0
+          },
+          "net": {
+            "count": -1,
+            "value": 0
+          }
+        }
+      }
+    },
+    "a8": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            5,
+            6,
+            7,
+            13,
+            14,
+            20
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "b8": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [
+            14
+          ],
+          "L1": {
+            "legal": [
+              14
+            ],
+            "excluded": []
+          },
+          "L2": [
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            21,
+            26
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "white",
+        "L1": "white"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 1,
+            "value": 9
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 9
+          }
+        }
+      }
+    },
+    "c8": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            13,
+            14
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "d8": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            12,
+            14,
+            17,
+            22,
+            27
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": []
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "e8": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            11,
+            14,
+            18
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            31,
+            32
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "f8": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            7,
+            10,
+            14,
+            19,
+            23,
+            28
+          ]
+        },
+        "black": {
+          "L0": [
+            40
+          ],
+          "L1": {
+            "legal": [
+              40
+            ],
+            "excluded": []
+          },
+          "L2": [
+            31
+          ]
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 0
+          },
+          "net": {
+            "count": -1,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 0
+          },
+          "net": {
+            "count": -1,
+            "value": 0
+          }
+        }
+      }
+    },
+    "g8": {
+      "occupant": {
+        "color": "black",
+        "type": "king"
+      },
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            6,
+            9,
+            14
+          ]
+        },
+        "black": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            31,
+            32,
+            33,
+            34
+          ]
+        }
+      },
+      "control": {
+        "L0": "none",
+        "L1": "none"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 0,
+            "value": 0
+          },
+          "net": {
+            "count": 0,
+            "value": 0
+          }
+        }
+      }
+    },
+    "h8": {
+      "occupant": null,
+      "attackers": {
+        "white": {
+          "L0": [],
+          "L1": {
+            "legal": [],
+            "excluded": []
+          },
+          "L2": [
+            21,
+            28
+          ]
+        },
+        "black": {
+          "L0": [
+            43
+          ],
+          "L1": {
+            "legal": [
+              43
+            ],
+            "excluded": []
+          },
+          "L2": [
+            33
+          ]
+        }
+      },
+      "control": {
+        "L0": "black",
+        "L1": "black"
+      },
+      "valuation": {
+        "L0": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 0
+          },
+          "net": {
+            "count": -1,
+            "value": 0
+          }
+        },
+        "L1": {
+          "white": {
+            "count": 0,
+            "value": 0
+          },
+          "black": {
+            "count": 1,
+            "value": 0
+          },
+          "net": {
+            "count": -1,
+            "value": 0
+          }
+        }
+      }
+    }
+  }
+}
