@@ -2,7 +2,7 @@
 // scene; this file decides only colours, shapes, sizes and glyphs.
 
 import type { Color, PieceType, Square } from "../contract/index.ts";
-import type { BoardScene, SquareScene, TallyRow } from "../projections/index.ts";
+import type { BoardScene, Readout, SquareScene, TallyRow } from "../projections/index.ts";
 import { el, replaceChildren, svg } from "./dom.ts";
 
 /**
@@ -83,8 +83,7 @@ function renderTallies(rows: readonly TallyRow[]): HTMLElement {
   );
 }
 
-/** One square. `column` is where it sits on the screen, 0 at the left, which decides the side its hover card opens on. */
-function renderSquare(scene: SquareScene, column: number, handlers: BoardHandlers): HTMLElement {
+function renderSquare(scene: SquareScene, handlers: BoardHandlers): HTMLElement {
   const classes = ["square", scene.shade];
   if (scene.selected) classes.push("selected");
   if (scene.hovered) classes.push("hovered");
@@ -108,15 +107,6 @@ function renderSquare(scene: SquareScene, column: number, handlers: BoardHandler
     scene.destination ? el("span", { className: "destination-mark" }) : null,
     renderTallies(scene.tallies),
     el("span", { className: "coordinate" }, scene.square),
-    scene.hover
-      ? el(
-          "div",
-          { className: `hover-card ${column >= 4 ? "to-left" : "to-right"}`, "data-hover-card": "" },
-          ...scene.hover.map((pair) =>
-            el("div", { className: "pair" }, el("span", { className: "label" }, pair.label), el("span", { className: "value" }, pair.value)),
-          ),
-        )
-      : null,
   );
   node.addEventListener("click", () => handlers.onSquareClick(scene.square));
   node.addEventListener("mouseenter", () => handlers.onSquareHover(scene.square));
@@ -125,5 +115,22 @@ function renderSquare(scene: SquareScene, column: number, handlers: BoardHandler
 
 /** Draws the 64 squares into `container`. Every square carries its own name, so the scene's edge labels are not drawn. */
 export function renderBoard(container: HTMLElement, scene: BoardScene, handlers: BoardHandlers): void {
-  replaceChildren(container, ...scene.squares.map((square, index) => renderSquare(square, index % 8, handlers)));
+  replaceChildren(container, ...scene.squares.map((square) => renderSquare(square, handlers)));
+}
+
+/** The readout strip under the board: the figures of the square being read, or a line saying how to read one. */
+export function renderReadout(container: HTMLElement, readout: Readout | null): void {
+  if (!readout) {
+    container.removeAttribute("data-readout-square");
+    replaceChildren(container, el("span", { className: "readout-placeholder" }, "Hover a square, or click one, to read its figures here."));
+    return;
+  }
+  container.dataset["readoutSquare"] = readout.square;
+  replaceChildren(
+    container,
+    el("span", { className: "readout-heading" }, readout.heading),
+    ...readout.pairs.map((pair) =>
+      el("span", { className: "readout-pair" }, `${pair.label} `, el("span", { className: "value" }, pair.value)),
+    ),
+  );
 }

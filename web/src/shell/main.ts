@@ -37,7 +37,7 @@ import {
 } from "../record/game-record.ts";
 import { createPositionCache } from "./cache.ts";
 import { el, replaceChildren } from "./dom.ts";
-import { markNode, renderBoard } from "./render-board.ts";
+import { markNode, renderBoard, renderReadout } from "./render-board.ts";
 import { renderPanel } from "./render-panels.ts";
 import "./fonts.ts";
 
@@ -128,6 +128,7 @@ async function start(): Promise<void> {
   const flipButton = el("button", { type: "button", id: "flip-board" }, "Flip board");
   const boardNode = el("div", { id: "board", role: "grid", "aria-label": "Board" });
   const boardFrame = el("div", { id: "board-frame" }, boardNode);
+  const readoutStrip = el("div", { id: "readout", role: "status", "aria-label": "Figures of the square being read" });
   const navigation = el("div", { id: "navigation" });
   const gameLine = el("p", { id: "game-headers" });
   const moveList = el("ol", { id: "move-list" });
@@ -163,6 +164,7 @@ async function start(): Promise<void> {
         { id: "board-column" },
         el("div", { id: "toolbar" }, layerSelector, flipButton, layerNote),
         boardFrame,
+        readoutStrip,
         statusLine,
         legend,
       ),
@@ -390,17 +392,15 @@ async function start(): Promise<void> {
     const { state } = currentState();
     document.documentElement.dataset["analysedPositions"] = String(cache.size);
     const toMove = sideToMove(currentFen(shell.record));
-    renderBoard(
-      boardNode,
-      boardScene(state, {
-        layer: shell.layer,
-        selected: shell.selected,
-        hovered: shell.hovered,
-        sideToMove: toMove,
-        orientation: shell.orientation,
-      }),
-      { onSquareClick, onSquareHover },
-    );
+    const board = boardScene(state, {
+      layer: shell.layer,
+      selected: shell.selected,
+      hovered: shell.hovered,
+      sideToMove: toMove,
+      orientation: shell.orientation,
+    });
+    renderBoard(boardNode, board, { onSquareClick, onSquareHover });
+    renderReadout(readoutStrip, board.readout);
     renderControls(state, toMove);
     renderPanel(
       piecePanelNode,

@@ -103,9 +103,9 @@ test("flipping draws the board from black's side and changes nothing about the s
   // Nothing was analysed again.
   await expect(page.locator("html")).toHaveAttribute("data-analysed-positions", analysedBefore ?? "");
 
-  // The hover card opens towards the middle of the screen, not off the edge: h-file squares now sit on the left.
+  // The readout strip reads the square under the pointer wherever it is drawn.
   await square(page, "h2").hover();
-  await expect(square(page, "h2").locator("[data-hover-card]")).toHaveClass(/to-right/);
+  await expect(page.locator("#readout")).toHaveAttribute("data-readout-square", "h2");
 
   // Flipping back restores the order; the move list is untouched throughout.
   await page.keyboard.press("f");

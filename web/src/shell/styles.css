@@ -138,16 +138,17 @@ body { margin: 0; background: var(--page); }
 .mark-white polygon { fill: var(--white-side); stroke: var(--white-side-edge); }
 .mark-black polygon { fill: var(--black-side); stroke: var(--black-side-edge); }
 
-.hover-card {
-  position: absolute; top: 0; z-index: 10; min-width: 180px;
-  background: #ffffff; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  padding: 6px 8px; font-size: 0.8rem; pointer-events: none;
+/* The readout strip: directly under the board at a fixed minimum height, so reading a square never covers the marks. */
+#readout {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 20px;
+  min-height: 44px; margin-top: var(--space-3); padding: 10px 12px;
+  background: var(--page); border: 1px solid var(--border); border-radius: 2px;
+  font-size: var(--fs-small);
 }
-.hover-card.to-right { left: 100%; margin-left: 4px; }
-.hover-card.to-left { right: 100%; margin-right: 4px; }
-.hover-card .pair { display: flex; justify-content: space-between; gap: 12px; }
-.hover-card .label { color: var(--muted); }
-.hover-card .value { font-variant-numeric: tabular-nums; }
+#readout .readout-heading { font-weight: 600; }
+#readout .readout-pair { color: var(--text-2); }
+#readout .value { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--text); }
+#readout .readout-placeholder { color: var(--muted); font-style: italic; }
 
 #status { margin: 8px 0 4px; font-size: 0.9rem; }
 #legend { display: grid; grid-template-columns: max-content 1fr; gap: 2px 10px; margin: 4px 0 0; font-size: 0.8rem; color: var(--muted); }
@@ -155,22 +156,38 @@ body { margin: 0; background: var(--page); }
 #legend dd { margin: 0; }
 #legend .mark { width: 11px; height: 11px; }
 
-#side-column { display: flex; flex-direction: column; gap: 12px; }
-.panel, #record { background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: 10px 12px; }
-.panel { max-height: 420px; overflow: auto; }
-.panel h2, #record h2 { margin: 0 0 2px; font-size: 1.05rem; }
-.subtitle { margin: 0 0 8px; color: var(--muted); font-size: 0.8rem; }
-.panel-section { margin-top: 10px; }
-.panel-section h3 { margin: 0 0 4px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.03em; color: var(--muted); }
-.pairs { display: grid; grid-template-columns: max-content 1fr; gap: 1px 12px; margin: 0; font-size: 0.85rem; }
-.pairs dt { color: var(--muted); }
-.pairs dd { margin: 0; font-variant-numeric: tabular-nums; }
-.items { margin: 4px 0 0; padding-left: 18px; font-size: 0.85rem; }
-.item { margin: 2px 0; }
-.item-detail { display: block; color: var(--muted); font-size: 0.8rem; }
-.tone-legal > .item-text::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 6px; background: var(--defence); }
-.tone-excluded > .item-text::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 6px; background: var(--threat); }
-.empty, .placeholder { margin: 2px 0; color: var(--muted); font-size: 0.85rem; font-style: italic; }
+#side-column { display: flex; flex-direction: column; gap: var(--space-4); }
+/* Panels grow with their content; nothing scrolls inside them. */
+.panel, #record {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 4px;
+  padding: var(--space-4) 20px; display: flex; flex-direction: column; gap: var(--space-3);
+}
+.panel-head { display: flex; flex-direction: column; gap: 2px; }
+.kicker, .panel-section > summary, .field-label, .toolbar-legend {
+  margin: 0; font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+}
+.panel h2, #record h2 { margin: 0; font-size: var(--fs-heading); font-weight: 600; }
+.panel-section { border-top: 1px solid var(--border); padding-top: var(--space-3); }
+.panel-section > summary { cursor: pointer; }
+.panel-section > summary::marker { color: var(--muted); }
+.pairs { display: grid; grid-template-columns: minmax(0, 1fr) max-content; gap: var(--space-1) var(--space-4); margin: var(--space-2) 0 0; font-size: var(--fs-small); }
+.pairs dt { color: var(--text-2); }
+.pairs dd { margin: 0; text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.items { margin: var(--space-2) 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: var(--space-2); }
+.item { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: var(--space-3); align-items: start; }
+.item-body { display: flex; flex-direction: column; gap: 2px; }
+.item-text { font-size: var(--fs-body); }
+.item-detail { font-size: var(--fs-small); line-height: 1.5; color: var(--text-2); }
+/* The L1 status of a reach, told apart by shape: filled for legal, outlined for excluded, dashed for a reach that exists only after a move. */
+.badge {
+  display: block; box-sizing: border-box; margin-top: 1px; padding: 2px 0; text-align: center;
+  font-family: var(--font-mono); font-size: var(--fs-label); font-weight: 500; line-height: 1.2; border-radius: 2px;
+}
+.badge-legal { color: var(--page); background: var(--text-2); border: 1px solid var(--text-2); }
+.badge-excluded { color: var(--text-2); border: 1px solid var(--muted); }
+.badge-lookahead { color: var(--text-2); border: 1px dashed var(--muted); }
+.empty, .placeholder { margin: var(--space-2) 0 0; color: var(--muted); font-size: var(--fs-small); font-style: italic; }
+.panel > .placeholder { margin: 0; }
 
 #game-headers { margin: 0 0 4px; font-size: 0.85rem; color: var(--muted); }
 #navigation { display: flex; gap: 4px; margin: 4px 0; }
