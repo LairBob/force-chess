@@ -5,10 +5,29 @@ import type { Color, PieceType, Square } from "../contract/index.ts";
 import type { BoardScene, SquareScene, TallyRow } from "../projections/index.ts";
 import { el, replaceChildren, svg } from "./dom.ts";
 
-const GLYPHS: Record<Color, Record<PieceType, string>> = {
-  white: { king: "♔", queen: "♕", rook: "♖", bishop: "♗", knight: "♘", pawn: "♙" },
-  black: { king: "♚", queen: "♛", rook: "♜", bishop: "♝", knight: "♞", pawn: "♟" },
+/**
+ * The pieces are the mpchess SVG set (Maxime Chupin, GPL-3.0), served from
+ * public/pieces/mpchess/ with its licence notice beside the files, named by
+ * colour letter and piece letter as the set names them.
+ */
+const PIECE_FILES: Record<Color, Record<PieceType, string>> = {
+  white: { king: "wK", queen: "wQ", rook: "wR", bishop: "wB", knight: "wN", pawn: "wP" },
+  black: { king: "bK", queen: "bQ", rook: "bR", bishop: "bB", knight: "bN", pawn: "bP" },
 };
+
+/** The image for one piece: 46px, placed by the stylesheet, named in plain words for anyone who cannot see it. */
+function pieceImage(color: Color, type: PieceType): HTMLImageElement {
+  const name = `${color[0]!.toUpperCase()}${color.slice(1)} ${type}`;
+  return el("img", {
+    className: "piece",
+    src: `pieces/mpchess/${PIECE_FILES[color][type]}.svg`,
+    alt: name,
+    width: "46",
+    height: "46",
+    draggable: "false",
+    "data-piece": `${color} ${type}`,
+  });
+}
 
 const ROW_TITLES: Record<TallyRow["meaning"], string> = {
   threat: "enemy pieces reaching this piece",
@@ -85,13 +104,7 @@ function renderSquare(scene: SquareScene, column: number, handlers: BoardHandler
         ? `${scene.square}, ${scene.piece.color} ${scene.piece.type}`
         : `${scene.square}, empty`,
     },
-    scene.piece
-      ? el(
-          "span",
-          { className: `piece ${scene.piece.color}`, "data-piece": `${scene.piece.color} ${scene.piece.type}` },
-          GLYPHS[scene.piece.color][scene.piece.type],
-        )
-      : null,
+    scene.piece ? pieceImage(scene.piece.color, scene.piece.type) : null,
     scene.destination ? el("span", { className: "destination-mark" }) : null,
     renderTallies(scene.tallies),
     el("span", { className: "coordinate" }, scene.square),

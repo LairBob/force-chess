@@ -1,0 +1,29 @@
+The mpchess piece set
+=====================
+
+The twelve SVG files in this directory (wK, wQ, wR, wB, wN, wP, bK, bQ, bR,
+bB, bN, bP) are the "mpchess" chess piece set drawn by Maxime Chupin for his
+MPchess MetaPost package. They are copied unchanged from the piece set's own
+repository, directory svg/, at commit 720f6e050b4ee9b6e68f1ef5d89330a44850d54e
+(2023-05-09):
+
+    https://github.com/chupinmaxime/mpchess-pieces
+    (mirror of https://plmlab.math.cnrs.fr/mchupin/mpchess-pieces)
+
+Author:   Maxime Chupin
+Licence:  GNU General Public License, version 3 (the repository's LICENSE file
+          and README state "GNU GENERAL PUBLIC LICENSE, Version 3, 29 June
+          2007"; Lichess, which ships the same set, records it as GPL-3.0 or
+          later in its COPYING.md). The full text of the licence is in the
+          LICENSE file at the root of the Force Chess repository and at
+          https://www.gnu.org/licenses/gpl-3.0.txt.
+
+Note on provenance: the MPchess package on CTAN (https://ctan.org/pkg/mpchess)
+is itself under the LaTeX Project Public License 1.3c, with its cburnett piece
+file under GPL-2.0-or-later. The piece set used here is not taken from that
+package; it is the separately published set above, which carries its own GPL-3
+licence. The verification was done against the CTAN package page, the package
+README in the CTAN archive, and the mpchess-pieces repository on 2026-11-09.
+
+Force Chess is itself distributed under GPL-3.0-or-later, so the set is
+distributed under the same terms as the rest of the site.

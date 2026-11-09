@@ -34,6 +34,9 @@ test("the starting position shows the L0 tallies the fixture describes", async (
   await ready(page);
   await expect(page.locator("[data-square]")).toHaveCount(64);
   await expect(page.locator("[data-piece]")).toHaveCount(32);
+  // Each piece is an image named in words for anyone who cannot see it.
+  await expect(square(page, "e1").locator("img[data-piece]")).toHaveAttribute("alt", "White king");
+  await expect(square(page, "d8").locator("img[data-piece]")).toHaveAttribute("alt", "Black queen");
   await expect(page.locator("#status")).toContainText("White to move");
   await expect(page.locator("html")).toHaveAttribute("data-contract-version", "0.4.0");
 
