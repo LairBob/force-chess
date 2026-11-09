@@ -2,15 +2,15 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://force-chess.dev/contract/force-state.schema.json",
   "title": "Force state of one configuration",
-  "description": "The complete output of the force function for one board configuration (concept section 4). Pure data: no history, no side to move, no interaction state. Every number and classification here is explicable in words from the records that produced it.",
+  "description": "The complete output of the force function for one board configuration (concept section 4). Pure data: no history, no side to move, no interaction state. Every fact is stored once, in 'relations'; square and piece records refer to it by index. Every number and classification here is explicable in words from the records that produced it.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["contractVersion", "configuration", "valuationScale", "sides", "squares", "pieces", "relations"],
+  "required": ["contractVersion", "configuration", "valuationScale", "sides", "pieces", "relations", "squares"],
   "properties": {
     "contractVersion": {
       "description": "Version of this contract the document conforms to.",
       "type": "string",
-      "const": "0.1.0"
+      "const": "0.2.0"
     },
     "configuration": { "$ref": "#/$defs/Configuration" },
     "valuationScale": {
@@ -37,50 +37,56 @@
         "black": { "$ref": "#/$defs/SideStatus" }
       }
     },
-    "squares": {
-      "description": "One record for each of the 64 squares, keyed by square name (concept 4.2, per square).",
-      "type": "object",
-      "minProperties": 64,
-      "maxProperties": 64,
-      "propertyNames": { "$ref": "#/$defs/Square" },
-      "additionalProperties": { "$ref": "#/$defs/SquareRecord" }
-    },
     "pieces": {
-      "description": "One record for each piece on the board, keyed by the square it stands on (concept 4.2, per piece). A piece is identified by its square: there is at most one piece per square and the record is only valid for this configuration.",
+      "description": "One record for each piece on the board, keyed by the square it stands on (concept 4.2, per piece). A piece is identified by its square everywhere in the document: there is at most one piece per square, and the record is only valid for this configuration.",
       "type": "object",
       "propertyNames": { "$ref": "#/$defs/Square" },
       "additionalProperties": { "$ref": "#/$defs/PieceRecord" }
     },
     "relations": {
-      "description": "Every attack, defence, pin, x-ray, battery and lookahead edge as a first-class record (concept 4.2, relations), so a projection can draw lines or build lists without re-deriving them. The same facts also appear inside the square and piece records; the reference implementation guarantees the three views agree.",
-      "type": "array",
-      "items": { "$ref": "#/$defs/Relation" }
+      "description": "Every relation stored once (concept 4.2, relations). Square and piece records point into these lists by zero-based index; nothing in them is repeated elsewhere.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edges", "lookaheads", "pins", "xrays", "batteries"],
+      "properties": {
+        "edges": {
+          "description": "Every L0 attack and defence edge, with its L1 status. Indexed by position.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/Edge" }
+        },
+        "lookaheads": {
+          "description": "Every legal move of either side, with the squares the moved piece would attack from its destination (L2). Indexed by position. A piece's legal moves are the entries whose move starts on its square.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/Lookahead" }
+        },
+        "pins": { "type": "array", "items": { "$ref": "#/$defs/Pin" } },
+        "xrays": { "type": "array", "items": { "$ref": "#/$defs/Xray" } },
+        "batteries": { "type": "array", "items": { "$ref": "#/$defs/Battery" } }
+      }
+    },
+    "squares": {
+      "description": "Records for squares that have something to report: an occupant, or at least one edge or lookahead entry landing on them. A square absent from this object is empty, reached by nothing at any layer, has control 'none' and all valuation numbers zero (concept 7.1: squares with nothing to report show nothing).",
+      "type": "object",
+      "maxProperties": 64,
+      "propertyNames": { "$ref": "#/$defs/Square" },
+      "additionalProperties": { "$ref": "#/$defs/SquareRecord" }
     }
   },
   "$defs": {
     "Square": {
-      "description": "A square in algebraic notation, file a-h then rank 1-8.",
+      "description": "A square in algebraic notation, file a-h then rank 1-8. Also the identifier of the piece standing on it.",
       "type": "string",
       "pattern": "^[a-h][1-8]$"
     },
     "Color": { "type": "string", "enum": ["white", "black"] },
     "PieceType": { "type": "string", "enum": ["pawn", "knight", "bishop", "rook", "queen", "king"] },
-    "Layer": {
-      "description": "L0 geometry, L1 legality, L2 one-ply lookahead (concept 4.1). L3 valuation is a set of quantities, not an attack set, and appears under 'valuation'.",
-      "type": "string",
-      "enum": ["L0", "L1", "L2"]
+    "Index": {
+      "description": "Zero-based position in one of the lists under 'relations'.",
+      "type": "integer",
+      "minimum": 0
     },
-    "Piece": {
-      "description": "A piece on the board, named by colour, type and the square it stands on.",
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["square", "color", "type"],
-      "properties": {
-        "square": { "$ref": "#/$defs/Square" },
-        "color": { "$ref": "#/$defs/Color" },
-        "type": { "$ref": "#/$defs/PieceType" }
-      }
-    },
+    "IndexList": { "type": "array", "items": { "$ref": "#/$defs/Index" } },
+    "SquareList": { "type": "array", "items": { "$ref": "#/$defs/Square" } },
     "Configuration": {
       "description": "The complete input to the force function (concept section 3): placement, castling rights, en passant target. Side to move, clocks and history are deliberately absent.",
       "type": "object",
@@ -155,9 +161,8 @@
         "kingSquare": { "$ref": "#/$defs/Square" },
         "inCheck": { "type": "boolean" },
         "checkers": {
-          "description": "The enemy pieces with a direct L0 attack on this side's king square. An xray, battery or through_king edge onto the king square is not a check. Empty when not in check; two entries is a double check.",
-          "type": "array",
-          "items": { "$ref": "#/$defs/Piece" }
+          "description": "The squares of the enemy pieces with a direct L0 attack on this side's king square. An xray, battery or through_king edge onto the king square is not a check. Empty when not in check; two entries is a double check.",
+          "$ref": "#/$defs/SquareList"
         },
         "status": {
           "description": "normal: has legal moves, not in check. check: in check with legal moves. checkmate: in check with no legal moves. stalemate: not in check with no legal moves. All read as 'if this side held the move'.",
@@ -165,43 +170,49 @@
           "enum": ["normal", "check", "checkmate", "stalemate"]
         },
         "legalMoveCount": {
-          "description": "Number of legal moves for this side if it held the move. Each promotion piece counts as its own move, as in standard move generation.",
+          "description": "Number of legal moves for this side if it held the move: the number of lookahead entries whose move is made by this side, counting a castling move once. Each promotion piece counts as its own move, as in standard move generation.",
           "type": "integer",
           "minimum": 0
         }
       }
     },
     "AttackKind": {
-      "description": "How the attack reaches its square (concept 4.1 L0). direct: nothing stands between attacker and square. battery: the line passes through one friendly piece that moves along the same kind of line (rook or queen on a file or rank, bishop or queen on a diagonal). xray: the line passes through one enemy piece that moves along the same kind of line. through_king: the line passes through the enemy king, as the standard rules require for king-move legality. Only one intervening piece is ever looked through.",
+      "description": "How the attack reaches its square (concept 4.1 L0). direct: nothing stands between attacker and square. battery: the line passes through one friendly piece that moves along the same kind of line (rook or queen on a file or rank, bishop or queen on a diagonal). xray: the line passes through one enemy piece that moves along the same kind of line. through_king: the line passes through the enemy king, as the standard rules require for king-move legality. Only one intervening piece is ever looked through. Only a direct attack on a king square is a check.",
       "type": "string",
       "enum": ["direct", "battery", "xray", "through_king"]
     },
-    "Attack": {
-      "description": "One piece reaching one square by its movement pattern, with the path it uses. The same object describes an attack (square empty or enemy-occupied) and a defence (square occupied by a friendly piece); which it is follows from 'target'.",
+    "Edge": {
+      "description": "One piece reaching one square by its movement pattern (L0), with the path it uses and whether it could be exercised if its side held the move (L1). 'role' is attack when the square is empty or holds an enemy piece, defence when it holds a friendly piece.",
       "type": "object",
       "additionalProperties": false,
-      "required": ["from", "to", "target", "kind", "path", "through"],
+      "required": ["from", "to", "role", "kind", "path", "through", "L1"],
       "properties": {
-        "from": { "$ref": "#/$defs/Piece" },
+        "from": { "description": "The attacking piece, by its square.", "$ref": "#/$defs/Square" },
         "to": { "$ref": "#/$defs/Square" },
-        "target": {
-          "description": "The occupant of the attacked square, or null when it is empty.",
-          "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/Piece" }]
-        },
+        "role": { "type": "string", "enum": ["attack", "defence"] },
         "kind": { "$ref": "#/$defs/AttackKind" },
         "path": {
           "description": "The squares strictly between 'from' and 'to', in order of travel. Empty for a knight, a king, a pawn, or an adjacent square.",
-          "type": "array",
-          "items": { "$ref": "#/$defs/Square" }
+          "$ref": "#/$defs/SquareList"
         },
         "through": {
-          "description": "For battery, xray and through_king attacks, the square of the piece the line passes through. Null for direct attacks.",
+          "description": "For battery, xray and through_king edges, the square of the piece the line passes through. Null for direct edges.",
           "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/Square" }]
+        },
+        "L1": {
+          "description": "Legal: the move to 'to', with whatever stands there removed, would leave the mover's king unattacked. Otherwise the reason.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["legal", "reason"],
+          "properties": {
+            "legal": { "type": "boolean" },
+            "reason": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/Reason" }] }
+          }
         }
       }
     },
     "ExclusionCode": {
-      "description": "Why an L0 attack cannot be exercised at L1 (concept 4.1 L1, 4.3). pinned: the attacker is pinned to its own king and the square is off the pin line. king_in_check: the attacker's king is in check and moving to this square would neither capture the single checking piece nor block its line. king_into_attack: the attacker is the king and the square is attacked by the enemy at L0 (which counts pinned enemy pieces and lines continuing through this king). exposes_king: any other way the move would leave the attacker's king attacked; today the only case is an en passant capture that opens a rank or diagonal to the king. When more than one applies, the first in this order is reported: king_into_attack, pinned, king_in_check, exposes_king.",
+      "description": "Why an L0 edge cannot be exercised at L1 (concept 4.1 L1, 4.3). pinned: the attacker is pinned to its own king and the square is off the pin line. king_in_check: the attacker's king is in check and moving to this square would neither capture the single checking piece nor block its line. king_into_attack: the attacker is the king and the square is attacked by the enemy at L0 (which counts pinned enemy pieces and lines continuing through this king). exposes_king: any other way the move would leave the attacker's king attacked; today the only case is an en passant capture that opens a rank or diagonal to the king. When more than one applies, the first in this order is reported: king_into_attack, pinned, king_in_check, exposes_king.",
       "type": "string",
       "enum": ["pinned", "king_in_check", "king_into_attack", "exposes_king"]
     },
@@ -215,24 +226,14 @@
         "text": { "type": "string", "minLength": 1 }
       }
     },
-    "Exclusion": {
-      "description": "An L0 attack that is not legal at L1, with the reason.",
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["attack", "reason"],
-      "properties": {
-        "attack": { "$ref": "#/$defs/Attack" },
-        "reason": { "$ref": "#/$defs/Reason" }
-      }
-    },
     "LegalitySplit": {
-      "description": "The L1 view of a set of L0 attacks: the ones that could be exercised if the attacker's side held the move, and the ones that could not, each with its reason.",
+      "description": "The L1 view of a set of edges: indices of the ones that are legal and of the ones that are excluded. The reason for each excluded edge is on the edge itself.",
       "type": "object",
       "additionalProperties": false,
       "required": ["legal", "excluded"],
       "properties": {
-        "legal": { "type": "array", "items": { "$ref": "#/$defs/Attack" } },
-        "excluded": { "type": "array", "items": { "$ref": "#/$defs/Exclusion" } }
+        "legal": { "$ref": "#/$defs/IndexList" },
+        "excluded": { "$ref": "#/$defs/IndexList" }
       }
     },
     "MoveKind": {
@@ -255,44 +256,72 @@
       }
     },
     "Lookahead": {
-      "description": "An L2 entry (concept 4.1 L2): after the named legal move, the moved piece would attack 'to' directly from its destination. The piece is named by its square before the move. For a promotion the attack set is that of the promoted piece. For castling, the king and the rook each produce entries, both tagged with the castling move. Only direct attacks from the destination are recorded, and only for the piece that moved.",
+      "description": "An L2 entry (concept 4.1 L2): one legal move, and the squares 'piece' would attack directly from where it stands after it. 'piece' is the moving piece, named by its square before the move, except for castling, which produces two entries with the same move: one for the king and one for the rook. For a promotion the attack set is that of the promoted piece. Only direct attacks from the destination are recorded, and only for the piece that moved; squares already attacked before the move are included.",
       "type": "object",
       "additionalProperties": false,
-      "required": ["piece", "move", "to", "target"],
+      "required": ["piece", "move", "attacks"],
       "properties": {
-        "piece": { "$ref": "#/$defs/Piece" },
+        "piece": { "$ref": "#/$defs/Square" },
         "move": { "$ref": "#/$defs/Move" },
-        "to": { "$ref": "#/$defs/Square" },
-        "target": {
-          "description": "The occupant of the attacked square in the position after the move, or null.",
-          "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/Piece" }]
+        "attacks": {
+          "description": "Squares attacked from the destination, in no particular order, whatever stands on them after the move.",
+          "$ref": "#/$defs/SquareList"
+        }
+      }
+    },
+    "Pin": {
+      "description": "An absolute pin: 'pinned' stands alone between 'pinner' (an enemy rook, bishop or queen) and its own king on one line (concept 4.2, 4.3). Pins against anything other than the king are not pins in this model.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pinner", "pinned", "king", "line"],
+      "properties": {
+        "pinner": { "$ref": "#/$defs/Square" },
+        "pinned": { "$ref": "#/$defs/Square" },
+        "king": { "$ref": "#/$defs/Square" },
+        "line": {
+          "description": "Every square from the pinner to the king inclusive, in order.",
+          "type": "array",
+          "minItems": 3,
+          "items": { "$ref": "#/$defs/Square" }
+        }
+      }
+    },
+    "Xray": {
+      "description": "A rook, bishop or queen looking through one enemy piece that moves along the same kind of line, to the squares beyond it up to and including the next piece.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["piece", "through", "beyond"],
+      "properties": {
+        "piece": { "$ref": "#/$defs/Square" },
+        "through": { "$ref": "#/$defs/Square" },
+        "beyond": {
+          "description": "The squares reached through the enemy piece, in order of travel.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/Square" }
+        }
+      }
+    },
+    "Battery": {
+      "description": "Two friendly pieces that move along the same kind of line standing on one line, so the back piece's reach continues through the front piece. The front piece is the one nearer the covered squares.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["front", "back", "covered"],
+      "properties": {
+        "front": { "$ref": "#/$defs/Square" },
+        "back": { "$ref": "#/$defs/Square" },
+        "covered": {
+          "description": "The squares the back piece reaches through the front piece, in order of travel, up to and including the next piece.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/Square" }
         }
       }
     },
     "Control": {
-      "description": "Cheap first lens over a square (concept 4.2): white when only white attacks it at this layer, black when only black does, contested when both do, none when neither does. Counts pieces, not values, and ignores the occupant.",
+      "description": "Cheap first lens over a square (concept 4.2): white when only white reaches it at this layer, black when only black does, contested when both do, none when neither does. Counts pieces, not values, and ignores the occupant.",
       "type": "string",
       "enum": ["white", "black", "contested", "none"]
-    },
-    "PerColorCount": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["white", "black"],
-      "properties": {
-        "white": { "type": "integer", "minimum": 0 },
-        "black": { "type": "integer", "minimum": 0 }
-      }
-    },
-    "PerLayerCount": {
-      "description": "Attacker counts per colour at each layer. At L1 only legal attackers are counted. At L2 distinct pieces are counted, not entries.",
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["L0", "L1", "L2"],
-      "properties": {
-        "L0": { "$ref": "#/$defs/PerColorCount" },
-        "L1": { "$ref": "#/$defs/PerColorCount" },
-        "L2": { "$ref": "#/$defs/PerColorCount" }
-      }
     },
     "ValuationSide": {
       "type": "object",
@@ -307,7 +336,7 @@
       "description": "The cheap L3 quantities for one square at one layer (concept 4.1 L3), exposed raw. On an occupied square, the enemy side's numbers are the threats to the occupant and the friendly side's numbers are its defences. 'net' is white minus black. No exchange evaluation is attempted.",
       "type": "object",
       "additionalProperties": false,
-      "required": ["white", "black", "net", "occupantValue"],
+      "required": ["white", "black", "net"],
       "properties": {
         "white": { "$ref": "#/$defs/ValuationSide" },
         "black": { "$ref": "#/$defs/ValuationSide" },
@@ -319,70 +348,60 @@
             "count": { "type": "integer" },
             "value": { "type": "number" }
           }
-        },
-        "occupantValue": {
-          "description": "Material value of the occupant on the valuation scale, or null for an empty square.",
-          "oneOf": [{ "type": "null" }, { "type": "number", "minimum": 0 }]
         }
+      }
+    },
+    "ByLayer": {
+      "description": "Edge and lookahead indices by layer. L0: every edge. L1: the same edges split into legal and excluded. L2: lookahead entries that attack the square in question.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["L0", "L1", "L2"],
+      "properties": {
+        "L0": { "$ref": "#/$defs/IndexList" },
+        "L1": { "$ref": "#/$defs/LegalitySplit" },
+        "L2": { "$ref": "#/$defs/IndexList" }
+      }
+    },
+    "ByColorAndLayer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["white", "black"],
+      "properties": {
+        "white": { "$ref": "#/$defs/ByLayer" },
+        "black": { "$ref": "#/$defs/ByLayer" }
       }
     },
     "SquareRecord": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["square", "occupant", "attackers", "summary", "valuation"],
+      "required": ["occupant", "attackers", "control", "valuation"],
       "properties": {
-        "square": { "$ref": "#/$defs/Square" },
-        "occupant": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/Piece" }] },
-        "attackers": {
-          "description": "Every piece reaching this square, by layer and colour. Pieces of the occupant's colour are its defenders; pieces of the other colour are threats to it. There is no separate defender list because it would repeat one of these.",
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["L0", "L1", "L2"],
-          "properties": {
-            "L0": {
+        "occupant": {
+          "description": "What stands here, or null. The piece's full record is under 'pieces' at this square.",
+          "oneOf": [
+            { "type": "null" },
+            {
               "type": "object",
               "additionalProperties": false,
-              "required": ["white", "black"],
+              "required": ["color", "type"],
               "properties": {
-                "white": { "type": "array", "items": { "$ref": "#/$defs/Attack" } },
-                "black": { "type": "array", "items": { "$ref": "#/$defs/Attack" } }
-              }
-            },
-            "L1": {
-              "type": "object",
-              "additionalProperties": false,
-              "required": ["white", "black"],
-              "properties": {
-                "white": { "$ref": "#/$defs/LegalitySplit" },
-                "black": { "$ref": "#/$defs/LegalitySplit" }
-              }
-            },
-            "L2": {
-              "type": "object",
-              "additionalProperties": false,
-              "required": ["white", "black"],
-              "properties": {
-                "white": { "type": "array", "items": { "$ref": "#/$defs/Lookahead" } },
-                "black": { "type": "array", "items": { "$ref": "#/$defs/Lookahead" } }
+                "color": { "$ref": "#/$defs/Color" },
+                "type": { "$ref": "#/$defs/PieceType" }
               }
             }
-          }
+          ]
         },
-        "summary": {
+        "attackers": {
+          "description": "Every piece reaching this square, by colour and layer, as indices into relations.edges (L0, L1) and relations.lookaheads (L2). Pieces of the occupant's colour are its defenders; pieces of the other colour are threats to it. Counts are the lengths of these lists; at L2 the count of distinct pieces is read from the entries.",
+          "$ref": "#/$defs/ByColorAndLayer"
+        },
+        "control": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["attackerCount", "control"],
+          "required": ["L0", "L1"],
           "properties": {
-            "attackerCount": { "$ref": "#/$defs/PerLayerCount" },
-            "control": {
-              "type": "object",
-              "additionalProperties": false,
-              "required": ["L0", "L1"],
-              "properties": {
-                "L0": { "$ref": "#/$defs/Control" },
-                "L1": { "$ref": "#/$defs/Control" }
-              }
-            }
+            "L0": { "$ref": "#/$defs/Control" },
+            "L1": { "$ref": "#/$defs/Control" }
           }
         },
         "valuation": {
@@ -393,23 +412,6 @@
             "L0": { "$ref": "#/$defs/Valuation" },
             "L1": { "$ref": "#/$defs/Valuation" }
           }
-        }
-      }
-    },
-    "Pin": {
-      "description": "An absolute pin: 'pinned' stands alone between 'pinner' (an enemy rook, bishop or queen) and its own king on one line (concept 4.2, 4.3). Pins against anything other than the king are not pins in this model.",
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["pinner", "pinned", "king", "line"],
-      "properties": {
-        "pinner": { "$ref": "#/$defs/Piece" },
-        "pinned": { "$ref": "#/$defs/Piece" },
-        "king": { "$ref": "#/$defs/Square" },
-        "line": {
-          "description": "Every square from the pinner to the king inclusive, in order.",
-          "type": "array",
-          "minItems": 3,
-          "items": { "$ref": "#/$defs/Square" }
         }
       }
     },
@@ -453,24 +455,29 @@
     "PieceRecord": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["piece", "attacks", "defends", "attackedBy", "defendedBy", "constraints", "mobility", "legalMoves", "specialMoves"],
+      "required": ["color", "type", "attacks", "defends", "attackedBy", "defendedBy", "lookaheads", "constraints", "mobility", "specialMoves"],
       "properties": {
-        "piece": { "$ref": "#/$defs/Piece" },
+        "color": { "$ref": "#/$defs/Color" },
+        "type": { "$ref": "#/$defs/PieceType" },
         "attacks": {
-          "description": "Squares this piece reaches that are empty or hold an enemy piece.",
+          "description": "Edges from this piece to squares that are empty or hold an enemy piece, as indices into relations.edges.",
           "$ref": "#/$defs/OutgoingByLayer"
         },
         "defends": {
-          "description": "Squares this piece reaches that hold a friendly piece.",
+          "description": "Edges from this piece to squares that hold a friendly piece.",
           "$ref": "#/$defs/OutgoingByLayer"
         },
         "attackedBy": {
-          "description": "Enemy pieces reaching this piece's square.",
-          "$ref": "#/$defs/IncomingByLayer"
+          "description": "Enemy reach onto this piece's square: edges at L0 and L1, lookahead entries at L2.",
+          "$ref": "#/$defs/ByLayer"
         },
         "defendedBy": {
-          "description": "Friendly pieces reaching this piece's square.",
-          "$ref": "#/$defs/IncomingByLayer"
+          "description": "Friendly reach onto this piece's square: edges at L0 and L1, lookahead entries at L2.",
+          "$ref": "#/$defs/ByLayer"
+        },
+        "lookaheads": {
+          "description": "Indices into relations.lookaheads of the entries for this piece: its own legal moves, plus, for a rook, the castling entry in which it moves. Its legal moves are the entries whose move starts on this square.",
+          "$ref": "#/$defs/IndexList"
         },
         "constraints": {
           "type": "object",
@@ -478,11 +485,11 @@
           "required": ["pinned", "inCheck", "noLegalMoves"],
           "properties": {
             "pinned": {
-              "description": "The pin this piece is in, or null.",
-              "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/Pin" }]
+              "description": "Index into relations.pins of the pin this piece is in, or null.",
+              "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/Index" }]
             },
             "inCheck": {
-              "description": "For a king: the enemy pieces giving check, or null when not in check. Always null for other pieces.",
+              "description": "For a king: the squares of the enemy pieces giving check, or null when not in check. Always null for other pieces.",
               "oneOf": [
                 { "type": "null" },
                 {
@@ -490,7 +497,7 @@
                   "additionalProperties": false,
                   "required": ["checkers"],
                   "properties": {
-                    "checkers": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/Piece" } }
+                    "checkers": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/Square" } }
                   }
                 }
               ]
@@ -517,11 +524,6 @@
           "type": "integer",
           "minimum": 0
         },
-        "legalMoves": {
-          "description": "Every legal move of this piece if its side held the move. Promotions appear once per promotion piece.",
-          "type": "array",
-          "items": { "$ref": "#/$defs/Move" }
-        },
         "specialMoves": {
           "description": "Special-move availability. Castling entries appear only on kings, en passant and promotion only on pawns.",
           "type": "object",
@@ -536,103 +538,13 @@
       }
     },
     "OutgoingByLayer": {
+      "description": "Edge indices by layer for one piece's outgoing reach. L2 is not split by target: see 'lookaheads' on the piece record.",
       "type": "object",
       "additionalProperties": false,
-      "required": ["L0", "L1", "L2"],
+      "required": ["L0", "L1"],
       "properties": {
-        "L0": { "type": "array", "items": { "$ref": "#/$defs/Attack" } },
-        "L1": { "$ref": "#/$defs/LegalitySplit" },
-        "L2": { "type": "array", "items": { "$ref": "#/$defs/Lookahead" } }
-      }
-    },
-    "IncomingByLayer": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["L0", "L1", "L2"],
-      "properties": {
-        "L0": { "type": "array", "items": { "$ref": "#/$defs/Attack" } },
-        "L1": { "$ref": "#/$defs/LegalitySplit" },
-        "L2": { "type": "array", "items": { "$ref": "#/$defs/Lookahead" } }
-      }
-    },
-    "Relation": {
-      "oneOf": [
-        { "$ref": "#/$defs/AttackRelation" },
-        { "$ref": "#/$defs/PinRelation" },
-        { "$ref": "#/$defs/XrayRelation" },
-        { "$ref": "#/$defs/BatteryRelation" },
-        { "$ref": "#/$defs/LookaheadRelation" }
-      ]
-    },
-    "AttackRelation": {
-      "description": "An L0 attack or defence edge with its L1 status. 'attack' when the square is empty or enemy-occupied, 'defence' when a friendly piece stands there.",
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["type", "attack", "L1"],
-      "properties": {
-        "type": { "type": "string", "enum": ["attack", "defence"] },
-        "attack": { "$ref": "#/$defs/Attack" },
-        "L1": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["legal", "reason"],
-          "properties": {
-            "legal": { "type": "boolean" },
-            "reason": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/Reason" }] }
-          }
-        }
-      }
-    },
-    "PinRelation": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["type", "pin"],
-      "properties": {
-        "type": { "type": "string", "const": "pin" },
-        "pin": { "$ref": "#/$defs/Pin" }
-      }
-    },
-    "XrayRelation": {
-      "description": "A rook, bishop or queen looking through one enemy piece that moves along the same kind of line, to the squares beyond it up to and including the next piece.",
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["type", "piece", "through", "beyond"],
-      "properties": {
-        "type": { "type": "string", "const": "xray" },
-        "piece": { "$ref": "#/$defs/Piece" },
-        "through": { "$ref": "#/$defs/Piece" },
-        "beyond": {
-          "description": "The squares reached through the enemy piece, in order of travel.",
-          "type": "array",
-          "minItems": 1,
-          "items": { "$ref": "#/$defs/Square" }
-        }
-      }
-    },
-    "BatteryRelation": {
-      "description": "Two friendly pieces that move along the same kind of line standing on one line, so the back piece's reach continues through the front piece. The front piece is the one nearer the covered squares.",
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["type", "front", "back", "covered"],
-      "properties": {
-        "type": { "type": "string", "const": "battery" },
-        "front": { "$ref": "#/$defs/Piece" },
-        "back": { "$ref": "#/$defs/Piece" },
-        "covered": {
-          "description": "The squares the back piece reaches through the front piece, in order of travel, up to and including the next piece.",
-          "type": "array",
-          "minItems": 1,
-          "items": { "$ref": "#/$defs/Square" }
-        }
-      }
-    },
-    "LookaheadRelation": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["type", "lookahead"],
-      "properties": {
-        "type": { "type": "string", "const": "lookahead" },
-        "lookahead": { "$ref": "#/$defs/Lookahead" }
+        "L0": { "$ref": "#/$defs/IndexList" },
+        "L1": { "$ref": "#/$defs/LegalitySplit" }
       }
     }
   }

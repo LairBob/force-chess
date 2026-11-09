@@ -29,3 +29,13 @@ Schema-level choices the concept document left open, made while writing `contrac
 - **Pieces are identified by their square.** A piece record is only meaningful within its configuration, so no cross-position identity is invented.
 - **The three views repeat each other on purpose.** Square records, piece records and the relations list carry the same edges in full. Consumers read without joining; the reference implementation guarantees agreement and snapshots check it. The documents are large (the two-kings example is 190 KB pretty-printed); compactness is an implementation and transport concern, not a contract one, and is deferred until measured.
 - **Fixtures name pieces in words** (`white knight f3`) and carry a `decisions` list so the chess fine points each one settles are readable without decoding the assertions. Every position was cross-checked against an independent chess library for legal moves and attacked squares before being committed.
+
+## 2026-11-08, normalised contract (v0.2.0)
+
+On Laurent's review of v0.1.0 the triple-view layout was rejected as wasteful, and measurement agreed: of the two-kings example's 76 KB minified, 48 KB was the square records embedding every edge in full and 19 KB was empty square skeletons. The "three views repeat each other on purpose" bullet above is superseded. Approved by Laurent, 2026-11-08.
+
+- **Every relation is stored once, under `relations`, and referenced by zero-based index.** `edges` (L0 attack and defence, each carrying its own L1 status and reason), `lookaheads`, `pins`, `xrays`, `batteries`. Square and piece records hold index lists per colour and layer plus their summaries. Looking up an index is not computing anything about the position (P2).
+- **A piece is identified by its square string alone.** Colour and type live once in `pieces`; edges name pieces by square.
+- **One lookahead entry per legal move, listing the squares attacked after it**, instead of one entry per move-and-square pair. A piece's legal moves are its entries; the separate `legalMoves` list is gone. Castling still yields two entries (king and rook) for one move.
+- **Squares with nothing to report are omitted.** A square absent from `squares` is empty, reached by nothing, control `none`, valuation zero. This is concept 7.1's rule applied to the data. `attackerCount` is gone; counts are the lengths of the index lists.
+- **Result:** the two-kings example went from 184 KB to 41 KB pretty-printed (16 KB minified). The fixtures did not change; they assert facts, not layout. Contract version bumped to 0.2.0; the fixture format stays at 0.1.
