@@ -139,6 +139,8 @@ export function boardScene(state: ForceState, context: InteractionContext): Boar
         destination: moves.get(square) ?? null,
         movable: piece !== undefined && piece.color === context.sideToMove,
         inCheck: piece?.type === "king" && state.sides[piece.color].inCheck,
+        // The raw values tint nothing; the control lens adds its fill over this scene.
+        fill: null,
       });
     }
   }

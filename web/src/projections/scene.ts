@@ -2,7 +2,7 @@
 // draw and what each drawn element means. The shell renders them; nothing
 // here is a drawing call.
 
-import type { Color, PieceType, Square } from "../contract/index.ts";
+import type { Color, Control, PieceType, Square } from "../contract/index.ts";
 
 /** One exact figure, shown as text: `Threats: 3`. */
 export interface LabelValue {
@@ -20,6 +20,25 @@ export interface TallyRow {
   readonly count: number;
 }
 
+/** How far ahead the leading side is on a square under the control lens: 1 by one piece, 2 by two, 3 by three or more; 0 when no side leads. */
+export type ControlStep = 0 | 1 | 2 | 3;
+
+/**
+ * The fill of one square under the control lens (concept section 7, "Control
+ * heatmap"): the document's class, the leading side and the size of its lead
+ * as a named step. Data, not a colour: the shell maps it to one.
+ */
+export interface ControlFill {
+  /** The document's class: who reaches the square at this layer, counting pieces and ignoring the occupant. */
+  readonly control: Control;
+  /** The side with more pieces reaching the square, or null when the counts are equal or nothing reaches it. */
+  readonly leader: Color | null;
+  /** The lead's step: 1, 2 or 3 (three or more); 0 when there is no leader. */
+  readonly step: ControlStep;
+  /** The exact difference, white minus black, as the document reports it. */
+  readonly net: number;
+}
+
 export interface SquareScene {
   readonly square: Square;
   readonly shade: "light" | "dark";
@@ -33,6 +52,8 @@ export interface SquareScene {
   readonly movable: boolean;
   /** A king in check, as the document reports for its side. */
   readonly inCheck: boolean;
+  /** The square's fill under the control lens; null under the raw values, and at L2, where the lens draws nothing. */
+  readonly fill: ControlFill | null;
 }
 
 /** The exact figures of one square at one layer, for the readout strip under the board: a heading naming the square and its piece, then label-value pairs. */
