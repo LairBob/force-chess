@@ -1,0 +1,29 @@
+{
+  "name": "force-chess-web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The representation side of Force Chess: projections and the web shell.",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "contract:types": "json2ts --input ../contract/schema/force-state.schema.json --output src/contract/force-state.ts --bannerComment \"/* Generated from contract/schema/force-state.schema.json by npm run contract:types. Do not edit. */\" --no-additionalProperties",
+    "wasm": "wasm-pack build ../core/wasm --target web --release --out-dir pkg",
+    "predev": "npm run contract:types",
+    "dev": "vite",
+    "pretypecheck": "npm run contract:types",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.pure.json --noEmit",
+    "prebuild": "npm run typecheck",
+    "build": "vite build",
+    "preview": "vite preview --port 4173 --strictPort",
+    "pretest": "npm run contract:types",
+    "test": "vitest run",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.0",
+    "json-schema-to-typescript": "^16.0.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.6",
+    "vitest": "^5.1.0"
+  }
+}

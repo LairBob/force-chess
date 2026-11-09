@@ -20,3 +20,6 @@ node_modules/
 .claude/settings.local.json
 .claude/worktrees/
 .playwright-mcp/
+
+# Generated from contract/schema by npm run contract:types
+/web/src/contract/force-state.ts
