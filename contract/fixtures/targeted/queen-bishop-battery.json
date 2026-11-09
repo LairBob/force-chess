@@ -8,11 +8,14 @@
     "The front piece is the one nearer the covered squares; here the bishop on c3 is the front and the queen on b2 the back.",
     "The king counts as a defender at L0 (count 1) but adds 0 to the summed value, so a square defended only by the king shows defence value 0.",
     "A king defends a piece at L1 only if it could recapture there: the square is tested with the defended piece removed, and if any enemy piece then attacks it the defence is excluded with reason king_into_attack, naming every such enemy piece. Here the bishop attacks g7 directly once the pawn is gone and the queen attacks it through the bishop.",
-    "The battery line stops at the pawn on g7: neither piece attacks h8 beyond it."
+    "The battery line stops at the pawn on g7: neither piece attacks h8 beyond it.",
+    "A battery runs both ways along its line. Wherever the line continues past the front piece, the back piece reaches through it, whichever end of the pair is nearer: the bishop on c3 also reaches a1 through the queen on b2, so there are two battery relations on this diagonal, each with its own front and back."
   ],
   "assertions": [
     { "assert": "battery", "front": "white bishop c3", "back": "white queen b2", "covered": ["d4", "e5", "f6", "g7"] },
-    { "assert": "relationCount", "type": "battery", "expect": 1 },
+    { "assert": "battery", "front": "white queen b2", "back": "white bishop c3", "covered": ["a1"], "note": "The same pair seen from the other end: the bishop reaches the empty corner a1 through the queen." },
+    { "assert": "relationCount", "type": "battery", "expect": 2 },
+    { "assert": "attackKind", "piece": "white bishop c3", "square": "a1", "kind": "battery", "through": "b2", "path": ["b2"] },
     { "assert": "attackKind", "piece": "white queen b2", "square": "g7", "kind": "battery", "through": "c3", "path": ["c3", "d4", "e5", "f6"] },
     { "assert": "attackKind", "piece": "white bishop c3", "square": "g7", "kind": "direct", "path": ["d4", "e5", "f6"] },
     { "assert": "attackKind", "piece": "white queen b2", "square": "c3", "kind": "direct", "path": [] },

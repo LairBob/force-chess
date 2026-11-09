@@ -46,7 +46,7 @@
     { "assert": "specialMove", "piece": "black king e8", "move": "castleKingside", "expect": { "available": false, "target": "g8", "reason": "path_blocked" } },
     { "assert": "lookahead", "piece": "white knight g1", "to": "f3", "attacks": { "includes": ["e5", "d4", "g5", "h4", "d2", "e1", "g1", "h2"] } },
     { "assert": "squareAttackers", "square": "e5", "layer": "L2", "color": "white", "expect": { "equals": ["white knight g1", "white pawn d2", "white pawn f2"] }, "note": "After Nf3, d4 or f4 respectively." },
-    { "assert": "squareAttackers", "square": "e5", "layer": "L2", "color": "black", "expect": { "equals": ["black knight b8"] }, "note": "Only the knight, after Nc6. A black pawn on e5 would attack d4 and f4, not its own square." },
+    { "assert": "squareAttackers", "square": "e5", "layer": "L2", "color": "black", "expect": { "equals": ["black knight b8", "black pawn d7", "black pawn f7"] }, "note": "After Nc6, d6 or f6 respectively, mirroring white. A black pawn pushed to e5 itself would attack d4 and f4, not its own square." },
     { "assert": "relationCount", "type": "pin", "expect": 0 },
     { "assert": "relationCount", "type": "battery", "expect": 0 },
     { "assert": "relationCount", "type": "xray", "expect": 0 }

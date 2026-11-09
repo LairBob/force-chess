@@ -7,7 +7,8 @@
     "An x-ray is a sliding attack through one enemy piece that moves along the same kind of line, recorded as an attack of kind xray on each square beyond up to and including the next piece, and as one xray relation listing those squares.",
     "A sliding attack through a piece that is neither a same-line piece of either colour nor the enemy king is not recorded at all.",
     "A battery and an x-ray can share a line: each side's relation is recorded from its own point of view.",
-    "The edge of the board ends a line; the black rook on a4 has no x-ray through a1 because nothing lies beyond it."
+    "The edge of the board ends a line; the black rook on a4 has no x-ray through a1 because nothing lies beyond it.",
+    "A battery runs both ways along its line: the black rook on a4 also reaches a8 through the black queen on a7, so the black pair on the a-file makes two battery relations, one aimed down the file and one up it."
   ],
   "assertions": [
     { "assert": "xray", "piece": "white rook a1", "through": "black rook a4", "beyond": ["a5", "a6", "a7"] },
@@ -16,7 +17,9 @@
     { "assert": "attackKind", "piece": "white rook a1", "square": "a4", "kind": "direct", "path": ["a2", "a3"] },
     { "assert": "attacks", "piece": "white rook a1", "square": "a8", "layer": "L0", "expect": false },
     { "assert": "battery", "front": "black rook a4", "back": "black queen a7", "covered": ["a3", "a2", "a1"] },
-    { "assert": "relationCount", "type": "battery", "expect": 1 },
+    { "assert": "battery", "front": "black queen a7", "back": "black rook a4", "covered": ["a8"] },
+    { "assert": "relationCount", "type": "battery", "expect": 2 },
+    { "assert": "relationCount", "type": "battery", "color": "white", "expect": 0 },
     { "assert": "attackKind", "piece": "black queen a7", "square": "a1", "kind": "battery", "through": "a4", "path": ["a6", "a5", "a4", "a3", "a2"] },
     { "assert": "squareAttackers", "square": "a1", "layer": "L0", "color": "black", "expect": { "equals": ["black rook a4", "black queen a7"] } },
     { "assert": "squareAttackers", "square": "a1", "layer": "L0", "color": "white", "expect": { "equals": [] } },

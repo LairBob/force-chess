@@ -20,7 +20,7 @@ use crate::legality::{Context, Exclusion, Trial};
 use crate::moves::{self, LegalMove, Lookahead, MoveKind};
 use crate::words::{color_name, join_and, named, piece_on, role_name, sentence_case};
 
-pub const CONTRACT_VERSION: &str = "0.2.0";
+pub const CONTRACT_VERSION: &str = "0.2.1";
 
 /// A JSON object keyed by square name, emitted in the order given.
 #[derive(Debug, Clone)]
