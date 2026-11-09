@@ -1,0 +1,29 @@
+{
+  "format": "force-chess/targeted-fixture/0.1",
+  "id": "en-passant-only-move-exposes-king",
+  "fen": "7k/8/1n6/KPp4r/8/8/8/8 w - c6 0 1",
+  "description": "Black has just played c7-c5 beside the white pawn on b5, whose push is blocked by the black knight on b6; the pawn's only move is the en passant capture, which would expose the white king on a5 to the black rook on h5, so the pawn has no legal move and the reason is exposes_king.",
+  "decisions": [
+    "A piece whose every move would leave its own king attacked in a way that is neither a pin nor an unanswered check reports the no-legal-moves code exposes_king, the same code its excluded move carries at L1. Today the only such move is an en passant capture that opens a rank or diagonal to the king.",
+    "A blocked square is not a move at all, so the pawn's blocked push to b6 does not make the reason mixed: the reason is drawn only from the moves the piece could make if its king's safety did not matter.",
+    "The pawn is not pinned (two pieces stand between the rook and the king), and its diagonal control of the empty square a6 is unaffected at L1."
+  ],
+  "assertions": [
+    {
+      "assert": "configuration",
+      "expect": {
+        "canonical": "7k/8/1n6/KPp4r/8/8/8/8 - c6",
+        "enPassant": { "square": "c6", "capturableBy": "white", "pawnToCapture": "c5" }
+      }
+    },
+    { "assert": "mobility", "piece": "white pawn b5", "expect": 0 },
+    { "assert": "pieceConstraint", "piece": "white pawn b5", "expect": { "pinned": false, "noLegalMoves": "exposes_king" } },
+    { "assert": "exclusion", "piece": "white pawn b5", "square": "c6", "reason": "exposes_king", "mentions": ["h5", "a5"] },
+    { "assert": "specialMove", "piece": "white pawn b5", "move": "enPassant", "expect": { "available": false, "target": "c6", "reason": "exposes_king" } },
+    { "assert": "attacks", "piece": "white pawn b5", "square": "a6", "layer": "L1", "expect": true },
+    { "assert": "relationCount", "type": "pin", "expect": 0 },
+    { "assert": "mobility", "piece": "white king a5", "expect": 2, "destinations": ["a6", "b6"] },
+    { "assert": "exclusion", "piece": "white king a5", "square": "a4", "reason": "king_into_attack", "mentions": ["b6"], "note": "The black knight on b6 covers a4." },
+    { "assert": "sideStatus", "color": "white", "expect": { "inCheck": false, "status": "normal", "legalMoveCount": 2 } }
+  ]
+}

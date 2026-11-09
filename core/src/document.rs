@@ -20,7 +20,7 @@ use crate::legality::{Context, Exclusion, Trial};
 use crate::moves::{self, LegalMove, Lookahead, MoveKind};
 use crate::words::{color_name, join_and, named, piece_on, role_name, sentence_case};
 
-pub const CONTRACT_VERSION: &str = "0.2.2";
+pub const CONTRACT_VERSION: &str = "0.3.0";
 
 /// A JSON object keyed by square name, emitted in the order given.
 #[derive(Debug, Clone)]
@@ -778,7 +778,7 @@ fn no_legal_moves(ctx: &Context, square: Square, piece: Piece) -> Reason {
                 "{subject} cannot move: every square it could go to is attacked by the enemy."
             ),
             Exclusion::ExposesKing { .. } => {
-                format!("{subject} cannot move: its only moves would leave its own king attacked. {detail}")
+                format!("{subject} cannot move: every move it has would leave its own king attacked. {detail}")
             }
         };
         return Reason {

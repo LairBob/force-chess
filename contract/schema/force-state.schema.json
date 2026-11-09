@@ -10,7 +10,7 @@
     "contractVersion": {
       "description": "Version of this contract the document conforms to.",
       "type": "string",
-      "const": "0.2.2"
+      "const": "0.3.0"
     },
     "configuration": { "$ref": "#/$defs/Configuration" },
     "valuationScale": {
@@ -416,9 +416,9 @@
       }
     },
     "NoLegalMovesCode": {
-      "description": "Why a piece has no legal move. blocked: every square in its pattern is off the board, occupied by a friendly piece, or behind another piece. pinned: it is pinned and no square on the pin line is available. king_in_check: its king is in check and none of its moves answers the check. king_into_attack: it is the king and every reachable square is attacked. mixed: more than one of these, for different squares.",
+      "description": "Why a piece has no legal move. blocked: every square in its pattern is off the board, occupied by a friendly piece, or behind another piece. pinned: it is pinned and no square on the pin line is available. king_in_check: its king is in check and none of its moves answers the check. king_into_attack: it is the king and every reachable square is attacked. exposes_king: every move it has would leave its king attacked in some other way; today the only case is a pawn whose one move is an en passant capture that opens a line to its king. mixed: more than one of these, for different squares. Squares that are blocked do not make a reason mixed when the piece has other moves that are excluded.",
       "type": "string",
-      "enum": ["blocked", "pinned", "king_in_check", "king_into_attack", "mixed"]
+      "enum": ["blocked", "pinned", "king_in_check", "king_into_attack", "exposes_king", "mixed"]
     },
     "SpecialMoveCode": {
       "description": "Why a special move is not available. no_right: the castling right is gone. path_blocked: a piece stands between king and rook. in_check: the king is in check, so it may not castle. path_attacked: the king would pass through or land on an attacked square. no_target: there is no en passant target this pawn can take. not_on_rank: the pawn is not on the rank from which it could promote. blocked: the promotion square is occupied and no capture onto the last rank is available. The L1 exclusion codes apply when the capture exists but is illegal.",
