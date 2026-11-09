@@ -1,27 +1,72 @@
-/* The shell's only styling. Colours of the tally marks are the four meanings
-   of concept 7.1 and nothing else is designed. */
+/* Instrument v0.1: the tokens of the design system, then the shell's
+   rules. Red, green, white and black appear only on the marks and in the
+   legend; blue only on the current state (selection, hover, current layer,
+   current move); everything else is ink and grey. */
 
 :root {
-  --light-square: #efd9b4;
-  --dark-square: #b08a62;
-  --threat: #d32f2f;
-  --defence: #2e9e3e;
+  /* Surfaces and text */
+  --page: #ffffff;
+  --panel: #f5f6f7;
+  --hairline: #eceef0;
+  --border: #d9dce0;
+  --text: #16181b;
+  --text-2: #3d434b;
+  --muted: #5b616b;
+  --disabled: #a3a8af;
+  --error: #b3261e;
+
+  /* Board */
+  --light-square: #e3e5e8;
+  --dark-square: #9ca2aa;
+  --board-frame: #3d434b;
+  --coordinate-light: rgb(22 24 27 / 0.55);
+  --coordinate-dark: rgb(22 24 27 / 0.6);
+
+  /* The four meanings of concept 7.1, each with the edge that keeps it visible on both square shades */
+  --threat: #b3261e;
+  --threat-edge: #5e0f0b;
+  --defence: #43a047;
+  --defence-edge: #134a18;
   --white-side: #ffffff;
-  --black-side: #111111;
-  --selected: #3b7dd8;
-  --destination: rgba(40, 90, 200, 0.55);
-  --check: #e53935;
-  --text: #1d1d1d;
-  --muted: #5a5a5a;
-  --panel: #fafafa;
-  --border: #d6d6d6;
-  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --white-side-edge: #3d434b;
+  --black-side: #16181b;
+  --black-side-edge: #e3e5e8;
+
+  /* Shell state: one interaction blue, and the threat colour for a king in check */
+  --selected: #1f5fd1;
+  --selected-tint: #e8effc;
+  --hovered: rgb(31 95 209 / 0.6);
+  --destination: rgb(31 95 209 / 0.5);
+  --check: #b3261e;
+
+  /* Type */
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "DejaVu Sans Mono", monospace;
+  --font-coordinate: Inter, system-ui, sans-serif;
+  --fs-title: 24px;
+  --fs-heading: 17px;
+  --fs-body: 14px;
+  --fs-small: 13px;
+  --fs-label: 11px;
+
+  /* Space and geometry */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --square: 72px;
+  --mark: 8px;
+  --mark-gap: 2px;
+
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
   color: var(--text);
 }
 
 * { box-sizing: border-box; }
 
-body { margin: 0; background: #ffffff; }
+body { margin: 0; background: var(--page); }
 
 #top { padding: 12px 16px 4px; }
 #top h1 { margin: 0 0 2px; font-size: 1.4rem; }
@@ -29,9 +74,9 @@ body { margin: 0; background: #ffffff; }
 #inputs { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: flex-start; }
 #fen-form { display: flex; gap: 8px; flex: 1 1 460px; max-width: 760px; }
 #pgn-form { display: flex; gap: 8px; flex: 1 1 360px; max-width: 760px; align-items: flex-start; }
-#pgn-input { flex: 1; font-family: ui-monospace, "DejaVu Sans Mono", monospace; font-size: 0.8rem; padding: 4px 6px; resize: vertical; min-height: 3.2em; }
-#fen-input { flex: 1; font-family: ui-monospace, "DejaVu Sans Mono", monospace; font-size: 0.9rem; padding: 4px 6px; }
-#message { min-height: 1.2em; margin: 4px 0 0; color: var(--threat); font-size: 0.9rem; }
+#pgn-input { flex: 1; font-family: var(--font-mono); font-size: 0.8rem; padding: 4px 6px; resize: vertical; min-height: 3.2em; }
+#fen-input { flex: 1; font-family: var(--font-mono); font-size: 0.9rem; padding: 4px 6px; }
+#message { min-height: 1.2em; margin: 4px 0 0; color: var(--error); font-size: 0.9rem; }
 
 #layout { display: grid; grid-template-columns: 600px minmax(360px, 1fr); gap: 16px; padding: 8px 16px 24px; align-items: start; }
 @media (max-width: 1000px) { #layout { grid-template-columns: 1fr; } }
@@ -39,7 +84,7 @@ body { margin: 0; background: #ffffff; }
 #toolbar { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px; margin-bottom: 8px; }
 #layer-selector { display: flex; gap: 4px; }
 .layer-option { padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-size: 0.9rem; }
-.layer-option.active { background: #e6eefc; border-color: var(--selected); }
+.layer-option.active { background: var(--selected-tint); border-color: var(--selected); }
 .layer-option input { margin-right: 4px; }
 #layer-note { margin: 0; color: var(--muted); font-size: 0.85rem; flex-basis: 100%; }
 #flip-board { padding: 4px 10px; font: inherit; font-size: 0.9rem; cursor: pointer; }
@@ -57,7 +102,7 @@ body { margin: 0; background: #ffffff; }
   display: grid;
   grid-template-columns: repeat(8, 72px);
   grid-template-rows: repeat(8, 72px);
-  border: 2px solid #5b4632;
+  border: 2px solid var(--board-frame);
   width: max-content;
   user-select: none;
 }
@@ -67,7 +112,7 @@ body { margin: 0; background: #ffffff; }
 .square.movable { cursor: pointer; }
 .square.destination-move, .square.destination-capture { cursor: pointer; }
 .square.selected { box-shadow: inset 0 0 0 4px var(--selected); }
-.square.hovered { box-shadow: inset 0 0 0 2px rgba(59, 125, 216, 0.6); }
+.square.hovered { box-shadow: inset 0 0 0 2px var(--hovered); }
 .square.selected.hovered { box-shadow: inset 0 0 0 4px var(--selected); }
 .square.in-check { background-image: radial-gradient(circle, rgba(229, 57, 53, 0.55) 0%, rgba(229, 57, 53, 0.25) 45%, transparent 70%); }
 
@@ -83,16 +128,17 @@ body { margin: 0; background: #ffffff; }
 .destination-mark { position: absolute; left: 50%; top: 50%; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; background: var(--destination); pointer-events: none; }
 .destination-capture .destination-mark { width: 62px; height: 62px; margin: -31px 0 0 -31px; background: transparent; border: 5px solid var(--destination); }
 
-.coordinate { position: absolute; right: 3px; top: 2px; font-size: 10px; color: rgba(0, 0, 0, 0.55); pointer-events: none; }
+.coordinate { position: absolute; right: 3px; top: 2px; font-size: 10px; color: var(--coordinate-light); pointer-events: none; }
+.square.dark .coordinate { color: var(--coordinate-dark); }
 
 /* Tallies: one 7px mark per unit, rows stacked at the bottom of the square. */
 .tallies { position: absolute; left: 3px; right: 3px; bottom: 3px; display: flex; flex-direction: column; gap: 2px; pointer-events: none; }
 .tally-row { display: flex; flex-wrap: wrap; gap: 2px; }
 .mark { display: inline-block; width: 7px; height: 7px; border: 1px solid transparent; }
-.tally-threat .mark, .legend-red { background: var(--threat); border-color: #7a1010; }
-.tally-defence .mark, .legend-green { background: var(--defence); border-color: #145a20; }
-.tally-white .mark, .legend-white { background: var(--white-side); border-color: #333333; }
-.tally-black .mark, .legend-black { background: var(--black-side); border-color: #dddddd; }
+.tally-threat .mark, .legend-red { background: var(--threat); border-color: var(--threat-edge); }
+.tally-defence .mark, .legend-green { background: var(--defence); border-color: var(--defence-edge); }
+.tally-white .mark, .legend-white { background: var(--white-side); border-color: var(--white-side-edge); }
+.tally-black .mark, .legend-black { background: var(--black-side); border-color: var(--black-side-edge); }
 
 .hover-card {
   position: absolute; top: 0; z-index: 10; min-width: 180px;
@@ -132,8 +178,8 @@ body { margin: 0; background: #ffffff; }
 #navigation { display: flex; gap: 4px; margin: 4px 0; }
 #navigation button { min-width: 36px; }
 #move-list { margin: 4px 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 2px 6px; font-size: 0.9rem; max-height: 220px; overflow: auto; }
-#move-list li.current .move { background: #e6eefc; border-color: var(--selected); }
+#move-list li.current .move { background: var(--selected-tint); border-color: var(--selected); }
 #move-list .move { border: 1px solid transparent; background: transparent; padding: 1px 4px; cursor: pointer; font: inherit; }
 #promotion button { margin: 4px 6px 0 0; }
 .loading, .fatal { padding: 16px; }
-.fatal { color: var(--threat); }
+.fatal { color: var(--error); }

@@ -39,6 +39,7 @@ import { createPositionCache } from "./cache.ts";
 import { el, replaceChildren } from "./dom.ts";
 import { renderBoard } from "./render-board.ts";
 import { renderPanel } from "./render-panels.ts";
+import "./fonts.ts";
 
 const STARTING_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 

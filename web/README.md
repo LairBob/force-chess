@@ -20,6 +20,14 @@ The first projection is the raw-values projection (concept 7.1): red tallies for
 
 `tsconfig.pure.json` typechecks `src/contract`, `src/record` and `src/projections` without the DOM library, so an import from the DOM there fails to compile.
 
+## Design system
+
+The shell follows Instrument v0.1, the design system on the Design canvas "Force Chess Design System" (2026-11-09). Its values are the `:root` tokens at the top of `src/shell/styles.css`: neutral greys, one interaction blue, and the four mark colours of concept 7.1, each with the edge colour that keeps it visible on both square shades.
+
+### Fonts
+
+IBM Plex Sans for words, IBM Plex Mono for figures, FEN and notation, and Inter ExtraBold for the square names on the board. They are vendored, not fetched from Google Fonts: an analysis board is opened offline and on machines that block font hosts, a page that asks a third party for its fonts falls back to the system font there and the figures would then be set in whatever monospace the machine has, and loading them from a host would also tell that host every time the board is opened. The vendoring goes through the fontsource packages (`@fontsource/ibm-plex-sans`, `@fontsource/ibm-plex-mono`, `@fontsource/inter`, SIL Open Font License 1.1, pinned in `package.json`) rather than through files committed under `public/fonts/`, so the binaries, their licence texts and their versions are tracked by npm like any other dependency and nothing binary is committed. `src/shell/fonts.ts` imports the Latin subset of only the weights the shell uses (Plex Sans 400, 500, 600; Plex Mono 400, 500; Inter 800), which Vite copies into `dist/`: six woff2 files, 128 KB in all, with their woff fallbacks beside them, against an 866 KB WebAssembly module.
+
 ## Install
 
 Node 22 and npm. The Rust toolchain, `wasm-pack` and the `wasm32-unknown-unknown` target as recorded in `core/README.md`.
