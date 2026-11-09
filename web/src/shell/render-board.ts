@@ -41,7 +41,8 @@ function renderTallies(rows: readonly TallyRow[]): HTMLElement {
   );
 }
 
-function renderSquare(scene: SquareScene, handlers: BoardHandlers): HTMLElement {
+/** One square. `column` is where it sits on the screen, 0 at the left, which decides the side its hover card opens on. */
+function renderSquare(scene: SquareScene, column: number, handlers: BoardHandlers): HTMLElement {
   const classes = ["square", scene.shade];
   if (scene.selected) classes.push("selected");
   if (scene.hovered) classes.push("hovered");
@@ -74,7 +75,7 @@ function renderSquare(scene: SquareScene, handlers: BoardHandlers): HTMLElement 
     scene.hover
       ? el(
           "div",
-          { className: `hover-card ${file >= "e" ? "to-left" : "to-right"}`, "data-hover-card": "" },
+          { className: `hover-card ${column >= 4 ? "to-left" : "to-right"}`, "data-hover-card": "" },
           ...scene.hover.map((pair) =>
             el("div", { className: "pair" }, el("span", { className: "label" }, pair.label), el("span", { className: "value" }, pair.value)),
           ),
@@ -86,6 +87,15 @@ function renderSquare(scene: SquareScene, handlers: BoardHandlers): HTMLElement 
   return node;
 }
 
-export function renderBoard(container: HTMLElement, scene: BoardScene, handlers: BoardHandlers): void {
-  replaceChildren(container, ...scene.squares.map((square) => renderSquare(square, handlers)));
+/** The containers the board is drawn into: the 64 squares, the file letters below them and the rank digits beside them. */
+export interface BoardNodes {
+  readonly squares: HTMLElement;
+  readonly files: HTMLElement;
+  readonly ranks: HTMLElement;
+}
+
+export function renderBoard(nodes: BoardNodes, scene: BoardScene, handlers: BoardHandlers): void {
+  replaceChildren(nodes.squares, ...scene.squares.map((square, index) => renderSquare(square, index % 8, handlers)));
+  replaceChildren(nodes.files, ...scene.files.map((file) => el("span", { className: "edge-label", "data-file-label": file }, file)));
+  replaceChildren(nodes.ranks, ...scene.ranks.map((rank) => el("span", { className: "edge-label", "data-rank-label": rank }, rank)));
 }

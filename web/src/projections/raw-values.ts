@@ -8,7 +8,7 @@
 
 import type { Color, ForceState, Layer, Promotion, Square, SquareRecord } from "../contract/index.ts";
 import { FILES, RANKS } from "../contract/index.ts";
-import type { InteractionContext } from "./context.ts";
+import { boardLayout, type InteractionContext } from "./context.ts";
 import type { BoardScene, LabelValue, SquareScene, TallyRow } from "./scene.ts";
 import { capitalise, otherSide } from "./words.ts";
 
@@ -101,16 +101,19 @@ export function destinations(
   return result;
 }
 
-/** The whole board as a scene: tallies at the selected layer, plus the marks the interaction context asks for. */
+/** The whole board as a scene: tallies at the selected layer, plus the marks the interaction context asks for, in the drawing order the orientation gives. */
 export function boardScene(state: ForceState, context: InteractionContext): BoardScene {
   const moves =
     context.selected !== null && state.pieces[context.selected]?.color === context.sideToMove
       ? destinations(state, context.selected)
       : new Map<Square, "move" | "capture">();
+  const layout = boardLayout(context.orientation);
   const squares: SquareScene[] = [];
-  for (let rankIndex = RANKS.length - 1; rankIndex >= 0; rankIndex -= 1) {
-    for (let fileIndex = 0; fileIndex < FILES.length; fileIndex += 1) {
-      const square = `${FILES[fileIndex]}${RANKS[rankIndex]}`;
+  for (const row of layout.rows) {
+    for (const square of row) {
+      // The shade belongs to the square, not to where it is drawn: a1 is dark from either side.
+      const fileIndex = FILES.indexOf(square[0] as (typeof FILES)[number]);
+      const rankIndex = RANKS.indexOf(square[1] as (typeof RANKS)[number]);
       const piece = state.pieces[square];
       const hovered = context.hovered === square;
       squares.push({
@@ -127,7 +130,7 @@ export function boardScene(state: ForceState, context: InteractionContext): Boar
       });
     }
   }
-  return { squares };
+  return { squares, files: layout.files, ranks: layout.ranks };
 }
 
 /** A one-line summary of what the tallies mean, for the legend. */
