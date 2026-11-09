@@ -104,16 +104,20 @@ body { margin: 0; background: var(--page); }
 .square.dark { background: var(--dark-square); }
 .square.movable { cursor: pointer; }
 .square.destination-move, .square.destination-capture { cursor: pointer; }
+/* Shell state, one channel each (none of it is force state): an inset edge for the selection, the hover and
+   a king in check; a dot or a ring for the selected piece's destinations. The marks keep the fill to themselves. */
 .square.selected { box-shadow: inset 0 0 0 4px var(--selected); }
 .square.hovered { box-shadow: inset 0 0 0 2px var(--hovered); }
 .square.selected.hovered { box-shadow: inset 0 0 0 4px var(--selected); }
-.square.in-check { background-image: radial-gradient(circle, rgba(229, 57, 53, 0.55) 0%, rgba(229, 57, 53, 0.25) 45%, transparent 70%); }
+.square.in-check { box-shadow: inset 0 0 0 3px var(--check); }
+.square.in-check.hovered { box-shadow: inset 0 0 0 2px var(--hovered), inset 0 0 0 5px var(--check); }
+.square.in-check.selected, .square.in-check.selected.hovered { box-shadow: inset 0 0 0 4px var(--selected), inset 0 0 0 7px var(--check); }
 
 /* The piece: a 46px image set 13px from the left and 6px from the top, clear of the name and the marks. */
 .piece { position: absolute; left: 13px; top: 6px; width: 46px; height: 46px; display: block; pointer-events: none; }
 
-.destination-mark { position: absolute; left: 50%; top: 50%; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; background: var(--destination); pointer-events: none; }
-.destination-capture .destination-mark { width: 62px; height: 62px; margin: -31px 0 0 -31px; background: transparent; border: 5px solid var(--destination); }
+.destination-mark { position: absolute; left: 27px; top: 27px; width: 18px; height: 18px; border-radius: 50%; background: var(--destination); pointer-events: none; }
+.destination-capture .destination-mark { left: 5px; top: 5px; width: 62px; height: 62px; background: transparent; border: 5px solid var(--destination); }
 
 /* The square's name, top right, in the one place Inter is used: translucent ink, so it reads as a deeper shade of the square. */
 .coordinate {
