@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://force-chess.dev/contract/game.schema.json",
+  "title": "Parsed game",
+  "description": "One chess game read from PGN text (concept section 6): where it starts, the moves of its main line in order, and the FEN after each move, with a few headers. This is a separate document from the force state and is versioned on its own. It holds nothing about forces: every position in it is analysed by its configuration key when a reader lands on it.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["gameVersion", "headers", "startFen", "moves", "gamesInText"],
+  "properties": {
+    "gameVersion": {
+      "description": "The version of this document's schema.",
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "headers": { "$ref": "#/$defs/Headers" },
+    "startFen": {
+      "description": "The full FEN of the position before the first move: the standard starting position, or the position a FEN header gives, written out in the same normalised way as every FEN after a move.",
+      "$ref": "#/$defs/Fen"
+    },
+    "moves": {
+      "description": "The main line, in the order played. Variations, comments and annotation glyphs in the text are not kept.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/Move" }
+    },
+    "gamesInText": {
+      "description": "How many games the text held. Only the first is parsed into this document.",
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "$defs": {
+    "Square": { "type": "string", "pattern": "^[a-h][1-8]$" },
+    "Fen": {
+      "description": "A full FEN: placement, side to move, castling rights, en passant square, halfmove clock, fullmove number. The en passant field is written only when an enemy pawn stands beside the pawn that just moved two squares, as the force-state contract keeps it.",
+      "type": "string",
+      "pattern": "^[pnbrqkPNBRQK1-8]+(/[pnbrqkPNBRQK1-8]+){7} [wb] (-|K?Q?k?q?) (-|[a-h][36]) [0-9]+ [0-9]+$"
+    },
+    "Headers": {
+      "description": "The seven standard headers. A header that is absent, or whose value is a PGN placeholder (empty, or made only of '?', '.' and '-'), is null.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event", "site", "date", "round", "white", "black", "result"],
+      "properties": {
+        "event": { "type": ["string", "null"] },
+        "site": { "type": ["string", "null"] },
+        "date": { "type": ["string", "null"] },
+        "round": { "type": ["string", "null"] },
+        "white": { "type": ["string", "null"] },
+        "black": { "type": ["string", "null"] },
+        "result": {
+          "description": "The Result header, or the result token that ends the move text when the header is missing. Null when the game's result is unknown.",
+          "type": ["string", "null"],
+          "enum": ["1-0", "0-1", "1/2-1/2", null]
+        }
+      }
+    },
+    "Move": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["san", "from", "to", "promotion", "fenAfter"],
+      "properties": {
+        "san": {
+          "description": "The move as the text wrote it, in standard algebraic notation, including any check or mate sign.",
+          "type": "string",
+          "minLength": 2
+        },
+        "from": { "$ref": "#/$defs/Square" },
+        "to": {
+          "description": "The destination. Castling is recorded as the king's two-square move, e1 to g1 for instance, as the force state records it.",
+          "$ref": "#/$defs/Square"
+        },
+        "promotion": {
+          "description": "The piece a pawn becomes, or null.",
+          "type": ["string", "null"],
+          "enum": ["knight", "bishop", "rook", "queen", null]
+        },
+        "fenAfter": {
+          "description": "The full FEN of the position once this move has been played.",
+          "$ref": "#/$defs/Fen"
+        }
+      }
+    }
+  }
+}

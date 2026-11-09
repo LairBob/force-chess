@@ -1,14 +1,15 @@
 // The analysis side, reached through the WebAssembly package built from
 // core/wasm/ (`npm run wasm`). This is the only module in web/ that knows
-// the package exists; everything else sees a force state and a FEN.
+// the package exists; everything else sees a force state, a parsed game
+// and FENs.
 
-import init, { analyze as analyzeRaw, applyMove as applyMoveRaw, contractVersion } from "../../../core/wasm/pkg/force_core_wasm.js";
+import init, { analyze as analyzeRaw, applyMove as applyMoveRaw, contractVersion, parseGame as parseGameRaw } from "../../../core/wasm/pkg/force_core_wasm.js";
 import wasmUrl from "../../../core/wasm/pkg/force_core_wasm_bg.wasm?url";
-import type { ForceState, Promotion } from "../contract/index.ts";
+import type { ForceState, ParsedGame, Promotion } from "../contract/index.ts";
 
 /** A refusal from the core, with its code and plain-words sentence. */
 export interface CoreError {
-  readonly code: "unreadable" | "impossible" | "illegal_move" | "bad_square";
+  readonly code: "unreadable" | "impossible" | "illegal_move" | "bad_square" | "no_game";
   readonly text: string;
 }
 
@@ -40,6 +41,8 @@ export interface ForceCore {
   readonly contractVersion: string;
   analyze(fen: string): Analysis;
   applyMove(fen: string, from: string, to: string, promotion: Promotion | null): string;
+  /** The first game in a PGN text, with the FEN after every move. */
+  parseGame(pgn: string): ParsedGame;
 }
 
 export async function loadForceCore(): Promise<ForceCore> {
@@ -67,6 +70,15 @@ export async function loadForceCore(): Promise<ForceCore> {
       } catch (error) {
         rethrow(error);
       }
+    },
+    parseGame(pgn) {
+      let text: string;
+      try {
+        text = parseGameRaw(pgn);
+      } catch (error) {
+        rethrow(error);
+      }
+      return JSON.parse(text) as ParsedGame;
     },
   };
 }

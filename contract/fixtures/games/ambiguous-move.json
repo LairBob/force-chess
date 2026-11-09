@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "illegal_move",
+    "text": "White's 3rd move, Nd2, could be made by more than one white knight, so it is not clear which is meant."
+  }
+}

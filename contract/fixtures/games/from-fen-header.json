@@ -1,0 +1,37 @@
+{
+  "gameVersion": "0.1.0",
+  "gamesInText": 1,
+  "headers": {
+    "black": null,
+    "date": null,
+    "event": "Endgame study",
+    "result": null,
+    "round": null,
+    "site": null,
+    "white": null
+  },
+  "moves": [
+    {
+      "fenAfter": "8/3k4/8/8/8/8/4P3/4K3 w - - 6 31",
+      "from": "e8",
+      "promotion": null,
+      "san": "Kd7",
+      "to": "d7"
+    },
+    {
+      "fenAfter": "8/3k4/8/8/4P3/8/8/4K3 b - - 0 31",
+      "from": "e2",
+      "promotion": null,
+      "san": "e4",
+      "to": "e4"
+    },
+    {
+      "fenAfter": "8/8/4k3/8/4P3/8/8/4K3 w - - 1 32",
+      "from": "d7",
+      "promotion": null,
+      "san": "Ke6",
+      "to": "e6"
+    }
+  ],
+  "startFen": "4k3/8/8/8/8/8/4P3/4K3 b - - 5 30"
+}

@@ -1,0 +1,65 @@
+{
+  "gameVersion": "0.1.0",
+  "gamesInText": 2,
+  "headers": {
+    "black": "Bob",
+    "date": "2026.11.09",
+    "event": "Casual game",
+    "result": "1-0",
+    "round": "1",
+    "site": "Nowhere",
+    "white": "Alice"
+  },
+  "moves": [
+    {
+      "fenAfter": "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1",
+      "from": "e2",
+      "promotion": null,
+      "san": "e4",
+      "to": "e4"
+    },
+    {
+      "fenAfter": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+      "from": "e7",
+      "promotion": null,
+      "san": "e5",
+      "to": "e5"
+    },
+    {
+      "fenAfter": "rnbqkbnr/pppp1ppp/8/4p2Q/4P3/8/PPPP1PPP/RNB1KBNR b KQkq - 1 2",
+      "from": "d1",
+      "promotion": null,
+      "san": "Qh5",
+      "to": "h5"
+    },
+    {
+      "fenAfter": "r1bqkbnr/pppp1ppp/2n5/4p2Q/4P3/8/PPPP1PPP/RNB1KBNR w KQkq - 2 3",
+      "from": "b8",
+      "promotion": null,
+      "san": "Nc6",
+      "to": "c6"
+    },
+    {
+      "fenAfter": "r1bqkbnr/pppp1ppp/2n5/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 3 3",
+      "from": "f1",
+      "promotion": null,
+      "san": "Bc4",
+      "to": "c4"
+    },
+    {
+      "fenAfter": "r1bqkb1r/pppp1ppp/2n2n2/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq - 4 4",
+      "from": "g8",
+      "promotion": null,
+      "san": "Nf6",
+      "to": "f6"
+    },
+    {
+      "fenAfter": "r1bqkb1r/pppp1Qpp/2n2n2/4p3/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 0 4",
+      "from": "h5",
+      "promotion": null,
+      "san": "Qxf7#",
+      "to": "f7"
+    }
+  ],
+  "startFen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+}

@@ -1,0 +1,13 @@
+[Event "Casual game"]
+[Site "Nowhere"]
+[Date "2026.11.09"]
+[Round "1"]
+[White "Alice"]
+[Black "Bob"]
+[Result "1-0"]
+[Annotator "Someone"]
+
+{ The same game as short-game, with everything a reader must skip. }
+1. e4 {The king's pawn.} e5 2. Qh5?! $6 (2. Nf3 {is the usual move} Nc6 3. Bb5)
+2... Nc6 3. Bc4 Nf6?? $4 ; a blunder, as the next move shows
+4. Qxf7# $18 1-0

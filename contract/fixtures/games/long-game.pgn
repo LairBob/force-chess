@@ -1,0 +1,18 @@
+[Event "Generated"]
+[Site "A scratch program on shakmaty"]
+[Date "2026.11.09"]
+[White "Random mover"]
+[Black "Random mover"]
+[Result "*"]
+
+1. a3 Nh6 2. c3 g5 3. Nh3 c5 4. Nf4 Ng4 5. h3 Nc6 6. d4 b5 7. Nd2 Nb4 8. Ra2 a5
+9. Nh5 Nxf2 10. b3 Ra6 11. c4 e6 12. Ne4 d6 13. Bf4 Ra8 14. cxb5 g4 15. Nhg3
+cxd4 16. Qd2 Bg7 17. Ra1 Rf8 18. e3 a4 19. Rb1 dxe3 20. Qc1 Rg8 21. Bh6 Be5
+22. Nc5 f5 23. Bg5 Ba6 24. Ke2 Kf8 25. bxa4 Qa5 26. Qc2 Bc8 27. Qc3 Nc2 28. Rb2
+Bf6 29. Qd2 Qb4 30. Qe1 Nxa3 31. Ra2 Rg7 32. Qc1 Qxa4 33. Qxe3 f4 34. Qc1 Qa5
+35. Rg1 Bc3 36. Qb1 Nh1 37. Bxf4 Qa6 38. Qe1 Ba5 39. Be3 Bc7 40. Qc3 Rd7
+41. Ke1 Rg7 42. Nce4 Ra7 43. Nf6 Re7 44. Bd2 Qa5 45. Qa1 Bd8 46. Qb1 Rf7
+47. Bd3 Qb4 48. Bc2 h6 49. Be4 Nxb5 50. Nf1 Rab7 51. Ra3 h5 52. Qb2 Bc7 53. Ra4
+Ke7 54. Bxb7 Rxf6 55. Ba8 Nc3 56. Ne3 Rh6 57. Nd1 Nxa4 58. Qa2 Rh7 59. Bc3 Ba5
+60. Qe2 Bb6 61. Rxh1 Qc5 62. Qc4 Kf7 63. Ne3 Rh8 64. Qxg4 Nb2 65. Nf5 Qa5
+66. Qa4 d5 67. Kd2 Nxa4 68. Bxa5 Bd7 69. Rf1 Rd8 70. Kc2 Nb2 *

@@ -8,7 +8,9 @@ use std::fmt;
 
 use sha2::{Digest, Sha256};
 use shakmaty::fen::Fen;
-use shakmaty::{Bitboard, Board, ByColor, Color, File, Piece, Rank, Role, Square};
+use shakmaty::{
+    Bitboard, Board, ByColor, CastlingMode, Chess, Color, File, Piece, Rank, Role, Square,
+};
 
 use crate::words::{color_name, join_and, piece_on};
 
@@ -282,6 +284,31 @@ fn normalise_en_passant(
         capturable_by: capturer,
         pawn_to_capture,
     }))
+}
+
+/// The FEN as a playable shakmaty position, for the rules that need one
+/// (playing a move, reading a game). The configuration checks above run
+/// first so the sentences match, then the two shakmaty refusals that the
+/// force state ignores (an "impossible" check, too much material) are
+/// ignored here too.
+pub fn position_from_fen(fen: &str) -> Result<Chess, ConfigError> {
+    parse(fen)?;
+    let parsed = Fen::from_ascii(fen.trim().as_bytes()).map_err(|err| {
+        ConfigError::Unreadable(format!(
+            "This text cannot be read as a FEN position ({err}): \"{}\".",
+            fen.trim()
+        ))
+    })?;
+    let mut result = parsed.into_position::<Chess>(CastlingMode::Standard);
+    if let Err(err) = result {
+        result = err.ignore_impossible_check();
+    }
+    if let Err(err) = result {
+        result = err.ignore_too_much_material();
+    }
+    result.map_err(|err| {
+        ConfigError::Impossible(format!("This position cannot be played from: {err}."))
+    })
 }
 
 #[cfg(test)]

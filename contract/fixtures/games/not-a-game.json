@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "no_game",
+    "text": "This text contains no chess game: no headers and no moves were found."
+  }
+}

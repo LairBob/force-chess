@@ -2,7 +2,7 @@
 name = "force-core-wasm"
 version = "0.1.0"
 edition = "2024"
-rust-version = "1.85"
+rust-version = "1.97"
 license = "GPL-3.0-or-later"
 description = "WebAssembly bindings for force-core: the force state and legal-move application for the web shell."
 repository = "https://github.com/LairBob/force-chess"
