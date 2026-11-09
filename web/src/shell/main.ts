@@ -8,6 +8,7 @@ import { isCoreError, loadForceCore, type ForceCore } from "../core/force-core.t
 import {
   boardScene,
   destinations,
+  type Orientation,
   LAYER_EXPLANATIONS,
   LAYER_NAMES,
   moveNotation,
@@ -44,6 +45,8 @@ const STARTING_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 interface ShellState {
   record: GameRecord;
   layer: Layer;
+  /** The side at the bottom of the screen. A viewing choice, so it is kept out of the URL and not stored. */
+  orientation: Orientation;
   selected: Square | null;
   hovered: Square | null;
   /** A promotion waiting for the piece to be chosen. */
@@ -93,6 +96,7 @@ async function start(): Promise<void> {
   const shell: ShellState = {
     record: recordFromFen(startFen),
     layer: "L0",
+    orientation: "white",
     selected: null,
     hovered: null,
     pendingPromotion: null,
@@ -120,7 +124,11 @@ async function start(): Promise<void> {
   const statusLine = el("p", { id: "status" });
   const layerSelector = el("div", { id: "layer-selector", role: "radiogroup", "aria-label": "Layer" });
   const layerNote = el("p", { id: "layer-note" });
+  const flipButton = el("button", { type: "button", id: "flip-board" }, "Flip board");
   const boardNode = el("div", { id: "board", role: "grid", "aria-label": "Board" });
+  const fileLabels = el("div", { id: "file-labels", "aria-hidden": "true" });
+  const rankLabels = el("div", { id: "rank-labels", "aria-hidden": "true" });
+  const boardFrame = el("div", { id: "board-frame" }, rankLabels, boardNode, fileLabels);
   const navigation = el("div", { id: "navigation" });
   const gameLine = el("p", { id: "game-headers" });
   const moveList = el("ol", { id: "move-list" });
@@ -157,8 +165,8 @@ async function start(): Promise<void> {
       el(
         "div",
         { id: "board-column" },
-        el("div", { id: "toolbar" }, layerSelector, layerNote),
-        boardNode,
+        el("div", { id: "toolbar" }, layerSelector, flipButton, layerNote),
+        boardFrame,
         statusLine,
         legend,
       ),
@@ -177,6 +185,12 @@ async function start(): Promise<void> {
 
   function setLayer(layer: Layer): void {
     shell.layer = layer;
+    render();
+  }
+
+  /** Turns the board half a turn. Nothing is analysed again: the same positions are drawn from the other side. */
+  function flip(): void {
+    shell.orientation = shell.orientation === "white" ? "black" : "white";
     render();
   }
 
@@ -299,6 +313,11 @@ async function start(): Promise<void> {
       ),
     );
     layerNote.textContent = LAYER_EXPLANATIONS[shell.layer];
+    const bottom = shell.orientation === "white" ? "White" : "Black";
+    const top = shell.orientation === "white" ? "black" : "white";
+    flipButton.title = `${bottom} is at the bottom. Press to look at the board from ${top}'s side (shortcut: f).`;
+    flipButton.setAttribute("aria-label", `Flip the board. ${bottom} is at the bottom.`);
+    boardFrame.dataset["bottom"] = shell.orientation;
 
     const sides = (["white", "black"] as const).map(
       (color) => `${color === "white" ? "White" : "Black"}: ${state.sides[color].status}, ${state.sides[color].legalMoveCount} legal moves`,
@@ -376,8 +395,14 @@ async function start(): Promise<void> {
     document.documentElement.dataset["analysedPositions"] = String(cache.size);
     const toMove = sideToMove(currentFen(shell.record));
     renderBoard(
-      boardNode,
-      boardScene(state, { layer: shell.layer, selected: shell.selected, hovered: shell.hovered, sideToMove: toMove }),
+      { squares: boardNode, files: fileLabels, ranks: rankLabels },
+      boardScene(state, {
+        layer: shell.layer,
+        selected: shell.selected,
+        hovered: shell.hovered,
+        sideToMove: toMove,
+        orientation: shell.orientation,
+      }),
       { onSquareClick, onSquareHover },
     );
     renderControls(state, toMove);
@@ -394,6 +419,7 @@ async function start(): Promise<void> {
   }
 
   boardNode.addEventListener("mouseleave", () => onSquareHover(null));
+  flipButton.addEventListener("click", flip);
   document.getElementById("fen-form")?.addEventListener("submit", (event) => {
     event.preventDefault();
     loadFen(fenInput.value);
@@ -421,6 +447,11 @@ async function start(): Promise<void> {
         shell.selected = null;
         shell.pendingPromotion = null;
         render();
+        break;
+      case "f":
+        // A plain f only: the browser keeps Ctrl+F and the like.
+        if (event.ctrlKey || event.metaKey || event.altKey) return;
+        flip();
         break;
       default:
         return;
