@@ -104,7 +104,9 @@ impl Context<'_> {
     /// Runs the single hypothetical-move test. None means legal.
     pub fn test(&self, trial: Trial) -> Option<Exclusion> {
         let board = self.board();
-        let mover = board.piece_at(trial.from).expect("the mover stands on its square");
+        let mover = board
+            .piece_at(trial.from)
+            .expect("the mover stands on its square");
         let after = board_after(board, trial);
         // A piece reaching its own king's square: the test removes whatever
         // stands on the target, which here is the king itself, so no king of
@@ -150,7 +152,9 @@ impl Context<'_> {
     /// The plain-words sentence for an exclusion of this trial.
     pub fn explain(&self, trial: Trial, exclusion: &Exclusion) -> String {
         let board = self.board();
-        let mover = board.piece_at(trial.from).expect("the mover stands on its square");
+        let mover = board
+            .piece_at(trial.from)
+            .expect("the mover stands on its square");
         let subject = sentence_case(&piece_on(mover, trial.from));
         let action = self.action(trial, mover);
         let king_square = board.king_of(mover.color).expect("each side has one king");

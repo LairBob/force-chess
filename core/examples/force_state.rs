@@ -24,7 +24,9 @@ fn main() -> ExitCode {
         }
     }
     if words.is_empty() {
-        eprintln!("Give a position as a FEN, for example:\n  cargo run --example force_state -- \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\"");
+        eprintln!(
+            "Give a position as a FEN, for example:\n  cargo run --example force_state -- \"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\""
+        );
         return ExitCode::FAILURE;
     }
     // A FEN has spaces in it; accept it quoted as one argument or unquoted as several.

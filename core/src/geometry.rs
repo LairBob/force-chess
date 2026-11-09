@@ -168,7 +168,15 @@ fn piece_reaches(board: &Board, from: Square, piece: Piece, geometry: &mut Geome
             continue;
         }
         for direction in directions {
-            walk_line(board, from, piece, direction, diagonal, &mut reaches, geometry);
+            walk_line(
+                board,
+                from,
+                piece,
+                direction,
+                diagonal,
+                &mut reaches,
+                geometry,
+            );
         }
     }
     reaches

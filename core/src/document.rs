@@ -352,7 +352,9 @@ pub fn build(config: &Configuration) -> ForceState {
     let mut edges = Vec::new();
     let mut edge_records = Vec::new();
     for reach in &geometry.reaches {
-        let mover = board.piece_at(reach.from).expect("the reaching piece stands here");
+        let mover = board
+            .piece_at(reach.from)
+            .expect("the reaching piece stands here");
         let defence = board.color_at(reach.to) == Some(mover.color);
         let trial = Trial {
             from: reach.from,
@@ -478,11 +480,13 @@ fn configuration_record(config: &Configuration) -> ConfigurationRecord {
             white: rights(Color::White),
             black: rights(Color::Black),
         },
-        en_passant: config.en_passant.map(|ep: EnPassantTarget| EnPassantRecord {
-            square: ep.square.to_string(),
-            capturable_by: color_name(ep.capturable_by),
-            pawn_to_capture: ep.pawn_to_capture.to_string(),
-        }),
+        en_passant: config
+            .en_passant
+            .map(|ep: EnPassantTarget| EnPassantRecord {
+                square: ep.square.to_string(),
+                capturable_by: color_name(ep.capturable_by),
+                pawn_to_capture: ep.pawn_to_capture.to_string(),
+            }),
     }
 }
 
@@ -778,7 +782,9 @@ fn no_legal_moves(ctx: &Context, square: Square, piece: Piece) -> Reason {
                 "{subject} cannot move: every square it could go to is attacked by the enemy."
             ),
             Exclusion::ExposesKing { .. } => {
-                format!("{subject} cannot move: every move it has would leave its own king attacked. {detail}")
+                format!(
+                    "{subject} cannot move: every move it has would leave its own king attacked. {detail}"
+                )
             }
         };
         return Reason {
@@ -980,8 +986,11 @@ fn promotion(ctx: &Context, square: Square, piece: Piece, all_moves: &[LegalMove
                 "blocked",
                 format!(
                     "{subject} cannot promote: the square in front of it is occupied by {} and there is nothing to capture on the last rank.",
-                    geometry::step(square, (0, if piece.color == Color::White { 1 } else { -1 }))
-                        .map_or_else(|| "nothing".to_string(), |ahead| named(board, ahead))
+                    geometry::step(
+                        square,
+                        (0, if piece.color == Color::White { 1 } else { -1 })
+                    )
+                    .map_or_else(|| "nothing".to_string(), |ahead| named(board, ahead))
                 ),
             ),
         },

@@ -209,7 +209,10 @@ pub fn castling_squares(color: Color, kingside: bool) -> (Vec<Square>, Vec<Squar
     let rank = color.backrank();
     let at = |file: File| Square::from_coords(file, rank);
     if kingside {
-        (vec![at(File::F), at(File::G)], vec![at(File::F), at(File::G)])
+        (
+            vec![at(File::F), at(File::G)],
+            vec![at(File::F), at(File::G)],
+        )
     } else {
         (
             vec![at(File::D), at(File::C)],
@@ -353,7 +356,9 @@ pub fn castling_possible(ctx: &Context, color: Color, kingside: bool) -> bool {
 pub fn lookaheads(board: &Board, moves: &[LegalMove]) -> Vec<Lookahead> {
     let mut entries = Vec::new();
     for mv in moves {
-        let color = board.color_at(mv.from).expect("the mover stands on its square");
+        let color = board
+            .color_at(mv.from)
+            .expect("the mover stands on its square");
         match mv.rook {
             Some((rook_from, rook_to)) => {
                 let mut after = board.clone();

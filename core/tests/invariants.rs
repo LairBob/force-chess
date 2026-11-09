@@ -107,16 +107,25 @@ fn legal_moves_agree_with_l1_reach() {
                 .unwrap()
                 .iter()
                 .map(|i| &doc["relations"]["lookaheads"][i.as_u64().unwrap() as usize]["move"])
-                .filter(|mv| mv["from"] == square.as_str() && !mv["kind"].as_str().unwrap().starts_with("castle"))
+                .filter(|mv| {
+                    mv["from"] == square.as_str()
+                        && !mv["kind"].as_str().unwrap().starts_with("castle")
+                })
                 .map(|mv| mv["to"].as_str().unwrap().to_string())
                 .collect();
             let reach: BTreeSet<String> = edges
                 .iter()
-                .filter(|e| e["from"] == square.as_str() && e["kind"] == "direct" && e["L1"]["legal"] == true)
+                .filter(|e| {
+                    e["from"] == square.as_str()
+                        && e["kind"] == "direct"
+                        && e["L1"]["legal"] == true
+                })
                 .filter(|e| {
                     let to = e["to"].as_str().unwrap();
                     let occupant = &doc["pieces"][to];
-                    let enemy_piece = !occupant.is_null() && occupant["color"] != color && occupant["type"] != "king";
+                    let enemy_piece = !occupant.is_null()
+                        && occupant["color"] != color
+                        && occupant["type"] != "king";
                     if piece["type"] == "pawn" {
                         enemy_piece || (Some(to) == ep_square && Some(color) == ep_side)
                     } else {
@@ -126,17 +135,25 @@ fn legal_moves_agree_with_l1_reach() {
                 .map(|e| e["to"].as_str().unwrap().to_string())
                 .collect();
             if piece["type"] == "pawn" {
-                assert!(reach.is_subset(&moves), "{fen}: pawn {square} captures {reach:?} vs moves {moves:?}");
+                assert!(
+                    reach.is_subset(&moves),
+                    "{fen}: pawn {square} captures {reach:?} vs moves {moves:?}"
+                );
                 let pushes: BTreeSet<&String> = moves.difference(&reach).collect();
                 for push in pushes {
-                    assert_eq!(&push[..1], &square[..1], "{fen}: pawn {square} moves to {push} without reach");
+                    assert_eq!(
+                        &push[..1],
+                        &square[..1],
+                        "{fen}: pawn {square} moves to {push} without reach"
+                    );
                 }
             } else {
                 assert_eq!(reach, moves, "{fen}: {square}");
             }
             assert_eq!(
                 piece["mobility"].as_u64().unwrap() as usize,
-                moves.len() + usize::from(piece["specialMoves"]["castleKingside"]["available"] == true)
+                moves.len()
+                    + usize::from(piece["specialMoves"]["castleKingside"]["available"] == true)
                     + usize::from(piece["specialMoves"]["castleQueenside"]["available"] == true),
                 "{fen}: mobility of {square}"
             );
@@ -157,7 +174,12 @@ fn every_document_is_valid_against_the_schema() {
         }
         checked += 1;
     }
-    assert!(problems.is_empty(), "{} problems in {checked} documents:\n{}", problems.len(), problems.join("\n"));
+    assert!(
+        problems.is_empty(),
+        "{} problems in {checked} documents:\n{}",
+        problems.len(),
+        problems.join("\n")
+    );
 }
 
 /// When one king is in check, shakmaty refuses the position with the other
@@ -176,7 +198,10 @@ fn side_whose_opponent_is_in_check_moves_by_the_standard_rules() {
     };
     let (black, source) = moves::legal_moves(&ctx, Color::Black);
     assert_eq!(source, Source::OwnGenerator);
-    let listed: Vec<String> = black.iter().map(|m| format!("{}{}", m.from, m.to)).collect();
+    let listed: Vec<String> = black
+        .iter()
+        .map(|m| format!("{}{}", m.from, m.to))
+        .collect();
     assert_eq!(
         listed,
         [

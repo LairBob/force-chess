@@ -77,13 +77,7 @@ impl SchemaCheck {
     pub fn errors(&self, document: &Value) -> Vec<String> {
         self.validator
             .iter_errors(document)
-            .map(|err| {
-                format!(
-                    "{} violation at {}: {err}",
-                    self.name,
-                    err.instance_path()
-                )
-            })
+            .map(|err| format!("{} violation at {}: {err}", self.name, err.instance_path()))
             .collect()
     }
 }

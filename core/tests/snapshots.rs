@@ -58,13 +58,20 @@ fn every_snapshot_matches_the_current_force_state() {
             failures.push(format!("snapshot {file}: {error}"));
         }
         if stored != current {
-            failures.push(format!("snapshot {file} differs from the current force state:\n{}", first_difference(&stored, &current)));
+            failures.push(format!(
+                "snapshot {file} differs from the current force state:\n{}",
+                first_difference(&stored, &current)
+            ));
         }
     }
 
     if !update && dir.exists() {
         for entry in fs::read_dir(&dir).expect("the snapshot directory can be read") {
-            let name = entry.expect("a directory entry").file_name().to_string_lossy().into_owned();
+            let name = entry
+                .expect("a directory entry")
+                .file_name()
+                .to_string_lossy()
+                .into_owned();
             if name.ends_with(".json") && !expected_files.contains(&name) {
                 failures.push(format!(
                     "snapshot {name} has no targeted fixture of the same id; remove it or restore its fixture"

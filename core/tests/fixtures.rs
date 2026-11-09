@@ -46,7 +46,9 @@ fn every_targeted_fixture_passes() {
         for error in state_schema.errors(&doc) {
             failures.push(format!("fixture {id}: {error}"));
         }
-        let assertions = fixture["assertions"].as_array().expect("assertions are a list");
+        let assertions = fixture["assertions"]
+            .as_array()
+            .expect("assertions are a list");
         for (n, assertion) in assertions.iter().enumerate() {
             assertions_run += 1;
             if let Err(mismatch) = evaluate(&doc, assertion) {
@@ -150,7 +152,9 @@ fn reference_of(doc: &Value, square: &str) -> String {
 }
 
 fn edges(doc: &Value) -> &Vec<Value> {
-    doc["relations"]["edges"].as_array().expect("edges are a list")
+    doc["relations"]["edges"]
+        .as_array()
+        .expect("edges are a list")
 }
 
 fn lookaheads(doc: &Value) -> &Vec<Value> {
@@ -171,7 +175,9 @@ fn indices(value: &Value) -> Vec<usize> {
 }
 
 fn find_edge<'a>(doc: &'a Value, from: &str, to: &str) -> Option<&'a Value> {
-    edges(doc).iter().find(|e| e["from"] == from && e["to"] == to)
+    edges(doc)
+        .iter()
+        .find(|e| e["from"] == from && e["to"] == to)
 }
 
 fn color_of(doc: &Value, square: &str) -> String {
@@ -379,7 +385,10 @@ fn square_attackers(doc: &Value, a: &Value) -> Outcome {
         && !includes.is_subset(&found)
     {
         return Err(mismatch(
-            format!("{color} at {layer} on {square} including {}", show(&includes)),
+            format!(
+                "{color} at {layer} on {square} including {}",
+                show(&includes)
+            ),
             show(&found),
         ));
     }
@@ -392,7 +401,11 @@ fn square_attackers(doc: &Value, a: &Value) -> Outcome {
         ));
     }
     if let Some(count) = expect.get("count") {
-        same(count, &json!(found.len()), &format!("{color} count at {layer} on {square}"))?;
+        same(
+            count,
+            &json!(found.len()),
+            &format!("{color} count at {layer} on {square}"),
+        )?;
     }
     Ok(())
 }
@@ -436,7 +449,11 @@ fn valuation(doc: &Value, a: &Value) -> Outcome {
         } else {
             doc["valuationScale"][occupant["type"].as_str().expect("a piece type")].clone()
         };
-        same(occupant_value, &found_value, &format!("occupant value on {square}"))?;
+        same(
+            occupant_value,
+            &found_value,
+            &format!("occupant value on {square}"),
+        )?;
     }
     Ok(())
 }
@@ -488,7 +505,9 @@ fn xray(doc: &Value, a: &Value) -> Outcome {
             format!("{piece} and {through} are the same colour"),
         ));
     }
-    let all = doc["relations"]["xrays"].as_array().expect("xrays are a list");
+    let all = doc["relations"]["xrays"]
+        .as_array()
+        .expect("xrays are a list");
     let Some(relation) = all
         .iter()
         .find(|x| x["piece"] == piece.as_str() && x["through"] == through.as_str())
@@ -512,12 +531,20 @@ fn piece_constraint(doc: &Value, a: &Value) -> Outcome {
         same(pinned, &json!(!constraints["pinned"].is_null()), "pinned")?;
     }
     if let Some(in_check) = expect.get("inCheck") {
-        same(in_check, &json!(!constraints["inCheck"].is_null()), "inCheck")?;
+        same(
+            in_check,
+            &json!(!constraints["inCheck"].is_null()),
+            "inCheck",
+        )?;
     }
     if let Some(no_moves) = expect.get("noLegalMoves") {
         let found = &constraints["noLegalMoves"];
         match no_moves {
-            Value::Bool(present) => same(&json!(present), &json!(!found.is_null()), "noLegalMoves present")?,
+            Value::Bool(present) => same(
+                &json!(present),
+                &json!(!found.is_null()),
+                "noLegalMoves present",
+            )?,
             code => same(code, &found["code"], "noLegalMoves code")?,
         }
     }
@@ -715,6 +742,9 @@ fn relation_count(doc: &Value, a: &Value) -> Outcome {
     same(
         &a["expect"],
         &json!(count),
-        &format!("number of {kind} relations{}", color.map(|c| format!(" for {c}")).unwrap_or_default()),
+        &format!(
+            "number of {kind} relations{}",
+            color.map(|c| format!(" for {c}")).unwrap_or_default()
+        ),
     )
 }

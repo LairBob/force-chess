@@ -185,7 +185,9 @@ fn check_kings(board: &Board) -> Result<(), ConfigError> {
 fn check_pawn_ranks(board: &Board) -> Result<(), ConfigError> {
     let stranded = board.pawns() & Bitboard::BACKRANKS;
     if let Some(square) = stranded.first() {
-        let piece = board.piece_at(square).expect("a pawn stands on this square");
+        let piece = board
+            .piece_at(square)
+            .expect("a pawn stands on this square");
         return Err(ConfigError::Impossible(format!(
             "{} stands on the first or last rank, where no pawn can ever be: a pawn reaching the far end is promoted at once, and a pawn never stands behind its starting rank.",
             crate::words::sentence_case(&piece_on(piece, square))
@@ -244,7 +246,12 @@ fn normalise_en_passant(
         "The en passant square {square} says a {} pawn has just moved two squares, from {origin} to {pawn_to_capture}",
         color_name(mover)
     );
-    if board.piece_at(pawn_to_capture) != Some(Piece { color: mover, role: Role::Pawn }) {
+    if board.piece_at(pawn_to_capture)
+        != Some(Piece {
+            color: mover,
+            role: Role::Pawn,
+        })
+    {
         return Err(ConfigError::Impossible(format!(
             "{story}, but there is no {} pawn on {pawn_to_capture}.",
             color_name(mover)
@@ -262,9 +269,8 @@ fn normalise_en_passant(
             piece_on(piece, origin)
         )));
     }
-    let beside = shakmaty::attacks::pawn_attacks(mover, square)
-        & board.pawns()
-        & board.by_color(capturer);
+    let beside =
+        shakmaty::attacks::pawn_attacks(mover, square) & board.pawns() & board.by_color(capturer);
     // pawn_attacks(mover, target) gives the two squares diagonally behind the
     // target from the capturer's side, which are exactly the squares beside
     // the pawn to capture.
