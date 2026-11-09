@@ -1,0 +1,27 @@
+{
+  "format": "force-chess/targeted-fixture/0.1",
+  "id": "pawn-diagonal-control",
+  "fen": "4k3/8/8/8/3P4/8/8/4K3 w - - 0 1",
+  "description": "A lone white pawn on d4 controls the empty squares c5 and e5 diagonally, does not attack the square d5 straight ahead that it can move to, and after moving to d5 would control c6 and e6 instead.",
+  "decisions": [
+    "A pawn's diagonal squares are attacked whether or not anything stands on them; the attack on an empty square is legal at L1 when the pawn is not pinned off that diagonal, tested as if an enemy piece were there to capture.",
+    "The square straight ahead is a move destination, never an attack.",
+    "A pawn not on its seventh rank reports promotion as unavailable with reason not_on_rank."
+  ],
+  "assertions": [
+    { "assert": "attacks", "piece": "white pawn d4", "square": "e5", "layer": "L0", "expect": true },
+    { "assert": "attacks", "piece": "white pawn d4", "square": "e5", "layer": "L1", "expect": true },
+    { "assert": "attacks", "piece": "white pawn d4", "square": "c5", "layer": "L1", "expect": true },
+    { "assert": "attacks", "piece": "white pawn d4", "square": "d5", "layer": "L0", "expect": false },
+    { "assert": "attackKind", "piece": "white pawn d4", "square": "e5", "kind": "direct", "path": [] },
+    { "assert": "squareAttackers", "square": "e5", "layer": "L0", "color": "white", "expect": { "equals": ["white pawn d4"] } },
+    { "assert": "control", "square": "e5", "layer": "L0", "expect": "white" },
+    { "assert": "control", "square": "e5", "layer": "L1", "expect": "white" },
+    { "assert": "control", "square": "d5", "layer": "L0", "expect": "none" },
+    { "assert": "valuation", "square": "e5", "layer": "L0", "expect": { "white": { "count": 1, "value": 1 }, "net": { "count": 1, "value": 1 }, "occupantValue": null } },
+    { "assert": "mobility", "piece": "white pawn d4", "expect": 1, "destinations": ["d5"] },
+    { "assert": "lookahead", "piece": "white pawn d4", "to": "d5", "attacks": { "includes": ["c6", "e6"], "excludes": ["d6", "c5", "e5"] } },
+    { "assert": "squareAttackers", "square": "e5", "layer": "L2", "color": "white", "expect": { "excludes": ["white pawn d4"] }, "note": "After its only move the pawn no longer reaches e5." },
+    { "assert": "specialMove", "piece": "white pawn d4", "move": "promotion", "expect": { "available": false, "reason": "not_on_rank" } }
+  ]
+}

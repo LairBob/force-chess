@@ -1,0 +1,35 @@
+{
+  "format": "force-chess/targeted-fixture/0.1",
+  "id": "en-passant-one-side",
+  "fen": "4k3/8/8/8/3pP3/8/8/4K3 b - e3 0 1",
+  "description": "White has just played e2-e4 past the black pawn on d4; the en passant target e3 is capturable by black only, and the black pawn's attack on the empty square e3 is a legal capture while the white pawn on e4 is not attacked on its own square.",
+  "decisions": [
+    "An en passant target is recorded with the side that can capture it, derived from its rank: a target on rank 3 is capturable by black, on rank 6 by white. The pawn to be captured is the one on the square in front of the target from the capturer's point of view.",
+    "The capturing pawn's L0 attack lands on the target square, not on the pawn being captured; the pawn on e4 has no black attacker.",
+    "The capture is a legal L1 attack on the target square when it leaves the capturer's king safe, and the pawn's en passant special move is available with the target square.",
+    "The side that cannot capture reports en passant as unavailable with reason no_target."
+  ],
+  "assertions": [
+    {
+      "assert": "configuration",
+      "expect": {
+        "canonical": "4k3/8/8/8/3pP3/8/8/4K3 - e3",
+        "enPassant": { "square": "e3", "capturableBy": "black", "pawnToCapture": "e4" }
+      }
+    },
+    { "assert": "attacks", "piece": "black pawn d4", "square": "e3", "layer": "L0", "expect": true },
+    { "assert": "attacks", "piece": "black pawn d4", "square": "e3", "layer": "L1", "expect": true },
+    { "assert": "attackKind", "piece": "black pawn d4", "square": "e3", "kind": "direct", "path": [] },
+    { "assert": "attacks", "piece": "black pawn d4", "square": "c3", "layer": "L1", "expect": true, "note": "Plain diagonal control of an empty square is also legal." },
+    { "assert": "specialMove", "piece": "black pawn d4", "move": "enPassant", "expect": { "available": true, "target": "e3" } },
+    { "assert": "specialMove", "piece": "white pawn e4", "move": "enPassant", "expect": { "available": false, "target": null, "reason": "no_target" } },
+    { "assert": "squareAttackers", "square": "e3", "layer": "L0", "color": "black", "expect": { "equals": ["black pawn d4"] } },
+    { "assert": "squareAttackers", "square": "e3", "layer": "L0", "color": "white", "expect": { "equals": [] } },
+    { "assert": "squareAttackers", "square": "e4", "layer": "L0", "color": "black", "expect": { "equals": [] }, "note": "The pawn that can be taken en passant is not attacked where it stands." },
+    { "assert": "mobility", "piece": "black pawn d4", "expect": 2, "destinations": ["d3", "e3"] },
+    { "assert": "mobility", "piece": "white pawn e4", "expect": 1, "destinations": ["e5"] },
+    { "assert": "lookahead", "piece": "black pawn d4", "to": "e3", "attacks": { "includes": ["d2", "f2"] } },
+    { "assert": "sideStatus", "color": "black", "expect": { "inCheck": false, "status": "normal", "legalMoveCount": 7 } },
+    { "assert": "sideStatus", "color": "white", "expect": { "inCheck": false, "status": "normal", "legalMoveCount": 6 } }
+  ]
+}

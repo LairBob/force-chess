@@ -1,0 +1,32 @@
+{
+  "format": "force-chess/targeted-fixture/0.1",
+  "id": "through-enemy-king",
+  "fen": "4r1k1/8/8/8/4K3/8/8/8 w - - 0 1",
+  "description": "A black rook on e8 gives check to the white king on e4 along the e-file; the rook's attack continues through the king to e3, e2 and e1, so the king cannot step back along the line.",
+  "decisions": [
+    "A sliding attack continues through the enemy king as if the king were not there, to every square up to and including the next piece or the edge of the board, and each such square is recorded as an attack of kind through_king with the king's square as 'through'.",
+    "A king's own move onto any square attacked by the enemy at L0 is excluded with reason king_into_attack; this uses L0, so the through_king squares count.",
+    "The rook's attack on the king's square is an ordinary direct attack and is legal at L1; that is what a check is in this model.",
+    "Side status for white reads check: in check with legal moves."
+  ],
+  "assertions": [
+    { "assert": "sideStatus", "color": "white", "expect": { "inCheck": true, "checkers": ["black rook e8"], "status": "check", "legalMoveCount": 6 } },
+    { "assert": "sideStatus", "color": "black", "expect": { "inCheck": false, "status": "normal" } },
+    { "assert": "pieceConstraint", "piece": "white king e4", "expect": { "inCheck": true, "pinned": false } },
+    { "assert": "attackKind", "piece": "black rook e8", "square": "e4", "kind": "direct", "path": ["e7", "e6", "e5"] },
+    { "assert": "squareAttackers", "square": "e4", "layer": "L1", "color": "black", "expect": { "equals": ["black rook e8"] } },
+    { "assert": "attackKind", "piece": "black rook e8", "square": "e3", "kind": "through_king", "through": "e4", "path": ["e7", "e6", "e5", "e4"] },
+    { "assert": "attackKind", "piece": "black rook e8", "square": "e2", "kind": "through_king", "through": "e4" },
+    { "assert": "attackKind", "piece": "black rook e8", "square": "e1", "kind": "through_king", "through": "e4" },
+    { "assert": "squareAttackers", "square": "e3", "layer": "L0", "color": "black", "expect": { "equals": ["black rook e8"] } },
+    { "assert": "control", "square": "e3", "layer": "L0", "expect": "contested", "note": "The white king reaches e3 geometrically, so at L0 both sides are present." },
+    { "assert": "control", "square": "e3", "layer": "L1", "expect": "black", "note": "At L1 the king's attack is excluded and only the rook remains." },
+    { "assert": "attacks", "piece": "white king e4", "square": "e3", "layer": "L0", "expect": true },
+    { "assert": "attacks", "piece": "white king e4", "square": "e3", "layer": "L1", "expect": false },
+    { "assert": "exclusion", "piece": "white king e4", "square": "e3", "reason": "king_into_attack", "mentions": ["e8"] },
+    { "assert": "attacks", "piece": "white king e4", "square": "e5", "layer": "L1", "expect": false },
+    { "assert": "exclusion", "piece": "white king e4", "square": "e5", "reason": "king_into_attack", "mentions": ["e8"] },
+    { "assert": "mobility", "piece": "white king e4", "expect": 6, "destinations": ["d3", "d4", "d5", "f3", "f4", "f5"] },
+    { "assert": "attacks", "piece": "white king e4", "square": "d4", "layer": "L1", "expect": true }
+  ]
+}

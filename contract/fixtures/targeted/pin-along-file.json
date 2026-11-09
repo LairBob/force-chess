@@ -1,0 +1,37 @@
+{
+  "format": "force-chess/targeted-fixture/0.1",
+  "id": "pin-along-file",
+  "fen": "4r1k1/8/8/3P4/8/4N3/8/4K3 w - - 0 1",
+  "description": "A black rook on e8 pins the white knight on e3 to the white king on e1 along the e-file; the knight keeps all its geometric reach at L0 but can exercise none of it at L1, and so no longer defends the pawn on d5.",
+  "decisions": [
+    "Only a pin against the piece's own king is a pin. The pinned piece stays between pinner and king with no other piece on the line between them.",
+    "A pinned piece keeps its full L0 reach; every attack off the pin line is excluded at L1 with reason pinned, and the explanation names the pinning piece and its square.",
+    "A knight can never move along a line, so a pinned knight has no legal move; its no-legal-moves reason is pinned.",
+    "The pinner's line does not continue through the pinned piece as an L0 attack: the rook on e8 does not attack e2 or e1, because a knight is neither a same-line piece (no x-ray) nor the enemy king.",
+    "The king is not in check while the pinned piece stands on the line."
+  ],
+  "assertions": [
+    { "assert": "sideStatus", "color": "white", "expect": { "inCheck": false, "status": "normal" } },
+    { "assert": "pin", "pinned": "white knight e3", "pinner": "black rook e8", "king": "e1", "line": ["e8", "e7", "e6", "e5", "e4", "e3", "e2", "e1"] },
+    { "assert": "pieceConstraint", "piece": "white knight e3", "expect": { "pinned": true, "noLegalMoves": "pinned" } },
+    { "assert": "relationCount", "type": "pin", "expect": 1 },
+    { "assert": "attacks", "piece": "white knight e3", "square": "d5", "layer": "L0", "expect": true, "note": "At L0 the knight still defends the pawn on d5." },
+    { "assert": "attacks", "piece": "white knight e3", "square": "d5", "layer": "L1", "expect": false, "note": "At L1 it does not: moving to d5 would leave the e-file open." },
+    { "assert": "exclusion", "piece": "white knight e3", "square": "d5", "reason": "pinned", "mentions": ["e8"] },
+    { "assert": "exclusion", "piece": "white knight e3", "square": "f5", "reason": "pinned", "mentions": ["e8"] },
+    { "assert": "squareAttackers", "square": "d5", "layer": "L0", "color": "white", "expect": { "equals": ["white knight e3"] } },
+    { "assert": "squareAttackers", "square": "d5", "layer": "L1", "color": "white", "expect": { "equals": [] } },
+    { "assert": "valuation", "square": "d5", "layer": "L0", "expect": { "white": { "count": 1, "value": 3 }, "occupantValue": 1 } },
+    { "assert": "valuation", "square": "d5", "layer": "L1", "expect": { "white": { "count": 0, "value": 0 } } },
+    { "assert": "mobility", "piece": "white knight e3", "expect": 0 },
+    { "assert": "attacks", "piece": "black rook e8", "square": "e3", "layer": "L0", "expect": true },
+    { "assert": "attackKind", "piece": "black rook e8", "square": "e3", "kind": "direct", "path": ["e7", "e6", "e5", "e4"] },
+    { "assert": "attacks", "piece": "black rook e8", "square": "e2", "layer": "L0", "expect": false, "note": "The knight blocks; no x-ray through a knight." },
+    { "assert": "attacks", "piece": "black rook e8", "square": "e1", "layer": "L0", "expect": false },
+    { "assert": "control", "square": "e2", "layer": "L0", "expect": "white", "note": "Only the white king reaches e2." },
+    { "assert": "mobility", "piece": "white king e1", "expect": 5, "destinations": ["d1", "d2", "e2", "f1", "f2"] },
+    { "assert": "mobility", "piece": "white pawn d5", "expect": 1, "destinations": ["d6"] },
+    { "assert": "mobility", "piece": "black rook e8", "expect": 10 },
+    { "assert": "sideStatus", "color": "white", "expect": { "legalMoveCount": 6 } }
+  ]
+}

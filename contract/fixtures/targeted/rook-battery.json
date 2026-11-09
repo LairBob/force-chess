@@ -1,0 +1,31 @@
+{
+  "format": "force-chess/targeted-fixture/0.1",
+  "id": "rook-battery",
+  "fen": "7k/p7/8/8/8/R7/8/R6K w - - 0 1",
+  "description": "Two white rooks doubled on the a-file: the rook on a3 attacks the black pawn on a7 directly and the rook on a1 attacks it through the front rook, recorded as a battery.",
+  "decisions": [
+    "A battery is two friendly pieces that move along the same kind of line standing on one line; the back piece's reach continues through the front piece and is recorded as an attack of kind battery with the front piece's square as 'through'.",
+    "The back piece's direct attack on the front piece is an ordinary defence, kind direct.",
+    "A battery line ends at the first piece beyond the front piece, inclusive: the pawn on a7 is attacked, a8 beyond it is not.",
+    "Only one intervening piece is ever looked through, so a line with two pieces of any kind on it reaches nothing beyond the second."
+  ],
+  "assertions": [
+    { "assert": "battery", "front": "white rook a3", "back": "white rook a1", "covered": ["a4", "a5", "a6", "a7"] },
+    { "assert": "relationCount", "type": "battery", "expect": 1 },
+    { "assert": "attackKind", "piece": "white rook a1", "square": "a7", "kind": "battery", "through": "a3", "path": ["a2", "a3", "a4", "a5", "a6"] },
+    { "assert": "attackKind", "piece": "white rook a3", "square": "a7", "kind": "direct", "path": ["a4", "a5", "a6"] },
+    { "assert": "attackKind", "piece": "white rook a1", "square": "a3", "kind": "direct", "path": ["a2"], "note": "The back rook defends the front rook." },
+    { "assert": "attacks", "piece": "white rook a1", "square": "a3", "layer": "L1", "expect": true },
+    { "assert": "squareAttackers", "square": "a7", "layer": "L0", "color": "white", "expect": { "equals": ["white rook a3", "white rook a1"] } },
+    { "assert": "squareAttackers", "square": "a7", "layer": "L1", "color": "white", "expect": { "equals": ["white rook a3", "white rook a1"] } },
+    { "assert": "squareAttackers", "square": "a7", "layer": "L0", "color": "black", "expect": { "equals": [] }, "note": "The black king on h8 does not reach a7: the pawn is undefended." },
+    { "assert": "valuation", "square": "a7", "layer": "L0", "expect": { "white": { "count": 2, "value": 10 }, "black": { "count": 0, "value": 0 }, "net": { "count": 2, "value": 10 }, "occupantValue": 1 } },
+    { "assert": "attacks", "piece": "white rook a3", "square": "a8", "layer": "L0", "expect": false },
+    { "assert": "attacks", "piece": "white rook a1", "square": "a8", "layer": "L0", "expect": false },
+    { "assert": "attacks", "piece": "white rook a1", "square": "h1", "layer": "L0", "expect": true, "note": "The back rook also defends the white king along the first rank." },
+    { "assert": "mobility", "piece": "white rook a3", "expect": 12 },
+    { "assert": "mobility", "piece": "white rook a1", "expect": 7, "destinations": ["a2", "b1", "c1", "d1", "e1", "f1", "g1"] },
+    { "assert": "mobility", "piece": "black king h8", "expect": 3, "destinations": ["g7", "g8", "h7"] },
+    { "assert": "mobility", "piece": "black pawn a7", "expect": 2, "destinations": ["a5", "a6"] }
+  ]
+}

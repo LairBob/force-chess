@@ -1,0 +1,33 @@
+{
+  "format": "force-chess/targeted-fixture/0.1",
+  "id": "en-passant-exposes-king",
+  "fen": "7k/8/8/KPp4r/8/8/8/8 w - c6 0 1",
+  "description": "Black has just played c7-c5 beside the white pawn on b5; capturing en passant would remove both pawns from the fifth rank and expose the white king on a5 to the black rook on h5, so the capture is geometric at L0 but excluded at L1, and the pawn is not pinned.",
+  "decisions": [
+    "An en passant capture is tested for legality with both pawns removed from the rank, as the standard rules require. When that opens a line to the capturer's king the attack is excluded with reason exposes_king, naming the piece that would give check.",
+    "This is not a pin: two pieces stand between the rook and the king, so no pin relation is recorded for the pawn on b5. exposes_king is reserved for exactly this kind of case.",
+    "The pawn's en passant special move is reported as unavailable with the same reason code."
+  ],
+  "assertions": [
+    {
+      "assert": "configuration",
+      "expect": {
+        "canonical": "7k/8/8/KPp4r/8/8/8/8 - c6",
+        "enPassant": { "square": "c6", "capturableBy": "white", "pawnToCapture": "c5" }
+      }
+    },
+    { "assert": "sideStatus", "color": "white", "expect": { "inCheck": false, "status": "normal", "legalMoveCount": 4 } },
+    { "assert": "attacks", "piece": "white pawn b5", "square": "c6", "layer": "L0", "expect": true },
+    { "assert": "attacks", "piece": "white pawn b5", "square": "c6", "layer": "L1", "expect": false },
+    { "assert": "exclusion", "piece": "white pawn b5", "square": "c6", "reason": "exposes_king", "mentions": ["h5"] },
+    { "assert": "pieceConstraint", "piece": "white pawn b5", "expect": { "pinned": false, "noLegalMoves": false } },
+    { "assert": "relationCount", "type": "pin", "expect": 0 },
+    { "assert": "specialMove", "piece": "white pawn b5", "move": "enPassant", "expect": { "available": false, "target": "c6", "reason": "exposes_king" } },
+    { "assert": "attacks", "piece": "white pawn b5", "square": "a6", "layer": "L1", "expect": true, "note": "The pawn's other diagonal is unaffected." },
+    { "assert": "mobility", "piece": "white pawn b5", "expect": 1, "destinations": ["b6"] },
+    { "assert": "attacks", "piece": "black rook h5", "square": "a5", "layer": "L0", "expect": false, "note": "Two pawns block the rank; nothing is looked through." },
+    { "assert": "attackKind", "piece": "black rook h5", "square": "c5", "kind": "direct", "path": ["g5", "f5", "e5", "d5"] },
+    { "assert": "mobility", "piece": "white king a5", "expect": 3, "destinations": ["a4", "a6", "b6"] },
+    { "assert": "exclusion", "piece": "white king a5", "square": "b4", "reason": "king_into_attack", "mentions": ["c5"], "note": "The black pawn on c5 attacks b4." }
+  ]
+}

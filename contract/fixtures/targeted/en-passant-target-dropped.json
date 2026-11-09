@@ -1,0 +1,16 @@
+{
+  "format": "force-chess/targeted-fixture/0.1",
+  "id": "en-passant-target-dropped",
+  "fen": "4k3/8/8/8/4P3/8/8/4K3 b - e3 0 1",
+  "description": "The FEN carries an en passant target e3 but no black pawn stands beside the white pawn on e4, so the canonical form drops the target and the configuration has no en passant square.",
+  "decisions": [
+    "The canonical form keeps an en passant target only when a pawn of the capturing side stands on a square from which it could capture; otherwise the field is '-'. Two configurations that differ only by an uncapturable target are the same configuration and share one key.",
+    "Whether that capture would be legal does not matter for the key; only the presence of a pawn that could geometrically make it does."
+  ],
+  "assertions": [
+    { "assert": "configuration", "expect": { "canonical": "4k3/8/8/8/4P3/8/8/4K3 - -", "enPassant": null } },
+    { "assert": "squareAttackers", "square": "e3", "layer": "L0", "color": "black", "expect": { "equals": [] } },
+    { "assert": "specialMove", "piece": "white pawn e4", "move": "enPassant", "expect": { "available": false, "reason": "no_target" } },
+    { "assert": "mobility", "piece": "white pawn e4", "expect": 1, "destinations": ["e5"] }
+  ]
+}

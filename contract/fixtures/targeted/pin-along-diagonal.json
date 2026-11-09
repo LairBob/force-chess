@@ -1,0 +1,34 @@
+{
+  "format": "force-chess/targeted-fixture/0.1",
+  "id": "pin-along-diagonal",
+  "fen": "6k1/8/8/3p4/1b6/2N5/8/4K3 w - - 0 1",
+  "description": "A black bishop on b4 pins the white knight on c3 to the white king on e1 along the b4-e1 diagonal; the knight attacks the black pawn on d5 at L0 but cannot capture it at L1, so d5 is controlled by white at L0 and by nobody at L1.",
+  "decisions": [
+    "A pin along a diagonal is recorded exactly as a pin along a file: pinner, pinned piece, king, and the full line from pinner to king.",
+    "Control of a square is classified from attacker counts at the layer in question and ignores the occupant, so an occupied square can be controlled at L0 by the side that cannot legally take it.",
+    "The pinning bishop's L0 reach stops at the knight: a knight is not a same-line piece, so there is no x-ray to d2 or e1.",
+    "The white king may step onto d2, a square on the pin line, because the knight still blocks the bishop while the king stands there."
+  ],
+  "assertions": [
+    { "assert": "sideStatus", "color": "white", "expect": { "inCheck": false, "status": "normal" } },
+    { "assert": "pin", "pinned": "white knight c3", "pinner": "black bishop b4", "king": "e1", "line": ["b4", "c3", "d2", "e1"] },
+    { "assert": "pieceConstraint", "piece": "white knight c3", "expect": { "pinned": true, "noLegalMoves": "pinned" } },
+    { "assert": "attacks", "piece": "white knight c3", "square": "d5", "layer": "L0", "expect": true },
+    { "assert": "attacks", "piece": "white knight c3", "square": "d5", "layer": "L1", "expect": false },
+    { "assert": "exclusion", "piece": "white knight c3", "square": "d5", "reason": "pinned", "mentions": ["b4"] },
+    { "assert": "squareAttackers", "square": "d5", "layer": "L0", "color": "white", "expect": { "equals": ["white knight c3"] } },
+    { "assert": "squareAttackers", "square": "d5", "layer": "L0", "color": "black", "expect": { "equals": [] } },
+    { "assert": "control", "square": "d5", "layer": "L0", "expect": "white" },
+    { "assert": "control", "square": "d5", "layer": "L1", "expect": "none" },
+    { "assert": "attackKind", "piece": "black bishop b4", "square": "c3", "kind": "direct", "path": [] },
+    { "assert": "attacks", "piece": "black bishop b4", "square": "d2", "layer": "L0", "expect": false },
+    { "assert": "attacks", "piece": "black bishop b4", "square": "e1", "layer": "L0", "expect": false },
+    { "assert": "attacks", "piece": "black pawn d5", "square": "c4", "layer": "L0", "expect": true, "note": "Black pawns attack downward." },
+    { "assert": "attacks", "piece": "black pawn d5", "square": "e4", "layer": "L0", "expect": true },
+    { "assert": "attacks", "piece": "black pawn d5", "square": "d4", "layer": "L0", "expect": false },
+    { "assert": "mobility", "piece": "white king e1", "expect": 5, "destinations": ["d1", "d2", "e2", "f1", "f2"] },
+    { "assert": "mobility", "piece": "black bishop b4", "expect": 7, "destinations": ["a3", "a5", "c3", "c5", "d6", "e7", "f8"] },
+    { "assert": "mobility", "piece": "black pawn d5", "expect": 1, "destinations": ["d4"] },
+    { "assert": "sideStatus", "color": "white", "expect": { "legalMoveCount": 5 } }
+  ]
+}

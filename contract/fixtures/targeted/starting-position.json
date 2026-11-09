@@ -1,0 +1,54 @@
+{
+  "format": "force-chess/targeted-fixture/0.1",
+  "id": "starting-position",
+  "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+  "description": "The starting position: every piece on its home square, no attacks across the middle, every pawn and knight free to move, nothing else able to move.",
+  "decisions": [
+    "A pawn attacks only the two squares diagonally in front of it, never the square straight ahead; the square in front of a pawn is reachable by a move but is not attacked.",
+    "The king and queen count as defenders of the pieces beside them, like any other piece; the king contributes 0 to summed material value.",
+    "Castling is reported as unavailable with reason path_blocked when pieces stand between the king and the rook, even though the right itself is intact.",
+    "A piece with no legal move because every square in its pattern is blocked or friendly-occupied has the no-legal-moves reason blocked.",
+    "The L2 layer records every square the moved piece would attack from its destination, including squares it already attacks now."
+  ],
+  "assertions": [
+    {
+      "assert": "configuration",
+      "expect": {
+        "canonical": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR KQkq -",
+        "castling": { "white": { "kingside": true, "queenside": true }, "black": { "kingside": true, "queenside": true } },
+        "enPassant": null
+      }
+    },
+    { "assert": "sideStatus", "color": "white", "expect": { "inCheck": false, "status": "normal", "legalMoveCount": 20 } },
+    { "assert": "sideStatus", "color": "black", "expect": { "inCheck": false, "status": "normal", "legalMoveCount": 20 } },
+    { "assert": "squareAttackers", "square": "e4", "layer": "L0", "color": "white", "expect": { "equals": [] }, "note": "No white piece reaches the centre yet." },
+    { "assert": "control", "square": "e4", "layer": "L0", "expect": "none" },
+    { "assert": "squareAttackers", "square": "d3", "layer": "L0", "color": "white", "expect": { "equals": ["white pawn c2", "white pawn e2"] } },
+    { "assert": "squareAttackers", "square": "d3", "layer": "L0", "color": "black", "expect": { "equals": [] } },
+    { "assert": "control", "square": "d3", "layer": "L0", "expect": "white" },
+    { "assert": "attacks", "piece": "white pawn d2", "square": "d3", "layer": "L0", "expect": false, "note": "The square straight ahead of a pawn is not attacked by it." },
+    { "assert": "squareAttackers", "square": "f3", "layer": "L0", "color": "white", "expect": { "equals": ["white pawn e2", "white pawn g2", "white knight g1"] } },
+    { "assert": "squareAttackers", "square": "f3", "layer": "L1", "color": "white", "expect": { "count": 3 }, "note": "Nothing is pinned, so L1 equals L0." },
+    { "assert": "valuation", "square": "f3", "layer": "L0", "expect": { "white": { "count": 3, "value": 5 }, "black": { "count": 0, "value": 0 }, "net": { "count": 3, "value": 5 }, "occupantValue": null } },
+    { "assert": "squareAttackers", "square": "e2", "layer": "L0", "color": "white", "expect": { "equals": ["white queen d1", "white king e1", "white bishop f1", "white knight g1"] }, "note": "The pawn on e2 is defended by four pieces." },
+    { "assert": "squareAttackers", "square": "e2", "layer": "L0", "color": "black", "expect": { "equals": [] } },
+    { "assert": "valuation", "square": "e2", "layer": "L0", "expect": { "white": { "count": 4, "value": 15 }, "occupantValue": 1 }, "note": "Queen 9, bishop 3, knight 3, king 0." },
+    { "assert": "attackKind", "piece": "white queen d1", "square": "e2", "kind": "direct", "path": [] },
+    { "assert": "mobility", "piece": "white knight b1", "expect": 2, "destinations": ["a3", "c3"] },
+    { "assert": "mobility", "piece": "white knight g1", "expect": 2, "destinations": ["f3", "h3"] },
+    { "assert": "mobility", "piece": "white pawn e2", "expect": 2, "destinations": ["e3", "e4"] },
+    { "assert": "mobility", "piece": "white rook a1", "expect": 0 },
+    { "assert": "pieceConstraint", "piece": "white rook a1", "expect": { "pinned": false, "noLegalMoves": "blocked" } },
+    { "assert": "mobility", "piece": "white queen d1", "expect": 0 },
+    { "assert": "mobility", "piece": "white king e1", "expect": 0 },
+    { "assert": "specialMove", "piece": "white king e1", "move": "castleKingside", "expect": { "available": false, "target": "g1", "reason": "path_blocked" } },
+    { "assert": "specialMove", "piece": "white king e1", "move": "castleQueenside", "expect": { "available": false, "target": "c1", "reason": "path_blocked" } },
+    { "assert": "specialMove", "piece": "black king e8", "move": "castleKingside", "expect": { "available": false, "target": "g8", "reason": "path_blocked" } },
+    { "assert": "lookahead", "piece": "white knight g1", "to": "f3", "attacks": { "includes": ["e5", "d4", "g5", "h4", "d2", "e1", "g1", "h2"] } },
+    { "assert": "squareAttackers", "square": "e5", "layer": "L2", "color": "white", "expect": { "equals": ["white knight g1", "white pawn d2", "white pawn f2"] }, "note": "After Nf3, d4 or f4 respectively." },
+    { "assert": "squareAttackers", "square": "e5", "layer": "L2", "color": "black", "expect": { "equals": ["black knight b8"] }, "note": "Only the knight, after Nc6. A black pawn on e5 would attack d4 and f4, not its own square." },
+    { "assert": "relationCount", "type": "pin", "expect": 0 },
+    { "assert": "relationCount", "type": "battery", "expect": 0 },
+    { "assert": "relationCount", "type": "xray", "expect": 0 }
+  ]
+}

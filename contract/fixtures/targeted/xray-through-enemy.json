@@ -1,0 +1,30 @@
+{
+  "format": "force-chess/targeted-fixture/0.1",
+  "id": "xray-through-enemy",
+  "fen": "7k/q7/8/8/r7/8/8/R6K w - - 0 1",
+  "description": "The white rook on a1 attacks the black rook on a4 directly and x-rays through it to the black queen on a7; on the same file the black queen stands behind the black rook as a battery aimed at a1.",
+  "decisions": [
+    "An x-ray is a sliding attack through one enemy piece that moves along the same kind of line, recorded as an attack of kind xray on each square beyond up to and including the next piece, and as one xray relation listing those squares.",
+    "A sliding attack through a piece that is neither a same-line piece of either colour nor the enemy king is not recorded at all.",
+    "A battery and an x-ray can share a line: each side's relation is recorded from its own point of view.",
+    "The edge of the board ends a line; the black rook on a4 has no x-ray through a1 because nothing lies beyond it."
+  ],
+  "assertions": [
+    { "assert": "xray", "piece": "white rook a1", "through": "black rook a4", "beyond": ["a5", "a6", "a7"] },
+    { "assert": "relationCount", "type": "xray", "expect": 1 },
+    { "assert": "attackKind", "piece": "white rook a1", "square": "a7", "kind": "xray", "through": "a4", "path": ["a2", "a3", "a4", "a5", "a6"] },
+    { "assert": "attackKind", "piece": "white rook a1", "square": "a4", "kind": "direct", "path": ["a2", "a3"] },
+    { "assert": "attacks", "piece": "white rook a1", "square": "a8", "layer": "L0", "expect": false },
+    { "assert": "battery", "front": "black rook a4", "back": "black queen a7", "covered": ["a3", "a2", "a1"] },
+    { "assert": "relationCount", "type": "battery", "expect": 1 },
+    { "assert": "attackKind", "piece": "black queen a7", "square": "a1", "kind": "battery", "through": "a4", "path": ["a6", "a5", "a4", "a3", "a2"] },
+    { "assert": "squareAttackers", "square": "a1", "layer": "L0", "color": "black", "expect": { "equals": ["black rook a4", "black queen a7"] } },
+    { "assert": "squareAttackers", "square": "a1", "layer": "L0", "color": "white", "expect": { "equals": [] } },
+    { "assert": "valuation", "square": "a1", "layer": "L0", "expect": { "white": { "count": 0, "value": 0 }, "black": { "count": 2, "value": 14 }, "net": { "count": -2, "value": -14 }, "occupantValue": 5 } },
+    { "assert": "valuation", "square": "a4", "layer": "L0", "expect": { "white": { "count": 1, "value": 5 }, "black": { "count": 1, "value": 9 }, "occupantValue": 5 } },
+    { "assert": "sideStatus", "color": "white", "expect": { "inCheck": false, "status": "normal" } },
+    { "assert": "mobility", "piece": "white rook a1", "expect": 9 },
+    { "assert": "mobility", "piece": "black rook a4", "expect": 12 },
+    { "assert": "mobility", "piece": "black queen a7", "expect": 17 }
+  ]
+}

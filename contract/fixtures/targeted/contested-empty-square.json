@@ -1,0 +1,31 @@
+{
+  "format": "force-chess/targeted-fixture/0.1",
+  "id": "contested-empty-square",
+  "fen": "4k3/8/4pn2/8/4P3/2N5/8/4K3 w - - 0 1",
+  "description": "The empty square d5 is reached twice by white (knight c3, pawn e4) and twice by black (pawn e6, knight f6) with nothing pinned, so it is contested at L0 and L1 with equal material on each side.",
+  "decisions": [
+    "Control is classified from attacker counts per colour: both colours present means contested, whatever the values.",
+    "Net valuation is white minus black, so a square with equal force on each side reads 0 for both count and value.",
+    "The occupied square e4 is contested in the same sense: one black attacker (a threat to the pawn) and one white attacker (a defence of it)."
+  ],
+  "assertions": [
+    { "assert": "squareAttackers", "square": "d5", "layer": "L0", "color": "white", "expect": { "equals": ["white knight c3", "white pawn e4"] } },
+    { "assert": "squareAttackers", "square": "d5", "layer": "L0", "color": "black", "expect": { "equals": ["black pawn e6", "black knight f6"] } },
+    { "assert": "squareAttackers", "square": "d5", "layer": "L1", "color": "white", "expect": { "count": 2 } },
+    { "assert": "squareAttackers", "square": "d5", "layer": "L1", "color": "black", "expect": { "count": 2 } },
+    { "assert": "control", "square": "d5", "layer": "L0", "expect": "contested" },
+    { "assert": "control", "square": "d5", "layer": "L1", "expect": "contested" },
+    { "assert": "valuation", "square": "d5", "layer": "L0", "expect": { "white": { "count": 2, "value": 4 }, "black": { "count": 2, "value": 4 }, "net": { "count": 0, "value": 0 }, "occupantValue": null } },
+    { "assert": "valuation", "square": "d5", "layer": "L1", "expect": { "net": { "count": 0, "value": 0 } } },
+    { "assert": "squareAttackers", "square": "e4", "layer": "L0", "color": "black", "expect": { "equals": ["black knight f6"] } },
+    { "assert": "squareAttackers", "square": "e4", "layer": "L0", "color": "white", "expect": { "equals": ["white knight c3"] } },
+    { "assert": "control", "square": "e4", "layer": "L0", "expect": "contested" },
+    { "assert": "valuation", "square": "e4", "layer": "L0", "expect": { "white": { "count": 1, "value": 3 }, "black": { "count": 1, "value": 3 }, "occupantValue": 1 } },
+    { "assert": "attacks", "piece": "black knight f6", "square": "e4", "layer": "L1", "expect": true },
+    { "assert": "control", "square": "f5", "layer": "L0", "expect": "contested", "note": "Pawn e4 and pawn e6 both reach f5." },
+    { "assert": "relationCount", "type": "pin", "expect": 0 },
+    { "assert": "mobility", "piece": "white knight c3", "expect": 7, "destinations": ["a2", "a4", "b1", "b5", "d1", "d5", "e2"] },
+    { "assert": "mobility", "piece": "black knight f6", "expect": 7, "destinations": ["d5", "d7", "e4", "g4", "g8", "h5", "h7"] },
+    { "assert": "mobility", "piece": "black pawn e6", "expect": 1, "destinations": ["e5"] }
+  ]
+}
