@@ -335,12 +335,12 @@ fn spell(value: &Value, code: Option<&str>, into: &mut Spelling) {
             let own_code = map.get("code").and_then(Value::as_str).or(code);
             for (key, item) in map {
                 into.keys += key.len() + 3;
-                if key == "text" {
-                    if let Value::String(_) = item {
-                        let label = own_code.unwrap_or("(no code)").to_string();
-                        *into.sentences.entry(label).or_default() += compact_len(item);
-                        continue;
-                    }
+                if key == "text"
+                    && let Value::String(_) = item
+                {
+                    let label = own_code.unwrap_or("(no code)").to_string();
+                    *into.sentences.entry(label).or_default() += compact_len(item);
+                    continue;
                 }
                 spell(item, own_code, into);
             }
