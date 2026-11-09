@@ -219,3 +219,29 @@ fn side_whose_opponent_is_in_check_moves_by_the_standard_rules() {
     assert_eq!(to_king["L1"]["legal"], true);
     assert_eq!(doc["sides"]["black"]["legalMoveCount"], 13);
 }
+
+/// L1 is what a piece can do now: an edge that passes through another piece
+/// (battery, x-ray, through the enemy king) is always excluded with
+/// line_blocked, and a direct edge never is.
+#[test]
+fn every_through_piece_edge_and_only_those_are_line_blocked() {
+    for position in positions().into_iter().step_by(11) {
+        let fen = fen_of(&position);
+        let doc = force_core::force_state_json(&fen).unwrap();
+        for edge in doc["relations"]["edges"].as_array().unwrap() {
+            let blocked = edge["L1"]["reason"]["code"] == "line_blocked";
+            let through = edge["kind"] != "direct";
+            assert_eq!(blocked, through, "{fen}: {edge}");
+            if through {
+                let named = edge["through"].as_str().unwrap();
+                assert!(
+                    edge["L1"]["reason"]["text"]
+                        .as_str()
+                        .unwrap()
+                        .contains(named),
+                    "{fen}: {edge}"
+                );
+            }
+        }
+    }
+}

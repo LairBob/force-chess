@@ -1,5 +1,5 @@
 {
-  "contractVersion": "0.3.0",
+  "contractVersion": "0.4.0",
   "configuration": {
     "key": "f64a3ad7b7f2bc1b46923e4ac672a5d1e2be244d0adf261e55a1262ee8c0159a",
     "keyAlgorithm": "sha256-hex",

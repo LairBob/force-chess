@@ -1,5 +1,5 @@
 {
-  "contractVersion": "0.3.0",
+  "contractVersion": "0.4.0",
   "configuration": {
     "key": "1068c42607b719ecd1301a1215cbfeec11171025ab1addd15ab50a8250c97d27",
     "keyAlgorithm": "sha256-hex",
@@ -165,16 +165,17 @@
             9,
             10,
             11,
-            12,
-            13,
-            14,
             15,
             16,
             17,
             18,
             19
           ],
-          "excluded": []
+          "excluded": [
+            12,
+            13,
+            14
+          ]
         }
       },
       "defends": {
@@ -489,8 +490,11 @@
         ],
         "through": "e4",
         "L1": {
-          "legal": true,
-          "reason": null
+          "legal": false,
+          "reason": {
+            "code": "line_blocked",
+            "text": "The black rook on e8 would reach e1 only once the white king on e4 leaves the line."
+          }
         }
       },
       {
@@ -507,8 +511,11 @@
         ],
         "through": "e4",
         "L1": {
-          "legal": true,
-          "reason": null
+          "legal": false,
+          "reason": {
+            "code": "line_blocked",
+            "text": "The black rook on e8 would reach e2 only once the white king on e4 leaves the line."
+          }
         }
       },
       {
@@ -524,8 +531,11 @@
         ],
         "through": "e4",
         "L1": {
-          "legal": true,
-          "reason": null
+          "legal": false,
+          "reason": {
+            "code": "line_blocked",
+            "text": "The black rook on e8 would reach e3 only once the white king on e4 leaves the line."
+          }
         }
       },
       {
@@ -1307,17 +1317,17 @@
             12
           ],
           "L1": {
-            "legal": [
+            "legal": [],
+            "excluded": [
               12
-            ],
-            "excluded": []
+            ]
           },
           "L2": []
         }
       },
       "control": {
         "L0": "black",
-        "L1": "black"
+        "L1": "none"
       },
       "valuation": {
         "L0": {
@@ -1340,12 +1350,12 @@
             "value": 0
           },
           "black": {
-            "count": 1,
-            "value": 5
+            "count": 0,
+            "value": 0
           },
           "net": {
-            "count": -1,
-            "value": -5
+            "count": 0,
+            "value": 0
           }
         }
       }
@@ -1658,17 +1668,17 @@
             13
           ],
           "L1": {
-            "legal": [
+            "legal": [],
+            "excluded": [
               13
-            ],
-            "excluded": []
+            ]
           },
           "L2": []
         }
       },
       "control": {
         "L0": "black",
-        "L1": "black"
+        "L1": "none"
       },
       "valuation": {
         "L0": {
@@ -1691,12 +1701,12 @@
             "value": 0
           },
           "black": {
-            "count": 1,
-            "value": 5
+            "count": 0,
+            "value": 0
           },
           "net": {
-            "count": -1,
-            "value": -5
+            "count": 0,
+            "value": 0
           }
         }
       }
@@ -2079,17 +2089,17 @@
             14
           ],
           "L1": {
-            "legal": [
+            "legal": [],
+            "excluded": [
               14
-            ],
-            "excluded": []
+            ]
           },
           "L2": []
         }
       },
       "control": {
         "L0": "contested",
-        "L1": "black"
+        "L1": "none"
       },
       "valuation": {
         "L0": {
@@ -2112,12 +2122,12 @@
             "value": 0
           },
           "black": {
-            "count": 1,
-            "value": 5
+            "count": 0,
+            "value": 0
           },
           "net": {
-            "count": -1,
-            "value": -5
+            "count": 0,
+            "value": 0
           }
         }
       }

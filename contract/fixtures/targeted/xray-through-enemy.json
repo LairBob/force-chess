@@ -5,6 +5,7 @@
   "description": "The white rook on a1 attacks the black rook on a4 directly and x-rays through it to the black queen on a7; on the same file the black queen stands behind the black rook as a battery aimed at a1.",
   "decisions": [
     "An x-ray is a sliding attack through one enemy piece that moves along the same kind of line, recorded as an attack of kind xray on each square beyond up to and including the next piece, and as one xray relation listing those squares.",
+    "At L1 every x-ray and battery edge is excluded with reason line_blocked, naming the piece in the way: the white rook cannot move to a7 while the black rook stands on a4.",
     "A sliding attack through a piece that is neither a same-line piece of either colour nor the enemy king is not recorded at all.",
     "A battery and an x-ray can share a line: each side's relation is recorded from its own point of view.",
     "The edge of the board ends a line; the black rook on a4 has no x-ray through a1 because nothing lies beyond it.",
@@ -15,6 +16,8 @@
     { "assert": "relationCount", "type": "xray", "expect": 1 },
     { "assert": "attackKind", "piece": "white rook a1", "square": "a7", "kind": "xray", "through": "a4", "path": ["a2", "a3", "a4", "a5", "a6"] },
     { "assert": "attackKind", "piece": "white rook a1", "square": "a4", "kind": "direct", "path": ["a2", "a3"] },
+    { "assert": "exclusion", "piece": "white rook a1", "square": "a7", "reason": "line_blocked", "mentions": ["a4"] },
+    { "assert": "squareAttackers", "square": "a7", "layer": "L1", "color": "white", "expect": { "equals": [] } },
     { "assert": "attacks", "piece": "white rook a1", "square": "a8", "layer": "L0", "expect": false },
     { "assert": "battery", "front": "black rook a4", "back": "black queen a7", "covered": ["a3", "a2", "a1"] },
     { "assert": "battery", "front": "black queen a7", "back": "black rook a4", "covered": ["a8"] },

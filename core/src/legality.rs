@@ -22,6 +22,10 @@ pub enum Exclusion {
     /// every enemy piece attacking it there, directly or as the back piece of
     /// a battery.
     KingIntoAttack { attackers: Vec<(Square, Kind)> },
+    /// The reach passes through another piece (a battery, x-ray or line
+    /// through the enemy king), so the piece cannot move there now. Names the
+    /// pieces in the way, nearest first.
+    LineBlocked { blockers: Vec<Square> },
     /// The mover is pinned and the square is off the pin line.
     Pinned { pin: usize },
     /// The mover's king is in check and the move neither captures the single
@@ -36,6 +40,7 @@ impl Exclusion {
     pub fn code(&self) -> &'static str {
         match self {
             Exclusion::KingIntoAttack { .. } => "king_into_attack",
+            Exclusion::LineBlocked { .. } => "line_blocked",
             Exclusion::Pinned { .. } => "pinned",
             Exclusion::KingInCheck { .. } => "king_in_check",
             Exclusion::ExposesKing { .. } => "exposes_king",
@@ -102,11 +107,23 @@ impl Context<'_> {
     }
 
     /// Runs the single hypothetical-move test. None means legal.
+    ///
+    /// The move must exist before its safety is asked about: a piece whose
+    /// way to the square is not clear cannot go there now, whatever kind of
+    /// L0 edge describes the reach. A king only ever steps to a neighbouring
+    /// square, so its way is always clear and king_into_attack keeps its place
+    /// first in the priority order.
     pub fn test(&self, trial: Trial) -> Option<Exclusion> {
         let board = self.board();
         let mover = board
             .piece_at(trial.from)
             .expect("the mover stands on its square");
+        let in_the_way = attacks::between(trial.from, trial.to) & board.occupied();
+        if in_the_way.any() {
+            let mut blockers: Vec<Square> = in_the_way.into_iter().collect();
+            blockers.sort_by_key(|&sq| trial.from.distance(sq));
+            return Some(Exclusion::LineBlocked { blockers });
+        }
         let after = board_after(board, trial);
         // A piece reaching its own king's square: the test removes whatever
         // stands on the target, which here is the king itself, so no king of
@@ -185,6 +202,15 @@ impl Context<'_> {
                         join_and(&names)
                     ),
                 }
+            }
+            Exclusion::LineBlocked { blockers } => {
+                let names: Vec<String> = blockers.iter().map(|&sq| named(board, sq)).collect();
+                format!(
+                    "{subject} would reach {} only once {} {} the line.",
+                    trial.to,
+                    join_and(&names),
+                    if names.len() == 1 { "leaves" } else { "leave" }
+                )
             }
             Exclusion::Pinned { pin } => {
                 let pin = &self.pins[*pin];

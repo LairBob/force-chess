@@ -1,5 +1,5 @@
 {
-  "contractVersion": "0.3.0",
+  "contractVersion": "0.4.0",
   "configuration": {
     "key": "7aa7e8886026a179e734786938b94a01c776a52b4e4f53bcb73ea806cf6f67b2",
     "keyAlgorithm": "sha256-hex",
@@ -78,10 +78,10 @@
           32
         ],
         "L1": {
-          "legal": [
+          "legal": [],
+          "excluded": [
             32
-          ],
-          "excluded": []
+          ]
         },
         "L2": [
           21
@@ -430,7 +430,6 @@
             29,
             30,
             31,
-            32,
             33,
             34,
             35,
@@ -441,7 +440,9 @@
             40,
             41
           ],
-          "excluded": []
+          "excluded": [
+            32
+          ]
         }
       },
       "defends": {
@@ -972,8 +973,11 @@
         ],
         "through": "e2",
         "L1": {
-          "legal": true,
-          "reason": null
+          "legal": false,
+          "reason": {
+            "code": "line_blocked",
+            "text": "The black rook on e8 would reach e1 only once the white rook on e2 leaves the line."
+          }
         }
       },
       {
@@ -2004,10 +2008,10 @@
             32
           ],
           "L1": {
-            "legal": [
+            "legal": [],
+            "excluded": [
               32
-            ],
-            "excluded": []
+            ]
           },
           "L2": [
             21
@@ -2016,7 +2020,7 @@
       },
       "control": {
         "L0": "contested",
-        "L1": "contested"
+        "L1": "white"
       },
       "valuation": {
         "L0": {
@@ -2039,12 +2043,12 @@
             "value": 5
           },
           "black": {
-            "count": 1,
-            "value": 5
-          },
-          "net": {
             "count": 0,
             "value": 0
+          },
+          "net": {
+            "count": 1,
+            "value": 5
           }
         }
       }

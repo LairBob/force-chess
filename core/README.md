@@ -37,7 +37,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profil
 
 `force-core`, a library, GPL-3.0-or-later. Dependencies are pinned to exact versions: shakmaty 0.30.2 (the rules of chess), serde 1.0.229 and serde_json 1.0.154 (the JSON document), sha2 0.11.1 (the configuration key). The tests also use jsonschema 0.61.0 to validate documents against the draft 2020-12 schemas in `contract/schema/`.
 
-The output follows contract version 0.3.0 (`CONTRACT_VERSION` in `src/document.rs`).
+The output follows contract version 0.4.0 (`CONTRACT_VERSION` in `src/document.rs`).
 
 | Module | What it does | Concept |
 |---|---|---|

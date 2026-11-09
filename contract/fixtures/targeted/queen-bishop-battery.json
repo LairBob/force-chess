@@ -9,6 +9,7 @@
     "The king counts as a defender at L0 (count 1) but adds 0 to the summed value, so a square defended only by the king shows defence value 0.",
     "A king defends a piece at L1 only if it could recapture there: the square is tested with the defended piece removed, and if any enemy piece then attacks it the defence is excluded with reason king_into_attack, naming every such enemy piece. Here the bishop attacks g7 directly once the pawn is gone and the queen attacks it through the bishop.",
     "The battery line stops at the pawn on g7: neither piece attacks h8 beyond it.",
+    "At L1 a battery edge is excluded with reason line_blocked: the queen cannot move to g7 while the bishop on c3 stands in the way, so only the bishop attacks g7 at L1. The battery still counts at L0 and still keeps the black king off g7, because king moves are tested against L0 reach.",
     "A battery runs both ways along its line. Wherever the line continues past the front piece, the back piece reaches through it, whichever end of the pair is nearer: the bishop on c3 also reaches a1 through the queen on b2, so there are two battery relations on this diagonal, each with its own front and back."
   ],
   "assertions": [
@@ -20,7 +21,9 @@
     { "assert": "attackKind", "piece": "white bishop c3", "square": "g7", "kind": "direct", "path": ["d4", "e5", "f6"] },
     { "assert": "attackKind", "piece": "white queen b2", "square": "c3", "kind": "direct", "path": [] },
     { "assert": "squareAttackers", "square": "g7", "layer": "L0", "color": "white", "expect": { "equals": ["white bishop c3", "white queen b2"] } },
-    { "assert": "squareAttackers", "square": "g7", "layer": "L1", "color": "white", "expect": { "equals": ["white bishop c3", "white queen b2"] } },
+    { "assert": "squareAttackers", "square": "g7", "layer": "L1", "color": "white", "expect": { "equals": ["white bishop c3"] }, "note": "The queen's reach through the bishop is geometry, not a move it can make now." },
+    { "assert": "exclusion", "piece": "white queen b2", "square": "g7", "reason": "line_blocked", "mentions": ["c3"] },
+    { "assert": "valuation", "square": "g7", "layer": "L1", "expect": { "white": { "count": 1, "value": 3 } } },
     { "assert": "squareAttackers", "square": "g7", "layer": "L0", "color": "black", "expect": { "equals": ["black king g8"] } },
     { "assert": "squareAttackers", "square": "g7", "layer": "L1", "color": "black", "expect": { "equals": [] }, "note": "The king could not recapture on g7: with the pawn gone the square is attacked by the bishop and, through it, the queen." },
     { "assert": "exclusion", "piece": "black king g8", "square": "g7", "reason": "king_into_attack", "mentions": ["c3", "b2"] },

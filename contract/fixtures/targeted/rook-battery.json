@@ -7,7 +7,8 @@
     "A battery is two friendly pieces that move along the same kind of line standing on one line; the back piece's reach continues through the front piece and is recorded as an attack of kind battery with the front piece's square as 'through'.",
     "The back piece's direct attack on the front piece is an ordinary defence, kind direct.",
     "A battery line ends at the first piece beyond the front piece, inclusive: the pawn on a7 is attacked, a8 beyond it is not.",
-    "Only one intervening piece is ever looked through, so a line with two pieces of any kind on it reaches nothing beyond the second."
+    "Only one intervening piece is ever looked through, so a line with two pieces of any kind on it reaches nothing beyond the second.",
+    "At L1 the back rook's battery edges are excluded with reason line_blocked naming the front rook on a3, so only the front rook attacks a7 at L1."
   ],
   "assertions": [
     { "assert": "battery", "front": "white rook a3", "back": "white rook a1", "covered": ["a4", "a5", "a6", "a7"] },
@@ -17,7 +18,8 @@
     { "assert": "attackKind", "piece": "white rook a1", "square": "a3", "kind": "direct", "path": ["a2"], "note": "The back rook defends the front rook." },
     { "assert": "attacks", "piece": "white rook a1", "square": "a3", "layer": "L1", "expect": true },
     { "assert": "squareAttackers", "square": "a7", "layer": "L0", "color": "white", "expect": { "equals": ["white rook a3", "white rook a1"] } },
-    { "assert": "squareAttackers", "square": "a7", "layer": "L1", "color": "white", "expect": { "equals": ["white rook a3", "white rook a1"] } },
+    { "assert": "squareAttackers", "square": "a7", "layer": "L1", "color": "white", "expect": { "equals": ["white rook a3"] } },
+    { "assert": "exclusion", "piece": "white rook a1", "square": "a7", "reason": "line_blocked", "mentions": ["a3"] },
     { "assert": "squareAttackers", "square": "a7", "layer": "L0", "color": "black", "expect": { "equals": [] }, "note": "The black king on h8 does not reach a7: the pawn is undefended." },
     { "assert": "valuation", "square": "a7", "layer": "L0", "expect": { "white": { "count": 2, "value": 10 }, "black": { "count": 0, "value": 0 }, "net": { "count": 2, "value": 10 }, "occupantValue": 1 } },
     { "assert": "attacks", "piece": "white rook a3", "square": "a8", "layer": "L0", "expect": false },

@@ -10,7 +10,7 @@
     "contractVersion": {
       "description": "Version of this contract the document conforms to.",
       "type": "string",
-      "const": "0.3.0"
+      "const": "0.4.0"
     },
     "configuration": { "$ref": "#/$defs/Configuration" },
     "valuationScale": {
@@ -200,7 +200,7 @@
           "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/Square" }]
         },
         "L1": {
-          "description": "Legal: the move to 'to', with whatever stands there removed, would leave the mover's king unattacked. Otherwise the reason.",
+          "description": "Legal: the piece could move to 'to' now (nothing stands between it and the square, so every battery, xray and through_king edge is excluded with line_blocked), and doing so, with whatever stands there removed, would leave the mover's king unattacked. Otherwise the reason.",
           "type": "object",
           "additionalProperties": false,
           "required": ["legal", "reason"],
@@ -212,9 +212,9 @@
       }
     },
     "ExclusionCode": {
-      "description": "Why an L0 edge cannot be exercised at L1 (concept 4.1 L1, 4.3). pinned: the attacker is pinned to its own king and the square is off the pin line. king_in_check: the attacker's king is in check and moving to this square would neither capture the single checking piece nor block its line. king_into_attack: the attacker is the king and the square is attacked by the enemy at L0 (which counts pinned enemy pieces and lines continuing through this king). exposes_king: any other way the move would leave the attacker's king attacked; today the only case is an en passant capture that opens a rank or diagonal to the king. When more than one applies, the first in this order is reported: king_into_attack, pinned, king_in_check, exposes_king.",
+      "description": "Why an L0 edge cannot be exercised at L1 (concept 4.1 L1, 4.3). line_blocked: the edge passes through another piece (kind battery, xray or through_king), so the piece cannot move there now; the explanation names the piece in the way. pinned: the attacker is pinned to its own king and the square is off the pin line. king_in_check: the attacker's king is in check and moving to this square would neither capture the single checking piece nor block its line. king_into_attack: the attacker is the king and the square is attacked by the enemy at L0 (which counts pinned enemy pieces and lines continuing through this king). exposes_king: any other way the move would leave the attacker's king attacked; today the only case is an en passant capture that opens a rank or diagonal to the king. When more than one applies, the first in this order is reported: king_into_attack, line_blocked, pinned, king_in_check, exposes_king.",
       "type": "string",
-      "enum": ["pinned", "king_in_check", "king_into_attack", "exposes_king"]
+      "enum": ["line_blocked", "pinned", "king_in_check", "king_into_attack", "exposes_king"]
     },
     "Reason": {
       "description": "A machine-readable code and a plain-words explanation naming the pieces and squares involved (concept P8, 4.3).",

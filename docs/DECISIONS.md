@@ -163,3 +163,17 @@ Choices the concept left open, made while building the first shell and the raw-v
 
 The task's example for the smoke test named e4 and d5 as squares that show side-coloured marks in the starting position at L0. The fixture `starting-position` says nothing reaches e4 at L0, and the snapshot says the same of d5. The test therefore asserts what the fixture asserts: two white marks on d3, three on f3, none on e4 and d5, four green on e2, one green on b1 and g1, none on a1. At L2 e4 shows three marks of each side.
 - **Screenshots are rewritten only with `FORCE_CHESS_SCREENSHOTS=1`.** They show the measured analysis time, so they differ on every run; like the core's snapshots, a rewrite is a deliberate act reviewed in git.
+
+## 2026-11-08, blocked lines are excluded at L1 (contract v0.4.0)
+
+Found while reviewing the web shell's pinned-rook screenshot: in `4r3/8/8/8/8/1k6/4R1P1/4K3`, the black rook on e8's `xray` edge to e1, through the white rook on e2, was legal at L1, so the white king showed a threat at the legality layer. That contradicts the contract's own definition of L1 (the L0 reach a piece "could actually exercise if its side held the move", tested by moving it to the square): a rook cannot move through the piece on e2. It was marked legal because the test never looked at the path, and none of the four reason codes described a blocked line. This corrects the reference implementation, and the fixtures that encoded its behaviour, against the contract's L1 definition and concept 4.1 (L0 is geometry; L1 is what can be done now).
+
+- **New L1 reason code `line_blocked`.** Every edge of kind `battery`, `xray` or `through_king` is excluded at L1 with it, and the sentence names the piece in the way: "The black rook on e8 would reach e1 only once the white rook on e2 leaves the line." The L1 test itself refuses any reach whose path is not clear, so the edge kind and the move test cannot disagree.
+- **Priority order: `king_into_attack`, `line_blocked`, `pinned`, `king_in_check`, `exposes_king`.** A blocked line is checked before king safety because the move does not exist to be tested. A king only steps to neighbouring squares, so its own moves are never blocked.
+- **L0 is unchanged, and so is king safety.** King moves are still tested against the enemy's L0 reach, so a line through the king still keeps it off the squares behind it (`through-enemy-king`), and a pinned piece still guards squares from the enemy king (`pinned-piece-still-defends`). The king-into-attack sentence still names a battery's back piece (`queen-bishop-battery`).
+- **L1 counts, control and valuation now count only edges that can be exercised.** These are what the raw tallies at L1 should show. Three existing assertions had encoded the old behaviour and were changed to follow the rule:
+  - `queen-bishop-battery`: g7's white L1 attackers are now the bishop alone, not the bishop and queen.
+  - `rook-battery`: a7's white L1 attackers are now the front rook alone.
+  - `through-enemy-king`: e3's L1 control is now `none`. The king's step there is excluded by `king_into_attack` and the rook's line through the king by `line_blocked`.
+- The earlier bullet "One L1 test for every edge" (v0.1.0) still holds, with the blocked-path check as the test's first step.
+- Contract version bumped to 0.4.0, a minor version because the reason enum widened. The fixture format stays at 0.1.

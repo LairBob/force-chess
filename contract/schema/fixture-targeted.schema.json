@@ -41,7 +41,7 @@
     },
     "PieceRefList": { "type": "array", "items": { "$ref": "#/$defs/PieceRef" } },
     "SquareList": { "type": "array", "items": { "$ref": "#/$defs/Square" } },
-    "ExclusionCode": { "type": "string", "enum": ["pinned", "king_in_check", "king_into_attack", "exposes_king"] },
+    "ExclusionCode": { "type": "string", "enum": ["line_blocked", "pinned", "king_in_check", "king_into_attack", "exposes_king"] },
     "SpecialMoveCode": { "type": "string", "enum": ["no_right", "path_blocked", "in_check", "path_attacked", "no_target", "not_on_rank", "blocked", "pinned", "king_in_check", "exposes_king"] },
     "NoLegalMovesCode": { "type": "string", "enum": ["blocked", "pinned", "king_in_check", "king_into_attack", "exposes_king", "mixed"] },
     "Note": { "description": "Plain-words reading of the assertion for a human. Not checked.", "type": "string" },

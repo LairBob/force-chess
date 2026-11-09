@@ -7,6 +7,7 @@
     "A sliding attack continues through the enemy king as if the king were not there, to every square up to and including the next piece or the edge of the board, and each such square is recorded as an attack of kind through_king with the king's square as 'through'.",
     "A king's own move onto any square attacked by the enemy at L0 is excluded with reason king_into_attack; this uses L0, so the through_king squares count.",
     "The rook's attack on the king's square is an ordinary direct attack and is legal at L1; that is what a check is in this model.",
+    "At L1 the through_king edges are excluded with reason line_blocked naming the king on e4: the rook cannot move past the king. They stay in L0, and king moves are tested against L0 reach, so they still keep the king off e3 and the squares behind it.",
     "Side status for white reads check: in check with legal moves."
   ],
   "assertions": [
@@ -20,7 +21,10 @@
     { "assert": "attackKind", "piece": "black rook e8", "square": "e1", "kind": "through_king", "through": "e4" },
     { "assert": "squareAttackers", "square": "e3", "layer": "L0", "color": "black", "expect": { "equals": ["black rook e8"] } },
     { "assert": "control", "square": "e3", "layer": "L0", "expect": "contested", "note": "The white king reaches e3 geometrically, so at L0 both sides are present." },
-    { "assert": "control", "square": "e3", "layer": "L1", "expect": "black", "note": "At L1 the king's attack is excluded and only the rook remains." },
+    { "assert": "control", "square": "e3", "layer": "L1", "expect": "none", "note": "At L1 the king's step is excluded (king_into_attack) and the rook's line through the king is excluded (line_blocked), so neither side reaches e3." },
+    { "assert": "exclusion", "piece": "black rook e8", "square": "e3", "reason": "line_blocked", "mentions": ["e4"] },
+    { "assert": "exclusion", "piece": "black rook e8", "square": "e2", "reason": "line_blocked", "mentions": ["e4"] },
+    { "assert": "exclusion", "piece": "black rook e8", "square": "e1", "reason": "line_blocked", "mentions": ["e4"] },
     { "assert": "attacks", "piece": "white king e4", "square": "e3", "layer": "L0", "expect": true },
     { "assert": "attacks", "piece": "white king e4", "square": "e3", "layer": "L1", "expect": false },
     { "assert": "exclusion", "piece": "white king e4", "square": "e3", "reason": "king_into_attack", "mentions": ["e8"] },

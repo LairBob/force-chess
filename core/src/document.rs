@@ -20,7 +20,7 @@ use crate::legality::{Context, Exclusion, Trial};
 use crate::moves::{self, LegalMove, Lookahead, MoveKind};
 use crate::words::{color_name, join_and, named, piece_on, role_name, sentence_case};
 
-pub const CONTRACT_VERSION: &str = "0.3.0";
+pub const CONTRACT_VERSION: &str = "0.4.0";
 
 /// A JSON object keyed by square name, emitted in the order given.
 #[derive(Debug, Clone)]
@@ -766,6 +766,9 @@ fn no_legal_moves(ctx: &Context, square: Square, piece: Piece) -> Reason {
         let detail = ctx.explain(*trial, exclusion);
         let code = exclusion.code();
         let summary = match exclusion {
+            Exclusion::LineBlocked { .. } => unreachable!(
+                "candidate moves come from attack sets, which stop at the first piece, so their way is always clear"
+            ),
             Exclusion::Pinned { pin } => format!(
                 "{subject} cannot move: it is pinned to its king on {} by {}, and none of its moves stays on that line.",
                 ctx.pins[*pin].king,
