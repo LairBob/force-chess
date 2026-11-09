@@ -6,17 +6,19 @@ Projections are pure mappings from configuration, force state, optional associat
 
 The first projection is the raw-values projection (concept 7.1): red tallies for threats and green for defences on occupied squares, side-coloured tallies on empty squares, exact figures in the piece and square panels and on hover. It is built first and never removed.
 
+The second is the control lens (concept section 7, "Control heatmap"), the first designed lens. It is drawn over the raw values, never instead of them: each square is tinted for the side with more pieces reaching it at L0 or L1, in three steps (by one, by two, by three or more), and hatched when both sides reach it; the marks stay on top as the exact count the tint is checked against.
+
 ## Layout
 
 | Path | What it is | Imports the DOM? |
 |---|---|---|
 | `src/contract/` | `force-state.ts` and `game.ts` are generated from the schemas in `contract/schema/` by `npm run contract:types` and are not committed. `index.ts` re-exports them and holds the 64 square names. | No |
 | `src/record/` | The game record (concept section 6): a list of FENs connected by moves, with a cursor. Built from one FEN or from a parsed game, whose notation and headers it keeps. First, previous, next, last, jump; playing from the middle discards what followed. | No |
-| `src/projections/` | Pure functions from (force state, interaction context) to scene descriptions: the raw-values board (`raw-values.ts`), the current-piece and current-square panels (`panels.ts`), the readout strip (in `raw-values.ts`), the interaction context with the board orientation and its drawing order (`context.ts`), and the plain words they use (`words.ts`). | No |
+| `src/projections/` | Pure functions from (force state, interaction context) to scene descriptions: the raw-values board (`raw-values.ts`), the control lens over it (`control.ts`), the current-piece and current-square panels (`panels.ts`), the readout strip (in `raw-values.ts`), the interaction context with the board orientation and its drawing order (`context.ts`), and the plain words they use (`words.ts`). | No |
 | `src/core/` | Loads the WebAssembly package from `core/wasm/pkg/` and wraps its three calls: analyse a FEN, apply a move, parse a game. The only module that knows the package exists. | Yes |
 | `src/shell/` | Renders scenes into the page and owns the state: board, layer selector, FEN and PGN inputs, panels, move list, keyboard navigation. | Yes |
-| `tests/` | Vitest: the game record against the game fixtures in `contract/fixtures/games/`, and the projections against the whole-board snapshots in `contract/fixtures/snapshots/`. | No |
-| `e2e/` | The Playwright smoke tests of the built site in chromium: `smoke.spec.ts` for the board, the FEN input and moves made by hand, `pgn.spec.ts` for an imported game, `flip.spec.ts` for the board seen from black's side, `marks.spec.ts` for the shapes of the marks and the wrapping of a row. They also take the screenshots in `docs/screenshots/`. | - |
+| `tests/` | Vitest: the game record against the game fixtures in `contract/fixtures/games/`, and the projections against the whole-board snapshots in `contract/fixtures/snapshots/`; the control lens also against a middlegame of `docs/measurements/corpus.fen`, analysed by the WebAssembly package in Node (`tests/core.ts`). | No |
+| `e2e/` | The Playwright smoke tests of the built site in chromium: `smoke.spec.ts` for the board, the FEN input and moves made by hand, `pgn.spec.ts` for an imported game, `flip.spec.ts` for the board seen from black's side, `marks.spec.ts` for the shapes of the marks and the wrapping of a row, `control.spec.ts` for the control lens checked against the marks on all 64 squares. They also take the screenshots in `docs/screenshots/`. | - |
 
 `tsconfig.pure.json` typechecks `src/contract`, `src/record` and `src/projections` without the DOM library, so an import from the DOM there fails to compile.
 
@@ -58,13 +60,15 @@ npm run dev
 
 Opens a dev server. Paste a FEN into the box and press Load, or put it in the URL after `#`. Open "Load a game (PGN)" at the bottom of the Moves panel, paste a game in PGN into its box and press Load game: the Moves panel then names the players, event, date and result on one line and lists the moves as the text wrote them; click any move to see the position after it. Only the first game of a text is loaded, and the line says how many there were. Click a piece of the side to move, then a destination, to play a move; the arrow keys, Home and End walk the record. Hover any square and the readout strip under the board shows its exact figures at the selected layer; when the pointer leaves the board the strip keeps the selected square's figures. Click any square to fill the piece and square panels, whose sections fold with a click on their heading. Press Flip board, at the right end of the layer selector's row, or the `f` key, to look at the position from black's side; the button's tooltip says which side is at the bottom, and flipping changes only where each square is drawn, nothing about the position or the marks.
 
+The Lens selector under the layer selector picks what draws the board. Raw values, the default, is the marks alone. Control tints each square for the side with more pieces reaching it at the selected layer, deeper the larger the lead (by one, by two, by three or more), and hatches a square both sides reach; the marks stay on top, the readout strip and the square panel add the fill in words, and the legend explains each step over both square shades. The lens reads the control class and net count the document gives at L0 and L1; at L2 it draws nothing and the note under the selector says so. The lens is a view: it is not in the URL and every load starts with the raw values.
+
 ## Test
 
 ```bash
 npm test
 ```
 
-Runs Vitest. The contract types are regenerated first, so a schema change that breaks a projection fails here.
+Runs Vitest. The contract types are regenerated first, so a schema change that breaks a projection fails here. The control-lens test analyses a corpus middlegame with the WebAssembly package, so `npm run wasm` must have been run.
 
 ```bash
 npm run test:e2e
@@ -72,7 +76,7 @@ npm run test:e2e
 
 Builds the site, serves it with `vite preview` on port 4173, and runs the chromium smoke tests. It prints a `MEASUREMENTS` line with the load time, document size and analysis time of the starting position. The PGN test loads the same WebAssembly package in Node to compute what the board at a chosen move must show, so the page is checked against the core and not by eye.
 
-The three screenshots under `docs/screenshots/` (`starting-position-L0`, `pinned-rook-L1`, and `imported-game-L0`, the short game of the fixtures three moves in) show the measured analysis time, so they differ on every run. They are rewritten only on request, and the rewrite is reviewed in git like any other change in what the page shows:
+The four screenshots under `docs/screenshots/` (`starting-position-L0`, `pinned-rook-L1`, `imported-game-L0`, the short game of the fixtures three moves in, and `control-lens-L1`, the pinned-rook position under the control lens) show the measured analysis time, so they differ on every run. They are rewritten only on request, and the rewrite is reviewed in git like any other change in what the page shows:
 
 ```bash
 FORCE_CHESS_SCREENSHOTS=1 npm run test:e2e

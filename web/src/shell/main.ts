@@ -7,6 +7,11 @@ import { LAYERS } from "../contract/index.ts";
 import { isCoreError, loadForceCore, type ForceCore } from "../core/force-core.ts";
 import {
   boardScene,
+  CONTROL_AT_L2,
+  CONTROL_EXPLANATION,
+  controlLegend,
+  controlScene,
+  controlSquarePanel,
   destinations,
   type Orientation,
   LAYER_EXPLANATIONS,
@@ -37,15 +42,24 @@ import {
 } from "../record/game-record.ts";
 import { createPositionCache } from "./cache.ts";
 import { el, replaceChildren, svg } from "./dom.ts";
-import { markNode, renderBoard, renderReadout } from "./render-board.ts";
+import { markNode, renderBoard, renderReadout, swatchNode } from "./render-board.ts";
 import { renderPanel } from "./render-panels.ts";
 import "./fonts.ts";
 
 const STARTING_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
+/** Which projection draws the board: the raw values, or the control lens over them. Projection state, not force state. */
+type Lens = "raw" | "control";
+const LENSES: readonly { id: Lens; name: string }[] = [
+  { id: "raw", name: "Raw values" },
+  { id: "control", name: "Control" },
+];
+
 interface ShellState {
   record: GameRecord;
   layer: Layer;
+  /** The lens drawing the board. A projection setting (concept section 7), so it is kept out of the URL and not stored. */
+  lens: Lens;
   /** The side at the bottom of the screen. A viewing choice, so it is kept out of the URL and not stored. */
   orientation: Orientation;
   selected: Square | null;
@@ -97,6 +111,7 @@ async function start(): Promise<void> {
   const shell: ShellState = {
     record: recordFromFen(startFen),
     layer: "L0",
+    lens: "raw",
     orientation: "white",
     selected: null,
     hovered: null,
@@ -125,6 +140,8 @@ async function start(): Promise<void> {
   const statusLine = el("p", { id: "status" });
   const layerSelector = el("div", { id: "layer-selector", role: "radiogroup", "aria-label": "Analysis layer" });
   const layerNote = el("p", { id: "layer-note" });
+  const lensSelector = el("div", { id: "lens-selector", role: "radiogroup", "aria-label": "Lens" });
+  const lensNote = el("p", { id: "lens-note" });
   const flipButton = el("button", { type: "button", id: "flip-board", className: "button-secondary" }, "Flip board");
   const boardNode = el("div", { id: "board", role: "grid", "aria-label": "Board" });
   const boardFrame = el("div", { id: "board-frame" }, boardNode);
@@ -135,11 +152,7 @@ async function start(): Promise<void> {
   const promotionNode = el("div", { id: "promotion" });
   const piecePanelNode = el("section", { id: "piece-panel", className: "panel", "aria-label": "Current piece" });
   const squarePanelNode = el("section", { id: "square-panel", className: "panel", "aria-label": "Current square" });
-  const legend = el(
-    "dl",
-    { id: "legend" },
-    ...tallyLegend().flatMap((entry) => [el("dt", {}, markNode(entry.meaning), entry.label), el("dd", {}, entry.value)]),
-  );
+  const legend = el("dl", { id: "legend" });
 
   replaceChildren(
     app,
@@ -178,9 +191,11 @@ async function start(): Promise<void> {
           "div",
           { id: "toolbar" },
           el("fieldset", { id: "layer-fieldset" }, el("legend", { className: "toolbar-legend" }, "Analysis layer"), layerSelector),
+          el("fieldset", { id: "lens-fieldset" }, el("legend", { className: "toolbar-legend" }, "Lens"), lensSelector),
           flipButton,
         ),
         layerNote,
+        lensNote,
         el("div", { className: "board-scroll" }, boardFrame),
         readoutStrip,
         statusLine,
@@ -215,6 +230,11 @@ async function start(): Promise<void> {
 
   function setLayer(layer: Layer): void {
     shell.layer = layer;
+    render();
+  }
+
+  function setLens(lens: Lens): void {
+    shell.lens = lens;
     render();
   }
 
@@ -344,6 +364,39 @@ async function start(): Promise<void> {
       ),
     );
     layerNote.textContent = LAYER_EXPLANATIONS[shell.layer];
+    replaceChildren(
+      lensSelector,
+      ...LENSES.map((lens) =>
+        el(
+          "label",
+          { className: `lens-option${lens.id === shell.lens ? " active" : ""}` },
+          (() => {
+            const input = el("input", {
+              type: "radio",
+              name: "lens",
+              value: lens.id,
+              checked: lens.id === shell.lens,
+            }) as HTMLInputElement;
+            input.addEventListener("change", () => setLens(lens.id));
+            return input;
+          })(),
+          lens.name,
+        ),
+      ),
+    );
+    // The lens note says what the tints mean, or why there are none at L2. Under the raw values it is empty.
+    lensNote.textContent = shell.lens === "control" ? (shell.layer === "L2" ? CONTROL_AT_L2 : CONTROL_EXPLANATION) : "";
+    lensNote.hidden = shell.lens !== "control";
+    boardFrame.dataset["lens"] = shell.lens;
+    // The legend explains the marks always, and the lens's fills while they are drawn.
+    const lensDrawn = shell.lens === "control" && shell.layer !== "L2";
+    replaceChildren(
+      legend,
+      ...tallyLegend().flatMap((entry) => [el("dt", {}, markNode(entry.meaning), entry.label), el("dd", {}, entry.value)]),
+      ...(lensDrawn
+        ? controlLegend().flatMap((entry) => [el("dt", { className: "legend-fill" }, swatchNode(entry.fill), entry.label), el("dd", {}, entry.value)])
+        : []),
+    );
     const bottom = shell.orientation === "white" ? "White" : "Black";
     const top = shell.orientation === "white" ? "black" : "white";
     flipButton.title = `${bottom} is at the bottom. Press to look at the board from ${top}'s side (shortcut: f).`;
@@ -444,13 +497,15 @@ async function start(): Promise<void> {
     const { state } = currentState();
     document.documentElement.dataset["analysedPositions"] = String(cache.size);
     const toMove = sideToMove(currentFen(shell.record));
-    const board = boardScene(state, {
+    const context = {
       layer: shell.layer,
       selected: shell.selected,
       hovered: shell.hovered,
       sideToMove: toMove,
       orientation: shell.orientation,
-    });
+    };
+    // The lens picks the projection; both draw the same marks, the control lens adds its fills under them.
+    const board = shell.lens === "control" ? controlScene(state, context) : boardScene(state, context);
     renderBoard(boardNode, board, { onSquareClick, onSquareHover });
     renderReadout(readoutStrip, board.readout);
     renderControls(state, toMove);
@@ -461,7 +516,7 @@ async function start(): Promise<void> {
     );
     renderPanel(
       squarePanelNode,
-      shell.selected ? squarePanel(state, shell.selected) : null,
+      shell.selected ? (shell.lens === "control" ? controlSquarePanel(state, shell.selected) : squarePanel(state, shell.selected)) : null,
       "Select a square to see who reaches it and the numbers behind the marks.",
     );
   }
