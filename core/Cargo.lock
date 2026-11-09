@@ -202,6 +202,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "force-core-wasm"
+version = "0.1.0"
+dependencies = [
+ "force-core",
+ "serde_json",
+ "shakmaty",
+ "wasm-bindgen",
+]
+
+[[package]]
 name = "fraction"
 version = "0.17.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"

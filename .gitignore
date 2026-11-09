@@ -1,6 +1,6 @@
 # Rust
 /core/target/
-/core/pkg/
+/core/wasm/pkg/
 Cargo.lock.bak
 
 # Node

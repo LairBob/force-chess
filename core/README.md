@@ -17,7 +17,15 @@ Installed with rustup for the user `laurent` on 2026-11-08, stable channel, mini
 | cargo | 1.99.1 (5f94df478 2026-08-27) |
 | clippy | 0.1.99 |
 
-wasm-pack is not installed yet; WebAssembly packaging is a later step.
+For the WebAssembly package, added 2026-11-08:
+
+| Tool | Version |
+|---|---|
+| wasm-pack | 0.15.1 (`cargo install wasm-pack --locked`) |
+| target `wasm32-unknown-unknown` | the stable 1.99.1 `rust-std` component (`rustup target add wasm32-unknown-unknown`) |
+| wasm-bindgen | 0.2.130, pinned in `wasm/Cargo.toml`; wasm-pack fetches the matching CLI |
+
+wasm-pack also fetches `wasm-opt` from binaryen on first use and runs it on the output.
 
 To install the same toolchain on another machine:
 
@@ -49,6 +57,28 @@ From `core/`:
 ```bash
 cargo build
 ```
+
+`core/` is a Cargo workspace of two crates: `force-core` at the root and `force-core-wasm` in `wasm/`.
+
+### The WebAssembly package
+
+`wasm/` is a thin crate, `force-core-wasm`, that depends on `force-core` and wasm-bindgen; `force-core` itself has no platform dependency. It exposes three functions to JavaScript, all passing strings so the JSON contract is the only shared shape:
+
+- `analyze(fen)` returns the force-state document as minified JSON.
+- `applyMove(fen, from, to, promotion?)` plays one legal move for the side the FEN says is to move, using shakmaty, and returns the new FEN. Castling is asked for as the king's move (e1 to g1). A promotion must name the piece (`queen`, `rook`, `bishop`, `knight`). The en passant field of the returned FEN is written when an enemy pawn stands beside the pawn that just moved two squares, which is the contract's own rule for keeping a target.
+- `contractVersion()` returns the contract version the documents follow.
+
+A refused FEN or an illegal move throws a `ForceError` with a `code` (`unreadable`, `impossible`, `illegal_move`, `bad_square`) and a `text` sentence in plain words. The core's own sentence is passed through unchanged for a refused configuration.
+
+Build it from `core/`:
+
+```bash
+wasm-pack build wasm --target web --release --out-dir pkg
+```
+
+The output lands in `core/wasm/pkg/` (not committed): the `.wasm` binary, an ES module loader, and TypeScript declarations. `web/` imports it from there. The release profile at the workspace root optimises for size; the starting point is 834 KB of WebAssembly, most of it shakmaty's attack tables and the serialiser.
+
+Its own tests (`cargo test -p force-core-wasm`) cover the move matching and the error sentences.
 
 ## Test
 

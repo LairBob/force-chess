@@ -16,3 +16,12 @@ sha2 = "=0.11.1"
 
 [dev-dependencies]
 jsonschema = { version = "=0.61.0", default-features = false }
+
+[workspace]
+members = ["wasm"]
+
+# Release builds exist for the WebAssembly package; size matters more there
+# than the last few percent of speed.
+[profile.release]
+opt-level = "s"
+lto = true
