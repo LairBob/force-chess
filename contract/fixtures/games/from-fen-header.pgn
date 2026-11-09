@@ -1,0 +1,10 @@
+[Event "Endgame study"]
+[White "?"]
+[Black "?"]
+[Round "-"]
+[Date "????.??.??"]
+[Result "*"]
+[SetUp "1"]
+[FEN "4k3/8/8/8/8/8/4P3/4K3 b - - 5 30"]
+
+30... Kd7 31. e4 Ke6 *

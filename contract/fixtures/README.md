@@ -68,3 +68,9 @@ Snapshots, when they exist, are compared as whole documents: a difference anywhe
 ## Adding a fixture
 
 Pick one rule or fine point. Build the smallest position that isolates it. Write the decision down in `decisions` before writing assertions. Assert the thing itself and one or two of its consequences on neighbouring records, not the whole board; the whole board belongs to the snapshots. Cross-check the geometry against an independent chess tool before committing. Validate the file against the fixture schema.
+
+## Game fixtures
+
+`games/` pins down how PGN text is read into the parsed-game document of `../schema/game.schema.json`. Each `<id>.pgn` is a text to import, and `<id>.json` beside it is what the analysis side must produce for it: either a parsed-game document (a successful import), or a refusal `{ "error": { "code": "...", "text": "..." } }` whose code and sentence must match exactly.
+
+The hand-written ones are small enough to check against any chess tool: `short-game` (a complete game with every header), `annotated-game` (the same game with comments, a variation, annotation glyphs and a move-number continuation, which must parse to the very same document), `from-fen-header` (a game starting from a FEN header, black to move at move 30), `two-games` (the first game is imported and the count says two), `illegal-move`, `ambiguous-move`, `empty-text` and `not-a-game`. `long-game` is a generated game of 70 moves, legal and meaningless, kept so the size of a real record is exercised; its expected document was written by the reference implementation (`FORCE_CORE_UPDATE_GAMES=1 cargo test --test pgn` in `core/`) and is compared as JSON like a snapshot.

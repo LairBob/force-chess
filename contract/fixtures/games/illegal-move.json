@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "illegal_move",
+    "text": "Black's 3rd move, Nxe5, is not legal in the position it is played from."
+  }
+}

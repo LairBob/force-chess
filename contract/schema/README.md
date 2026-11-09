@@ -61,3 +61,9 @@ The canonical string is the placement, castling and en passant fields of FEN, jo
 ## Size
 
 The two-kings example is 16 KB minified. A full middlegame position has on the order of a few hundred edges and a few dozen legal moves per side, so documents stay well under a megabyte. The pretty-printed example on disk is for reading; transport is minified.
+
+## The parsed-game document
+
+`game.schema.json` describes a second, separate document: one chess game read from PGN text (concept section 6), versioned on its own as `gameVersion` 0.1.0. It carries the seven standard headers (null where the text has none or a placeholder such as `?`, `????.??.??` or `-`), the full FEN of the starting position, the main line as a list of moves, and how many games the text held. Each move has the standard algebraic notation as the text wrote it, its `from` and `to` squares (castling as the king's two-square move, as the force state records it), the promotion piece or null, and the full FEN after it. Variations, comments and annotation glyphs are not kept. Nothing in the document is about forces: a reader stepping through the game analyses each position by its configuration key when it lands on it.
+
+A text the analysis side cannot turn into a game is refused with a code and a sentence in plain words, in the same way a FEN is refused: `no_game` when the text holds neither headers nor moves, `unreadable` or `impossible` when its FEN header cannot be used, and `illegal_move` when a move of the main line cannot be played, with the sentence naming the side, the move number and the move as written. The refusal shape is `{ "error": { "code", "text" } }`, and the game fixtures in `../fixtures/games/` use it for the texts that must be refused.
