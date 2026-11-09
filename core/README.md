@@ -1,4 +1,3 @@
-| `src/pgn.rs` | Reads the first game of a PGN text into the parsed-game document of `contract/schema/game.schema.json`: headers, starting FEN, and each main-line move with its notation, squares and the FEN after it. Variations, comments and annotation glyphs are skipped. Every refusal names the side, the move number and the move as written. | 6 |
 # core
 
 The reference implementation of the analysis side. Rust, built on shakmaty, compiled to WebAssembly for the web shell.
@@ -48,6 +47,7 @@ The output follows contract version 0.4.0 (`CONTRACT_VERSION` in `src/document.r
 | `src/moves.rs` | Legal moves for both sides, from shakmaty. A fallback generator covers the one case shakmaty refuses. Also the L2 lookahead entries. | 4.1 L2 |
 | `src/document.rs` | The normalised document: L3 valuation, control, side status, constraints, mobility and special moves. | 4.1 L3, 4.2 |
 | `src/words.rs` | Names pieces and squares in plain words. | P8 |
+| `src/pgn.rs` | Reads the first game of a PGN text into the parsed-game document of `contract/schema/game.schema.json`: headers, starting FEN, and each main-line move with its notation, squares and the FEN after it. Variations, comments and annotation glyphs are skipped. Every refusal names the side, the move number and the move as written. | 6 |
 
 Implementation decisions and the chess fine points settled here are recorded in `docs/DECISIONS.md`.
 
