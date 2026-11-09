@@ -37,12 +37,12 @@ One JSON file per position, validating against `../schema/fixture-targeted.schem
 | `assert` | Checks |
 |---|---|
 | `configuration` | Fields of the configuration record: the canonical string, castling rights, the en passant target. Only the fields given are checked. |
-| `attacks` | Whether the piece reaches the square at the layer. At L0: an attack or defence edge exists. At L1: it exists and is legal. At L2: some lookahead entry by the piece lands on the square. |
+| `attacks` | Whether the piece reaches the square at the layer. At L0: an attack or defence edge exists. At L1: it exists and is legal. At L2: some lookahead entry by the piece reaches the square, that is, lists it among the squares attacked after the move. |
 | `attackKind` | The L0 edge exists with the given `kind` (`direct`, `battery`, `xray`, `through_king`), and when given, the `through` square and the exact `path`. |
 | `exclusion` | The L0 edge is excluded at L1 with the given reason code, and the explanation text mentions every square in `mentions`. |
 | `squareAttackers` | The set of pieces of one colour reaching the square at the layer: `equals` (set equality), `includes`, `excludes`, `count`. At L1 only legal attackers count. At L2 distinct pieces are counted. |
 | `control` | The control classification of a square at L0 or L1. |
-| `valuation` | The L3 numbers of a square at L0 or L1. Only the fields given are checked. |
+| `valuation` | The L3 numbers of a square at L0 or L1. Only the fields given are checked. `occupantValue` is not a field of the document: it is read as the value of the square's `occupant` on the document's `valuationScale`, or null when the square is empty, and is the same at every layer. |
 | `pin` | The pinned piece carries exactly this pin; `line` when given is the full line from pinner to king. |
 | `battery` | A battery with this front and back piece exists; `covered` when given is the exact ordered list of squares reached through the front piece. |
 | `xray` | An x-ray from the piece through the enemy piece exists; `beyond` when given is the exact ordered list of squares reached. |

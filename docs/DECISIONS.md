@@ -47,3 +47,11 @@ The first run of the Rust reference implementation against the corpus failed thr
 - **A battery runs both ways along its line.** The L0 rule says a line continues through a friendly same-line piece to the next piece inclusive or the board edge. Applied from both ends of a pair, that gives two batteries wherever the line continues past both pieces: on the b2-c3 diagonal the queen reaches g7 through the bishop and the bishop reaches a1 through the queen; on the a-file the black queen reaches a1 through the rook and the rook reaches a8 through the queen. `queen-bishop-battery` and `xray-through-enemy` had counted one battery each. Counting only the direction that ends on a piece would have been the other way to make the numbers agree, but doubled rooks on an open file plainly form a battery that ends at the board edge, so that reading was rejected. Both fixtures now expect two and assert the second battery explicitly; `contract/schema/README.md` says so in its definition of a battery.
 - **Black's L2 reach of e5 in the starting position includes the d-pawn and f-pawn.** After d7-d6 the pawn on d6 attacks e5, and likewise after f7-f6, exactly mirroring white's d2-d4 and f2-f4, which the fixture already listed. The fixture had only the knight on b8.
 - Contract version bumped to 0.2.1. The force-state shape did not change; the fixture format stays at 0.1.
+
+## 2026-11-08, fixture runner semantics clarified (contract v0.2.2)
+
+Writing the first runner found two places where `contract/fixtures/README.md` did not say exactly what to check. Both are now stated; no fixture and no document shape changed.
+
+- **`occupantValue` in a `valuation` assertion** is asserted by several fixtures but is not a field of the force-state document. It is read as the occupant's value on the document's own `valuationScale`, or null for an empty square. This is a lookup, not a computation about the position (P2), so the document did not need a new field.
+- **`attacks` at L2** said "lands on the square" in the README and "reaches the square" in the fixture schema. L2 is about what a piece attacks after its move, and square records list L2 entries by the squares they attack, so "reaches" is the meaning: the square is among the entry's attacked squares, not the move's destination.
+- Contract version bumped to 0.2.2.
