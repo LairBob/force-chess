@@ -81,3 +81,9 @@ impl SchemaCheck {
             .collect()
     }
 }
+
+impl SchemaCheck {
+    pub fn game() -> SchemaCheck {
+        SchemaCheck::load("game.schema.json", "game schema")
+    }
+}

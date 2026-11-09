@@ -20,10 +20,12 @@ pub mod document;
 pub mod geometry;
 pub mod legality;
 pub mod moves;
+pub mod pgn;
 pub mod words;
 
 pub use config::ConfigError;
 pub use document::{CONTRACT_VERSION, ForceState};
+pub use pgn::{GAME_VERSION, GameError, ParsedGame, parse_game};
 
 /// The force state of the position a FEN describes. Side to move and clocks
 /// are ignored: they are not part of the configuration.

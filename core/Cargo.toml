@@ -2,7 +2,7 @@
 name = "force-core"
 version = "0.1.0"
 edition = "2024"
-rust-version = "1.85"
+rust-version = "1.97"
 license = "GPL-3.0-or-later"
 description = "Reference implementation of the Force Chess analysis side: a board configuration in, its force state out."
 repository = "https://github.com/LairBob/force-chess"
@@ -13,6 +13,7 @@ shakmaty = "=0.30.2"
 serde = { version = "=1.0.229", features = ["derive"] }
 serde_json = "=1.0.154"
 sha2 = "=0.11.1"
+pgn-reader = "=0.29.1"
 
 [dev-dependencies]
 jsonschema = { version = "=0.61.0", default-features = false }

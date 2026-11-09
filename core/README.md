@@ -1,3 +1,4 @@
+| `src/pgn.rs` | Reads the first game of a PGN text into the parsed-game document of `contract/schema/game.schema.json`: headers, starting FEN, and each main-line move with its notation, squares and the FEN after it. Variations, comments and annotation glyphs are skipped. Every refusal names the side, the move number and the move as written. | 6 |
 # core
 
 The reference implementation of the analysis side. Rust, built on shakmaty, compiled to WebAssembly for the web shell.
@@ -35,7 +36,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profil
 
 ## Crate
 
-`force-core`, a library, GPL-3.0-or-later. Dependencies are pinned to exact versions: shakmaty 0.30.2 (the rules of chess), serde 1.0.229 and serde_json 1.0.154 (the JSON document), sha2 0.11.1 (the configuration key). The tests also use jsonschema 0.61.0 to validate documents against the draft 2020-12 schemas in `contract/schema/`.
+`force-core`, a library, GPL-3.0-or-later. Dependencies are pinned to exact versions: shakmaty 0.30.2 (the rules of chess), pgn-reader 0.29.1 (the PGN tokeniser from the same author, which depends on shakmaty 0.30 and raises the minimum Rust to 1.97), serde 1.0.229 and serde_json 1.0.154 (the JSON documents), sha2 0.11.1 (the configuration key). The tests also use jsonschema 0.61.0 to validate documents against the draft 2020-12 schemas in `contract/schema/`.
 
 The output follows contract version 0.4.0 (`CONTRACT_VERSION` in `src/document.rs`).
 
@@ -62,13 +63,14 @@ cargo build
 
 ### The WebAssembly package
 
-`wasm/` is a thin crate, `force-core-wasm`, that depends on `force-core` and wasm-bindgen; `force-core` itself has no platform dependency. It exposes three functions to JavaScript, all passing strings so the JSON contract is the only shared shape:
+`wasm/` is a thin crate, `force-core-wasm`, that depends on `force-core` and wasm-bindgen; `force-core` itself has no platform dependency. It exposes four functions to JavaScript, all passing strings so the JSON contracts are the only shared shapes:
 
 - `analyze(fen)` returns the force-state document as minified JSON.
 - `applyMove(fen, from, to, promotion?)` plays one legal move for the side the FEN says is to move, using shakmaty, and returns the new FEN. Castling is asked for as the king's move (e1 to g1). A promotion must name the piece (`queen`, `rook`, `bishop`, `knight`). The en passant field of the returned FEN is written when an enemy pawn stands beside the pawn that just moved two squares, which is the contract's own rule for keeping a target.
+- `parseGame(pgn)` reads the first game of a PGN text and returns the parsed-game document as minified JSON.
 - `contractVersion()` returns the contract version the documents follow.
 
-A refused FEN or an illegal move throws a `ForceError` with a `code` (`unreadable`, `impossible`, `illegal_move`, `bad_square`) and a `text` sentence in plain words. The core's own sentence is passed through unchanged for a refused configuration.
+A refused FEN, an illegal move or an unusable game throws a `ForceError` with a `code` (`unreadable`, `impossible`, `illegal_move`, `bad_square`, `no_game`) and a `text` sentence in plain words. The core's own sentence is passed through unchanged for a refused configuration.
 
 Build it from `core/`:
 
@@ -90,6 +92,7 @@ This runs:
 
 - `tests/fixtures.rs`, the targeted fixture runner. It takes every file in `contract/fixtures/targeted/`, checks it against the fixture schema, and computes the force state of its FEN. It validates the document against the force-state schema and evaluates every assertion. A failure names the fixture, the assertion, what was expected and what was found.
 - `tests/snapshots.rs`, which compares the current output for every targeted fixture position with the whole-board snapshot in `contract/fixtures/snapshots/`, byte for byte.
+- `tests/pgn.rs`, the game fixture runner. It reads every `.pgn` in `contract/fixtures/games/` and compares the result with the expected document or refusal beside it. The expected documents of successful imports are rewritten with `FORCE_CORE_UPDATE_GAMES=1 cargo test --test pgn`, then reviewed in git.
 - `tests/invariants.rs`, which generates several thousand positions from six varied starting positions. It checks that the fallback move generator agrees with shakmaty, that legal moves agree with L1 reach, and that every sampled document is valid. This test takes about ten seconds in a debug build.
 - unit tests on the configuration key and the normalisation rules.
 
