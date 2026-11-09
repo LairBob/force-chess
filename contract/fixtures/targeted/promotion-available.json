@@ -1,0 +1,26 @@
+{
+  "format": "force-chess/targeted-fixture/0.1",
+  "id": "promotion-available",
+  "fen": "1n2k3/P7/8/8/8/8/8/4K3 w - - 0 1",
+  "description": "A white pawn on a7 can promote by pushing to a8 or by taking the black knight on b8; each destination yields four legal moves, one per piece it can become, and counts once in mobility.",
+  "decisions": [
+    "A pawn on its seventh rank reports promotion as available; its target is the first available promotion square in board order, the push square a8, even though the capture onto b8 is also a promotion.",
+    "Each promotion piece is its own legal move and its own lookahead entry, ordered knight, bishop, rook, queen; the side's legal move count counts all of them, as standard move generation does.",
+    "Mobility counts destination squares, so a pawn with a push promotion and a capture promotion has mobility 2 and eight legal moves.",
+    "The lookahead attacks of a promotion are those of the piece the pawn becomes, from the promotion square."
+  ],
+  "assertions": [
+    { "assert": "sideStatus", "color": "white", "expect": { "inCheck": false, "status": "normal", "legalMoveCount": 13 }, "note": "Eight promotions and five king moves." },
+    { "assert": "sideStatus", "color": "black", "expect": { "inCheck": false, "status": "normal", "legalMoveCount": 8 } },
+    { "assert": "specialMove", "piece": "white pawn a7", "move": "promotion", "expect": { "available": true, "target": "a8" } },
+    { "assert": "mobility", "piece": "white pawn a7", "expect": 2, "destinations": ["a8", "b8"] },
+    { "assert": "attacks", "piece": "white pawn a7", "square": "b8", "layer": "L1", "expect": true },
+    { "assert": "squareAttackers", "square": "b8", "layer": "L0", "color": "white", "expect": { "equals": ["white pawn a7"] } },
+    { "assert": "valuation", "square": "b8", "layer": "L0", "expect": { "white": { "count": 1, "value": 1 }, "black": { "count": 0, "value": 0 }, "occupantValue": 3 }, "note": "The knight on b8 is attacked by the pawn and defended by nothing: the black king on e8 does not reach b8." },
+    { "assert": "squareAttackers", "square": "a1", "layer": "L2", "color": "white", "expect": { "includes": ["white pawn a7"] } },
+    { "assert": "lookahead", "piece": "white pawn a7", "to": "a8", "promotion": "queen", "attacks": { "includes": ["b8", "a1", "h1"], "excludes": ["c8"] }, "note": "The queen on a8 reaches b8,  the knight,  and stops there; it reaches down the file to a1 and down the diagonal to h1." },
+    { "assert": "lookahead", "piece": "white pawn a7", "to": "a8", "promotion": "knight", "attacks": { "includes": ["b6", "c7"], "excludes": ["a1"] } },
+    { "assert": "lookahead", "piece": "white pawn a7", "to": "b8", "promotion": "rook", "attacks": { "includes": ["a8", "c8", "d8", "e8", "b1"], "excludes": ["f8"] }, "note": "The rook on b8 reaches along the rank to the black king on e8 and stops there." },
+    { "assert": "squareAttackers", "square": "a1", "layer": "L2", "color": "white", "expect": { "equals": ["white pawn a7"] }, "note": "Only the promoted rook or queen on a8 reaches a1 after a move; the white king cannot." }
+  ]
+}
