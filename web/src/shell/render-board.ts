@@ -1,14 +1,33 @@
 // Renders a BoardScene as 64 squares. Every mark drawn here is named by the
-// scene; this file decides only colours, sizes and glyphs.
+// scene; this file decides only colours, shapes, sizes and glyphs.
 
 import type { Color, PieceType, Square } from "../contract/index.ts";
-import type { BoardScene, SquareScene, TallyRow } from "../projections/index.ts";
-import { el, replaceChildren } from "./dom.ts";
+import type { BoardScene, Readout, SquareScene, TallyRow } from "../projections/index.ts";
+import { el, replaceChildren, svg } from "./dom.ts";
 
-const GLYPHS: Record<Color, Record<PieceType, string>> = {
-  white: { king: "♔", queen: "♕", rook: "♖", bishop: "♗", knight: "♘", pawn: "♙" },
-  black: { king: "♚", queen: "♛", rook: "♜", bishop: "♝", knight: "♞", pawn: "♟" },
+/**
+ * The pieces are the mpchess SVG set (Maxime Chupin, GPL-3.0), served from
+ * public/pieces/mpchess/ with its licence notice beside the files, named by
+ * colour letter and piece letter as the set names them.
+ */
+const PIECE_FILES: Record<Color, Record<PieceType, string>> = {
+  white: { king: "wK", queen: "wQ", rook: "wR", bishop: "wB", knight: "wN", pawn: "wP" },
+  black: { king: "bK", queen: "bQ", rook: "bR", bishop: "bB", knight: "bN", pawn: "bP" },
 };
+
+/** The image for one piece: 46px, placed by the stylesheet, named in plain words for anyone who cannot see it. */
+function pieceImage(color: Color, type: PieceType): HTMLImageElement {
+  const name = `${color[0]!.toUpperCase()}${color.slice(1)} ${type}`;
+  return el("img", {
+    className: "piece",
+    src: `pieces/mpchess/${PIECE_FILES[color][type]}.svg`,
+    alt: name,
+    width: "46",
+    height: "46",
+    draggable: "false",
+    "data-piece": `${color} ${type}`,
+  });
+}
 
 const ROW_TITLES: Record<TallyRow["meaning"], string> = {
   threat: "enemy pieces reaching this piece",
@@ -16,6 +35,29 @@ const ROW_TITLES: Record<TallyRow["meaning"], string> = {
   white: "white pieces reaching this square",
   black: "black pieces reaching this square",
 };
+
+/**
+ * The shape of a mark says what its colour says (concept 7.1): a threat is a
+ * triangle pointing down onto the piece, a defence a triangle pointing up
+ * under it, and a side's reach onto an empty square a plain square. Drawn on
+ * an 8 by 8 grid with a 1px edge in the mark's edge colour.
+ */
+const MARK_SHAPES: Record<TallyRow["meaning"], { shape: string; points: string }> = {
+  threat: { shape: "triangle-down", points: "0.5,1 7.5,1 4,7.5" },
+  defence: { shape: "triangle-up", points: "4,0.5 7.5,7 0.5,7" },
+  white: { shape: "square", points: "0.5,0.5 7.5,0.5 7.5,7.5 0.5,7.5" },
+  black: { shape: "square", points: "0.5,0.5 7.5,0.5 7.5,7.5 0.5,7.5" },
+};
+
+/** One mark, for the board and for the legend. Its colour comes from the stylesheet by its meaning. */
+export function markNode(meaning: TallyRow["meaning"]): SVGSVGElement {
+  const { shape, points } = MARK_SHAPES[meaning];
+  return svg(
+    "svg",
+    { class: `mark mark-${meaning}`, "data-shape": shape, width: "8", height: "8", viewBox: "0 0 8 8", "aria-hidden": "true" },
+    svg("polygon", { points }),
+  );
+}
 
 export interface BoardHandlers {
   onSquareClick(square: Square): void;
@@ -35,14 +77,13 @@ function renderTallies(rows: readonly TallyRow[]): HTMLElement {
           "data-count": String(row.count),
           title: `${row.count} ${ROW_TITLES[row.meaning]}`,
         },
-        ...Array.from({ length: row.count }, () => el("span", { className: "mark" })),
+        ...Array.from({ length: row.count }, () => markNode(row.meaning)),
       ),
     ),
   );
 }
 
-/** One square. `column` is where it sits on the screen, 0 at the left, which decides the side its hover card opens on. */
-function renderSquare(scene: SquareScene, column: number, handlers: BoardHandlers): HTMLElement {
+function renderSquare(scene: SquareScene, handlers: BoardHandlers): HTMLElement {
   const classes = ["square", scene.shade];
   if (scene.selected) classes.push("selected");
   if (scene.hovered) classes.push("hovered");
@@ -62,40 +103,34 @@ function renderSquare(scene: SquareScene, column: number, handlers: BoardHandler
         ? `${scene.square}, ${scene.piece.color} ${scene.piece.type}`
         : `${scene.square}, empty`,
     },
-    scene.piece
-      ? el(
-          "span",
-          { className: `piece ${scene.piece.color}`, "data-piece": `${scene.piece.color} ${scene.piece.type}` },
-          GLYPHS[scene.piece.color][scene.piece.type],
-        )
-      : null,
+    scene.piece ? pieceImage(scene.piece.color, scene.piece.type) : null,
     scene.destination ? el("span", { className: "destination-mark" }) : null,
     renderTallies(scene.tallies),
     el("span", { className: "coordinate" }, scene.square),
-    scene.hover
-      ? el(
-          "div",
-          { className: `hover-card ${column >= 4 ? "to-left" : "to-right"}`, "data-hover-card": "" },
-          ...scene.hover.map((pair) =>
-            el("div", { className: "pair" }, el("span", { className: "label" }, pair.label), el("span", { className: "value" }, pair.value)),
-          ),
-        )
-      : null,
   );
   node.addEventListener("click", () => handlers.onSquareClick(scene.square));
   node.addEventListener("mouseenter", () => handlers.onSquareHover(scene.square));
   return node;
 }
 
-/** The containers the board is drawn into: the 64 squares, the file letters below them and the rank digits beside them. */
-export interface BoardNodes {
-  readonly squares: HTMLElement;
-  readonly files: HTMLElement;
-  readonly ranks: HTMLElement;
+/** Draws the 64 squares into `container`. Every square carries its own name, so the scene's edge labels are not drawn. */
+export function renderBoard(container: HTMLElement, scene: BoardScene, handlers: BoardHandlers): void {
+  replaceChildren(container, ...scene.squares.map((square) => renderSquare(square, handlers)));
 }
 
-export function renderBoard(nodes: BoardNodes, scene: BoardScene, handlers: BoardHandlers): void {
-  replaceChildren(nodes.squares, ...scene.squares.map((square, index) => renderSquare(square, index % 8, handlers)));
-  replaceChildren(nodes.files, ...scene.files.map((file) => el("span", { className: "edge-label", "data-file-label": file }, file)));
-  replaceChildren(nodes.ranks, ...scene.ranks.map((rank) => el("span", { className: "edge-label", "data-rank-label": rank }, rank)));
+/** The readout strip under the board: the figures of the square being read, or a line saying how to read one. */
+export function renderReadout(container: HTMLElement, readout: Readout | null): void {
+  if (!readout) {
+    container.removeAttribute("data-readout-square");
+    replaceChildren(container, el("span", { className: "readout-placeholder" }, "Hover a square, or click one, to read its figures here."));
+    return;
+  }
+  container.dataset["readoutSquare"] = readout.square;
+  replaceChildren(
+    container,
+    el("span", { className: "readout-heading" }, readout.heading),
+    ...readout.pairs.map((pair) =>
+      el("span", { className: "readout-pair" }, `${pair.label} `, el("span", { className: "value" }, pair.value)),
+    ),
+  );
 }

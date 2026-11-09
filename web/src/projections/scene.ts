@@ -33,8 +33,13 @@ export interface SquareScene {
   readonly movable: boolean;
   /** A king in check, as the document reports for its side. */
   readonly inCheck: boolean;
-  /** The exact figures for the hovered square, shown beside it. */
-  readonly hover: readonly LabelValue[] | null;
+}
+
+/** The exact figures of one square at one layer, for the readout strip under the board: a heading naming the square and its piece, then label-value pairs. */
+export interface Readout {
+  readonly square: Square;
+  readonly heading: string;
+  readonly pairs: readonly LabelValue[];
 }
 
 export interface BoardScene {
@@ -44,13 +49,16 @@ export interface BoardScene {
   readonly files: readonly string[];
   /** The rank digits along the left edge, top to bottom. */
   readonly ranks: readonly string[];
+  /** The figures of the hovered square, or of the selected square when nothing is hovered, or null. */
+  readonly readout: Readout | null;
 }
 
 export interface PanelItem {
   readonly text: string;
   /** A second line: the plain-words reason, or what follows. */
   readonly detail?: string;
-  readonly tone?: "legal" | "excluded" | "plain";
+  /** Legal at L1, excluded at L1, reached only after a move (L2), or none of these. */
+  readonly tone?: "legal" | "excluded" | "lookahead" | "plain";
 }
 
 export interface PanelSection {

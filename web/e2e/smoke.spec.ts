@@ -34,6 +34,9 @@ test("the starting position shows the L0 tallies the fixture describes", async (
   await ready(page);
   await expect(page.locator("[data-square]")).toHaveCount(64);
   await expect(page.locator("[data-piece]")).toHaveCount(32);
+  // Each piece is an image named in words for anyone who cannot see it.
+  await expect(square(page, "e1").locator("img[data-piece]")).toHaveAttribute("alt", "White king");
+  await expect(square(page, "d8").locator("img[data-piece]")).toHaveAttribute("alt", "Black queen");
   await expect(page.locator("#status")).toContainText("White to move");
   await expect(page.locator("html")).toHaveAttribute("data-contract-version", "0.4.0");
 
@@ -73,17 +76,30 @@ test("the layer selector changes the tallies", async ({ page }) => {
   expect(await marks(page, "f3", "white")).toBe(3);
 });
 
-test("hovering shows the exact figures and selecting fills the panels", async ({ page }) => {
+test("hovering fills the readout strip with the exact figures and selecting fills the panels", async ({ page }) => {
   await ready(page);
+  const readout = page.locator("#readout");
+  await expect(readout).toContainText("Hover a square");
   await square(page, "e2").hover();
-  const card = square(page, "e2").locator("[data-hover-card]");
-  await expect(card).toBeVisible();
-  await expect(card).toContainText("Defenses at L0");
-  await expect(card).toContainText("15");
+  await expect(readout).toHaveAttribute("data-readout-square", "e2");
+  await expect(readout).toContainText("e2, white pawn");
+  await expect(readout).toContainText("Defenses at L0");
+  await expect(readout).toContainText("15");
+  // The strip sits under the board, never over it.
+  const boardBox = await page.locator("#board").boundingBox();
+  const stripBox = await readout.boundingBox();
+  expect(stripBox!.y).toBeGreaterThanOrEqual(boardBox!.y + boardBox!.height);
 
   await square(page, "e2").click();
+  // With the pointer away from the board the strip keeps the selected square.
+  await page.mouse.move(5, 5);
+  await expect(readout).toHaveAttribute("data-readout-square", "e2");
   await expect(page.locator("#piece-panel h2")).toHaveText("White pawn on e2");
   await expect(page.locator("#piece-panel")).toContainText("Mobility (squares it can move to)");
+  // Each reach carries its L1 status as a badge, and a section's summary line counts its items.
+  await expect(page.locator("#piece-panel .item", { hasText: "White queen on d1 (direct)" }).locator(".badge")).toHaveText("LEGAL");
+  await expect(page.locator("#piece-panel .item", { hasText: "after it moves to c3" }).locator(".badge")).toHaveText("L2");
+  await expect(page.locator("#piece-panel summary", { hasText: "Defended by" })).toHaveText(/Defended by · 5/);
   await expect(page.locator("#square-panel h2")).toHaveText("Square e2");
   await expect(page.locator("#square-panel")).toContainText("White queen on d1 (direct)");
   await expect(square(page, "e3")).toHaveClass(/destination-move/);

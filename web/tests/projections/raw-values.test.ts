@@ -145,12 +145,17 @@ describe("board scene", () => {
     expect(destinations(battery, "c3").get("d4")).toBe("move");
   });
 
-  it("attaches the hover figures to the hovered square and nowhere else", () => {
-    const scene = boardScene(starting, context({ hovered: "e2", layer: "L1" }));
-    const e2 = scene.squares.find((s) => s.square === "e2")!;
-    expect(e2.hovered).toBe(true);
-    expect(e2.hover?.find((p) => p.label === "Defenses at L1")?.value).toBe("4");
-    expect(scene.squares.filter((s) => s.hover !== null).length).toBe(1);
+  it("reads out the hovered square, falls back to the selected one, and otherwise reads nothing", () => {
+    const hovered = boardScene(starting, context({ hovered: "e2", selected: "g1", layer: "L1" }));
+    expect(hovered.squares.find((s) => s.square === "e2")?.hovered).toBe(true);
+    expect(hovered.readout?.square).toBe("e2");
+    expect(hovered.readout?.heading).toBe("e2, white pawn");
+    expect(hovered.readout?.pairs.find((p) => p.label === "Defenses at L1")?.value).toBe("4");
+    expect(hovered.readout?.pairs.map((p) => p.label)).toEqual(hoverFigures(starting, "e2", "L1").map((p) => p.label).slice(2));
+    const selected = boardScene(starting, context({ selected: "g1", layer: "L1" }));
+    expect(selected.readout?.heading).toBe("g1, white knight");
+    expect(boardScene(starting, context({ hovered: "e4" })).readout?.heading).toBe("e4, empty");
+    expect(boardScene(starting, context()).readout).toBeNull();
   });
 
   it("tallies the selected layer", () => {

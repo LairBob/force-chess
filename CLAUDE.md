@@ -28,6 +28,7 @@ Browser-based chess analysis board whose product is a logical "force state": for
 - Fixtures are behaviour: targeted assertions pin down each rule; whole-board snapshots catch regressions. No test that asserts a constant equals itself, a CSS class name, or that a component renders.
 - Narrow commits, one logical change each. No emojis in code or commit messages.
 - Before claiming work complete: the fixture corpus passes, the build succeeds, and for UI changes the raw projection has been looked at in a browser.
+- After a visual change, look at the raw projection in a browser, not only the tests: open the dev server or the preview, check the starting position, the pinned-rook position and an imported game at each layer, and read the regenerated screenshots. Tests pin counts and shapes; they do not see that a mark sits under a piece or a panel overflows.
 
 ## Toolchain
 

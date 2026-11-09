@@ -9,7 +9,7 @@
 import type { Color, ForceState, Layer, Promotion, Square, SquareRecord } from "../contract/index.ts";
 import { FILES, RANKS } from "../contract/index.ts";
 import { boardLayout, type InteractionContext } from "./context.ts";
-import type { BoardScene, LabelValue, SquareScene, TallyRow } from "./scene.ts";
+import type { BoardScene, LabelValue, Readout, SquareScene, TallyRow } from "./scene.ts";
 import { capitalise, otherSide } from "./words.ts";
 
 /**
@@ -54,25 +54,25 @@ export function tallies(state: ForceState, square: Square, layer: Layer): TallyR
   return rows;
 }
 
-/** The exact figures behind the tallies, as label-value pairs. */
-export function hoverFigures(state: ForceState, square: Square, layer: Layer): LabelValue[] {
+/** What the readout says about a square: the piece on it in words, or null, and the figures at the layer. */
+function figures(state: ForceState, square: Square, layer: Layer): { piece: string | null; pairs: LabelValue[] } {
   const record = state.squares[square];
-  const pairs: LabelValue[] = [{ label: "Square", value: square }];
+  const pairs: LabelValue[] = [];
   if (!record) {
     pairs.push({ label: "Report", value: "nothing: empty and reached by no piece" });
-    return pairs;
+    return { piece: null, pairs };
   }
   const valuation = layer === "L2" ? null : record.valuation[layer];
+  let piece: string | null = null;
   if (record.occupant) {
     const enemy = otherSide(record.occupant.color);
     const friendly = record.occupant.color;
-    pairs.push({ label: "Piece", value: `${friendly} ${record.occupant.type}` });
+    piece = `${friendly} ${record.occupant.type}`;
     pairs.push({ label: `Threats at ${layer}`, value: String(reachCount(state, record, enemy, layer)) });
     if (valuation) pairs.push({ label: `Threat value at ${layer}`, value: String(valuation[enemy].value) });
     pairs.push({ label: `Defenses at ${layer}`, value: String(reachCount(state, record, friendly, layer)) });
     if (valuation) pairs.push({ label: `Defense value at ${layer}`, value: String(valuation[friendly].value) });
   } else {
-    pairs.push({ label: "Piece", value: "none" });
     pairs.push({ label: `White reach at ${layer}`, value: String(reachCount(state, record, "white", layer)) });
     if (valuation) pairs.push({ label: `White value at ${layer}`, value: String(valuation.white.value) });
     pairs.push({ label: `Black reach at ${layer}`, value: String(reachCount(state, record, "black", layer)) });
@@ -81,7 +81,21 @@ export function hoverFigures(state: ForceState, square: Square, layer: Layer): L
   if (layer !== "L2") {
     pairs.push({ label: `Control at ${layer}`, value: record.control[layer] });
   }
-  return pairs;
+  return { piece, pairs };
+}
+
+/** The exact figures behind the tallies, as label-value pairs, the square and its piece first. */
+export function hoverFigures(state: ForceState, square: Square, layer: Layer): LabelValue[] {
+  const { piece, pairs } = figures(state, square, layer);
+  const head: LabelValue[] = [{ label: "Square", value: square }];
+  if (state.squares[square]) head.push({ label: "Piece", value: piece ?? "none" });
+  return [...head, ...pairs];
+}
+
+/** The readout strip's content for one square: "e2, white pawn" or "e4, empty", then the figures. */
+export function readout(state: ForceState, square: Square, layer: Layer): Readout {
+  const { piece, pairs } = figures(state, square, layer);
+  return { square, heading: `${square}, ${piece ?? "empty"}`, pairs };
 }
 
 /** The legal destinations of the piece on `square`, read from its lookahead entries. */
@@ -115,31 +129,41 @@ export function boardScene(state: ForceState, context: InteractionContext): Boar
       const fileIndex = FILES.indexOf(square[0] as (typeof FILES)[number]);
       const rankIndex = RANKS.indexOf(square[1] as (typeof RANKS)[number]);
       const piece = state.pieces[square];
-      const hovered = context.hovered === square;
       squares.push({
         square,
         shade: (fileIndex + rankIndex) % 2 === 0 ? "dark" : "light",
         piece: piece ? { color: piece.color, type: piece.type } : null,
         tallies: tallies(state, square, context.layer),
         selected: context.selected === square,
-        hovered,
+        hovered: context.hovered === square,
         destination: moves.get(square) ?? null,
         movable: piece !== undefined && piece.color === context.sideToMove,
         inCheck: piece?.type === "king" && state.sides[piece.color].inCheck,
-        hover: hovered ? hoverFigures(state, square, context.layer) : null,
       });
     }
   }
-  return { squares, files: layout.files, ranks: layout.ranks };
+  // The strip reads the square under the pointer; with the pointer away it keeps the selected square's figures.
+  const readSquare = context.hovered ?? context.selected;
+  return {
+    squares,
+    files: layout.files,
+    ranks: layout.ranks,
+    readout: readSquare === null ? null : readout(state, readSquare, context.layer),
+  };
+}
+
+/** One line of the legend: the meaning of a mark, so the shell can draw the mark itself beside the words. */
+export interface TallyLegendEntry extends LabelValue {
+  readonly meaning: TallyRow["meaning"];
 }
 
 /** A one-line summary of what the tallies mean, for the legend. */
-export function tallyLegend(): LabelValue[] {
+export function tallyLegend(): TallyLegendEntry[] {
   return [
-    { label: "Red mark", value: "one enemy piece reaching the piece on this square" },
-    { label: "Green mark", value: "one friendly piece reaching the piece on this square" },
-    { label: "White mark", value: "one white piece reaching this empty square" },
-    { label: "Black mark", value: "one black piece reaching this empty square" },
+    { meaning: "threat", label: "Red mark, pointing down", value: "one enemy piece reaching the piece on this square" },
+    { meaning: "defence", label: "Green mark, pointing up", value: "one friendly piece reaching the piece on this square" },
+    { meaning: "white", label: "White mark", value: "one white piece reaching this empty square" },
+    { meaning: "black", label: "Black mark", value: "one black piece reaching this empty square" },
   ];
 }
 

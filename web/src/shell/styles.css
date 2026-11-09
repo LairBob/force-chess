@@ -1,139 +1,239 @@
-/* The shell's only styling. Colours of the tally marks are the four meanings
-   of concept 7.1 and nothing else is designed. */
+/* Instrument v0.1: the tokens of the design system, then the shell's
+   rules. Red, green, white and black appear only on the marks and in the
+   legend; blue only on the current state (selection, hover, current layer,
+   current move); everything else is ink and grey. */
 
 :root {
-  --light-square: #efd9b4;
-  --dark-square: #b08a62;
-  --threat: #d32f2f;
-  --defence: #2e9e3e;
+  /* Surfaces and text */
+  --page: #ffffff;
+  --panel: #f5f6f7;
+  --hairline: #eceef0;
+  --border: #d9dce0;
+  --text: #16181b;
+  --text-2: #3d434b;
+  --muted: #5b616b;
+  --disabled: #a3a8af;
+  --error: #b3261e;
+
+  /* Board */
+  --light-square: #e3e5e8;
+  --dark-square: #9ca2aa;
+  --board-frame: #3d434b;
+  --coordinate-light: rgb(22 24 27 / 0.55);
+  --coordinate-dark: rgb(22 24 27 / 0.6);
+
+  /* The four meanings of concept 7.1, each with the edge that keeps it visible on both square shades */
+  --threat: #b3261e;
+  --threat-edge: #5e0f0b;
+  --defence: #43a047;
+  --defence-edge: #134a18;
   --white-side: #ffffff;
-  --black-side: #111111;
-  --selected: #3b7dd8;
-  --destination: rgba(40, 90, 200, 0.55);
-  --check: #e53935;
-  --text: #1d1d1d;
-  --muted: #5a5a5a;
-  --panel: #fafafa;
-  --border: #d6d6d6;
-  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --white-side-edge: #3d434b;
+  --black-side: #16181b;
+  --black-side-edge: #e3e5e8;
+
+  /* Shell state: one interaction blue, and the threat colour for a king in check */
+  --selected: #1f5fd1;
+  --selected-tint: #e8effc;
+  --hovered: rgb(31 95 209 / 0.6);
+  --destination: rgb(31 95 209 / 0.5);
+  --check: #b3261e;
+
+  /* Type */
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "DejaVu Sans Mono", monospace;
+  --font-coordinate: Inter, system-ui, sans-serif;
+  --fs-title: 24px;
+  --fs-heading: 17px;
+  --fs-body: 14px;
+  --fs-small: 13px;
+  --fs-label: 11px;
+
+  /* Space and geometry */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --square: 72px;
+  --mark: 8px;
+  --mark-gap: 2px;
+
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
   color: var(--text);
 }
 
 * { box-sizing: border-box; }
 
-body { margin: 0; background: #ffffff; }
+body { margin: 0; background: var(--page); }
 
-#top { padding: 12px 16px 4px; }
-#top h1 { margin: 0 0 2px; font-size: 1.4rem; }
-.tagline { margin: 0 0 8px; color: var(--muted); font-size: 0.9rem; }
-#inputs { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: flex-start; }
-#fen-form { display: flex; gap: 8px; flex: 1 1 460px; max-width: 760px; }
-#pgn-form { display: flex; gap: 8px; flex: 1 1 360px; max-width: 760px; align-items: flex-start; }
-#pgn-input { flex: 1; font-family: ui-monospace, "DejaVu Sans Mono", monospace; font-size: 0.8rem; padding: 4px 6px; resize: vertical; min-height: 3.2em; }
-#fen-input { flex: 1; font-family: ui-monospace, "DejaVu Sans Mono", monospace; font-size: 0.9rem; padding: 4px 6px; }
-#message { min-height: 1.2em; margin: 4px 0 0; color: var(--threat); font-size: 0.9rem; }
+/* The page: a header with the title and the position input, then the board column and the panels beside it. */
+.shell-width { max-width: 1360px; margin: 0 auto; padding-left: var(--space-6); padding-right: var(--space-6); }
+#top { border-bottom: 1px solid var(--border); }
+#top .shell-width { padding-top: var(--space-4); padding-bottom: var(--space-4); display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-4) 32px; }
+.title-block { display: flex; flex-direction: column; gap: 2px; flex: 1 1 280px; }
+#top h1 { margin: 0; font-size: var(--fs-title); font-weight: 600; letter-spacing: -0.01em; }
+.tagline { margin: 0; color: var(--muted); font-size: var(--fs-small); }
+#fen-form { display: flex; flex-direction: column; gap: var(--space-1); flex: 999 1 480px; max-width: 720px; }
+.field-row { display: flex; gap: var(--space-2); align-items: flex-end; }
+.field { display: flex; flex-direction: column; gap: var(--space-1); flex: 1; min-width: 0; }
+.field-label { display: block; }
+input[type="text"], textarea {
+  box-sizing: border-box; width: 100%; padding: 0 var(--space-3); font-family: var(--font-mono); font-size: var(--fs-small);
+  color: var(--text); background: var(--page); border: 1px solid var(--border); border-radius: 2px; min-width: 0;
+}
+input[type="text"] { height: 44px; }
+textarea { padding: var(--space-2) var(--space-3); resize: vertical; min-height: 88px; line-height: 1.4; }
+input[type="text"]:focus-visible, textarea:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--selected); outline-offset: 1px; }
+#message { min-height: 1.3em; margin: 0; color: var(--error); font-size: var(--fs-small); }
+#message:empty { display: none; }
 
-#layout { display: grid; grid-template-columns: 600px minmax(360px, 1fr); gap: 16px; padding: 8px 16px 24px; align-items: start; }
-@media (max-width: 1000px) { #layout { grid-template-columns: 1fr; } }
+/* Buttons: ink for the primary action, outlined for the rest. Blue is kept for the current state. */
+button { font-family: inherit; cursor: pointer; }
+button:disabled { cursor: default; }
+.button-primary, .button-secondary {
+  height: 44px; padding: 0 20px; font-size: var(--fs-body); font-weight: 500; border-radius: 2px; white-space: nowrap;
+}
+.button-primary { color: var(--page); background: var(--text); border: 1px solid var(--text); }
+.button-secondary { color: var(--text); background: var(--page); border: 1px solid var(--border); }
+.button-secondary:disabled { color: var(--disabled); background: var(--panel); border-color: var(--hairline); }
 
-#toolbar { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px; margin-bottom: 8px; }
-#layer-selector { display: flex; gap: 4px; }
-.layer-option { padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-size: 0.9rem; }
-.layer-option.active { background: #e6eefc; border-color: var(--selected); }
-.layer-option input { margin-right: 4px; }
-#layer-note { margin: 0; color: var(--muted); font-size: 0.85rem; flex-basis: 100%; }
-#flip-board { padding: 4px 10px; font: inherit; font-size: 0.9rem; cursor: pointer; }
+#layout { padding-top: var(--space-6); padding-bottom: var(--space-6); display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; }
+#board-column { flex: 0 1 580px; min-width: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+#side-column { flex: 999 1 420px; min-width: 0; display: flex; flex-direction: column; gap: var(--space-4); }
 
-/* The board with its edge labels: rank digits down the left, file letters along the bottom. */
-#board-frame { display: grid; grid-template-columns: 18px max-content; grid-template-rows: max-content 18px; width: max-content; }
-#rank-labels { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; padding: 2px 0; }
-#file-labels { grid-column: 2; grid-row: 2; display: flex; flex-direction: row; padding: 0 2px; }
-#board { grid-column: 2; grid-row: 1; }
-.edge-label { display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--muted); }
-#rank-labels .edge-label { height: 72px; width: 18px; }
-#file-labels .edge-label { width: 72px; height: 18px; }
+/* The layer selector reads first, because it changes every mark; the Flip board button sits at the end of its row. */
+#toolbar { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-2) var(--space-4); }
+#layer-fieldset { margin: 0; padding: 0; border: 0; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+#layer-fieldset legend { padding: 0; }
+#layer-selector { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--border); border-radius: 2px; width: max-content; max-width: 100%; }
+.layer-option { display: flex; align-items: center; height: 44px; padding: 0 var(--space-4); font-size: var(--fs-body); color: var(--text-2); cursor: pointer; border-right: 1px solid var(--border); }
+.layer-option:last-child { border-right: 0; }
+.layer-option input { margin: 0 var(--space-2) 0 0; accent-color: var(--selected); }
+.layer-option .layer-code { font-family: var(--font-mono); font-weight: 500; white-space: pre; }
+.layer-option.active { color: var(--text); background: var(--selected-tint); box-shadow: inset 0 -3px 0 var(--selected); }
+#layer-note { margin: 0; font-size: var(--fs-small); line-height: 1.5; color: var(--text-2); }
+.board-scroll { overflow-x: auto; max-width: 100%; }
 
+/* The board: 64 squares of 72px inside a 2px frame. Every square carries its own name. */
+#board-frame { width: max-content; }
 #board {
   display: grid;
-  grid-template-columns: repeat(8, 72px);
-  grid-template-rows: repeat(8, 72px);
-  border: 2px solid #5b4632;
+  grid-template-columns: repeat(8, var(--square));
+  grid-template-rows: repeat(8, var(--square));
+  border: 2px solid var(--board-frame);
   width: max-content;
   user-select: none;
 }
-.square { position: relative; width: 72px; height: 72px; cursor: default; }
+.square { position: relative; width: var(--square); height: var(--square); cursor: default; }
 .square.light { background: var(--light-square); }
 .square.dark { background: var(--dark-square); }
 .square.movable { cursor: pointer; }
 .square.destination-move, .square.destination-capture { cursor: pointer; }
+/* Shell state, one channel each (none of it is force state): an inset edge for the selection, the hover and
+   a king in check; a dot or a ring for the selected piece's destinations. The marks keep the fill to themselves. */
 .square.selected { box-shadow: inset 0 0 0 4px var(--selected); }
-.square.hovered { box-shadow: inset 0 0 0 2px rgba(59, 125, 216, 0.6); }
+.square.hovered { box-shadow: inset 0 0 0 2px var(--hovered); }
 .square.selected.hovered { box-shadow: inset 0 0 0 4px var(--selected); }
-.square.in-check { background-image: radial-gradient(circle, rgba(229, 57, 53, 0.55) 0%, rgba(229, 57, 53, 0.25) 45%, transparent 70%); }
+.square.in-check { box-shadow: inset 0 0 0 3px var(--check); }
+.square.in-check.hovered { box-shadow: inset 0 0 0 2px var(--hovered), inset 0 0 0 5px var(--check); }
+.square.in-check.selected, .square.in-check.selected.hovered { box-shadow: inset 0 0 0 4px var(--selected), inset 0 0 0 7px var(--check); }
 
-.piece {
-  position: absolute; left: 0; right: 0; top: 2px;
-  text-align: center; font-size: 44px; line-height: 48px;
-  font-family: "DejaVu Sans", "Segoe UI Symbol", "Noto Sans Symbols2", sans-serif;
-  pointer-events: none;
+/* The piece: a 46px image set 13px from the left and 6px from the top, clear of the name and the marks. */
+.piece { position: absolute; left: 13px; top: 6px; width: 46px; height: 46px; display: block; pointer-events: none; }
+
+.destination-mark { position: absolute; left: 27px; top: 27px; width: 18px; height: 18px; border-radius: 50%; background: var(--destination); pointer-events: none; }
+.destination-capture .destination-mark { left: 5px; top: 5px; width: 62px; height: 62px; background: transparent; border: 5px solid var(--destination); }
+
+/* The square's name, top right, in the one place Inter is used: translucent ink, so it reads as a deeper shade of the square. */
+.coordinate {
+  position: absolute; right: 3px; top: 1px;
+  font-family: var(--font-coordinate); font-size: 12px; font-weight: 800; line-height: 14px; letter-spacing: 0.01em;
+  color: var(--coordinate-light); pointer-events: none;
 }
-.piece.white { color: #ffffff; text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 2px #000; }
-.piece.black { color: #000000; text-shadow: 0 0 1px #fff; }
+.square.dark .coordinate { color: var(--coordinate-dark); }
 
-.destination-mark { position: absolute; left: 50%; top: 50%; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; background: var(--destination); pointer-events: none; }
-.destination-capture .destination-mark { width: 62px; height: 62px; margin: -31px 0 0 -31px; background: transparent; border: 5px solid var(--destination); }
+/* Tallies: one 8px mark per unit, 2px apart, wrapping after six (58px), rows stacked upward from
+   3px above the bottom edge, in the fixed order the scene gives: threats above defences, white above black. */
+.tallies { position: absolute; left: 3px; bottom: 3px; width: calc(6 * var(--mark) + 5 * var(--mark-gap)); display: flex; flex-direction: column; gap: var(--mark-gap); pointer-events: none; }
+.tally-row { display: flex; flex-wrap: wrap; gap: var(--mark-gap); }
+.mark { display: block; flex: none; width: var(--mark); height: var(--mark); }
+.mark polygon { stroke-width: 1; stroke-linejoin: round; }
+.mark-threat polygon { fill: var(--threat); stroke: var(--threat-edge); }
+.mark-defence polygon { fill: var(--defence); stroke: var(--defence-edge); }
+.mark-white polygon { fill: var(--white-side); stroke: var(--white-side-edge); }
+.mark-black polygon { fill: var(--black-side); stroke: var(--black-side-edge); }
 
-.coordinate { position: absolute; right: 3px; top: 2px; font-size: 10px; color: rgba(0, 0, 0, 0.55); pointer-events: none; }
-
-/* Tallies: one 7px mark per unit, rows stacked at the bottom of the square. */
-.tallies { position: absolute; left: 3px; right: 3px; bottom: 3px; display: flex; flex-direction: column; gap: 2px; pointer-events: none; }
-.tally-row { display: flex; flex-wrap: wrap; gap: 2px; }
-.mark { display: inline-block; width: 7px; height: 7px; border: 1px solid transparent; }
-.tally-threat .mark, .legend-red { background: var(--threat); border-color: #7a1010; }
-.tally-defence .mark, .legend-green { background: var(--defence); border-color: #145a20; }
-.tally-white .mark, .legend-white { background: var(--white-side); border-color: #333333; }
-.tally-black .mark, .legend-black { background: var(--black-side); border-color: #dddddd; }
-
-.hover-card {
-  position: absolute; top: 0; z-index: 10; min-width: 180px;
-  background: #ffffff; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  padding: 6px 8px; font-size: 0.8rem; pointer-events: none;
+/* The readout strip: directly under the board at a fixed minimum height, so reading a square never covers the marks. */
+#readout {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 20px;
+  min-height: 44px; margin-top: var(--space-3); padding: 10px 12px;
+  background: var(--page); border: 1px solid var(--border); border-radius: 2px;
+  font-size: var(--fs-small);
 }
-.hover-card.to-right { left: 100%; margin-left: 4px; }
-.hover-card.to-left { right: 100%; margin-right: 4px; }
-.hover-card .pair { display: flex; justify-content: space-between; gap: 12px; }
-.hover-card .label { color: var(--muted); }
-.hover-card .value { font-variant-numeric: tabular-nums; }
+#readout .readout-heading { font-weight: 600; }
+#readout .readout-pair { color: var(--text-2); }
+#readout .value { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--text); }
+#readout .readout-placeholder { color: var(--muted); font-style: italic; }
 
-#status { margin: 8px 0 4px; font-size: 0.9rem; }
-#legend { display: grid; grid-template-columns: max-content 1fr; gap: 2px 10px; margin: 4px 0 0; font-size: 0.8rem; color: var(--muted); }
-#legend dt { display: flex; align-items: center; gap: 6px; }
+#status { margin: 0; font-size: var(--fs-body); }
+#status .measure { color: var(--muted); font-size: var(--fs-small); }
+#legend { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px var(--space-4); margin: 0; font-size: 12px; color: var(--text-2); }
+#legend dt { display: flex; align-items: center; gap: var(--space-2); }
 #legend dd { margin: 0; }
-#legend .mark { width: 9px; height: 9px; }
+#legend .mark { width: 11px; height: 11px; }
 
-#side-column { display: flex; flex-direction: column; gap: 12px; }
-.panel, #record { background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: 10px 12px; }
-.panel { max-height: 420px; overflow: auto; }
-.panel h2, #record h2 { margin: 0 0 2px; font-size: 1.05rem; }
-.subtitle { margin: 0 0 8px; color: var(--muted); font-size: 0.8rem; }
-.panel-section { margin-top: 10px; }
-.panel-section h3 { margin: 0 0 4px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.03em; color: var(--muted); }
-.pairs { display: grid; grid-template-columns: max-content 1fr; gap: 1px 12px; margin: 0; font-size: 0.85rem; }
-.pairs dt { color: var(--muted); }
-.pairs dd { margin: 0; font-variant-numeric: tabular-nums; }
-.items { margin: 4px 0 0; padding-left: 18px; font-size: 0.85rem; }
-.item { margin: 2px 0; }
-.item-detail { display: block; color: var(--muted); font-size: 0.8rem; }
-.tone-legal > .item-text::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 6px; background: var(--defence); }
-.tone-excluded > .item-text::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 6px; background: var(--threat); }
-.empty, .placeholder { margin: 2px 0; color: var(--muted); font-size: 0.85rem; font-style: italic; }
+#side-column { display: flex; flex-direction: column; gap: var(--space-4); }
+/* Panels grow with their content; nothing scrolls inside them. */
+.panel, #record {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 4px;
+  padding: var(--space-4) 20px; display: flex; flex-direction: column; gap: var(--space-3);
+}
+.panel-head { display: flex; flex-direction: column; gap: 2px; }
+.kicker, .panel-section > summary, .field-label, .toolbar-legend {
+  margin: 0; font-size: var(--fs-label); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+}
+.panel h2, #record h2 { margin: 0; font-size: var(--fs-heading); font-weight: 600; }
+.panel-section { border-top: 1px solid var(--border); padding-top: var(--space-3); }
+.panel-section > summary { cursor: pointer; }
+.panel-section > summary::marker { color: var(--muted); }
+.pairs { display: grid; grid-template-columns: minmax(0, 1fr) max-content; gap: var(--space-1) var(--space-4); margin: var(--space-2) 0 0; font-size: var(--fs-small); }
+.pairs dt { color: var(--text-2); }
+.pairs dd { margin: 0; text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.items { margin: var(--space-2) 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: var(--space-2); }
+.item { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: var(--space-3); align-items: start; }
+.item-body { display: flex; flex-direction: column; gap: 2px; }
+.item-text { font-size: var(--fs-body); }
+.item-detail { font-size: var(--fs-small); line-height: 1.5; color: var(--text-2); }
+/* The L1 status of a reach, told apart by shape: filled for legal, outlined for excluded, dashed for a reach that exists only after a move. */
+.badge {
+  display: block; box-sizing: border-box; margin-top: 1px; padding: 2px 0; text-align: center;
+  font-family: var(--font-mono); font-size: var(--fs-label); font-weight: 500; line-height: 1.2; border-radius: 2px;
+}
+.badge-legal { color: var(--page); background: var(--text-2); border: 1px solid var(--text-2); }
+.badge-excluded { color: var(--text-2); border: 1px solid var(--muted); }
+.badge-lookahead { color: var(--text-2); border: 1px dashed var(--muted); }
+.empty, .placeholder { margin: var(--space-2) 0 0; color: var(--muted); font-size: var(--fs-small); font-style: italic; }
+.panel > .placeholder { margin: 0; }
 
-#game-headers { margin: 0 0 4px; font-size: 0.85rem; color: var(--muted); }
-#navigation { display: flex; gap: 4px; margin: 4px 0; }
-#navigation button { min-width: 36px; }
-#move-list { margin: 4px 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 2px 6px; font-size: 0.9rem; max-height: 220px; overflow: auto; }
-#move-list li.current .move { background: #e6eefc; border-color: var(--selected); }
-#move-list .move { border: 1px solid transparent; background: transparent; padding: 1px 4px; cursor: pointer; font: inherit; }
-#promotion button { margin: 4px 6px 0 0; }
-.loading, .fatal { padding: 16px; }
-.fatal { color: var(--threat); }
+/* The record: the game line, four 44px buttons, the move list in the monospace, the promotion question, and the PGN box folded away. */
+#game-headers { margin: 0; font-size: var(--fs-small); color: var(--muted); }
+#navigation { display: flex; gap: var(--space-1); }
+#navigation button { width: 44px; height: 44px; padding: 0; display: flex; align-items: center; justify-content: center; }
+#navigation svg { display: block; }
+#move-list { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-1); font-family: var(--font-mono); font-size: var(--fs-small); }
+#move-list li { display: flex; }
+#move-list .move { font: inherit; padding: var(--space-1) 6px; background: transparent; border: 1px solid transparent; border-radius: 2px; color: var(--text); }
+#move-list li.current .move { background: var(--selected-tint); border-color: var(--selected); }
+#move-list li.ahead .move { color: var(--muted); }
+#move-list .placeholder { margin: 0; font-family: var(--font-sans); }
+#promotion:empty { display: none; }
+#promotion p { margin: 0 0 var(--space-2); font-size: var(--fs-body); }
+#promotion .choices { display: flex; flex-wrap: wrap; gap: var(--space-1); }
+#pgn-import { border-top: 1px solid var(--border); padding-top: var(--space-3); }
+#pgn-import > summary { cursor: pointer; }
+#pgn-form { display: flex; flex-direction: column; gap: var(--space-2); margin-top: var(--space-2); }
+#pgn-form .button-primary { align-self: flex-start; }
+.loading, .fatal { padding: var(--space-4); }
+.fatal { color: var(--error); }

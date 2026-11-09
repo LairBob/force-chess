@@ -32,3 +32,20 @@ export function replaceChildren(parent: Element, ...children: Child[]): void {
     ...children.filter((c): c is Node | string => c !== null && c !== undefined && c !== false),
   );
 }
+
+const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
+
+/** An SVG element: the marks are drawn as small inline SVGs so they can have a shape as well as a colour. */
+export function svg<K extends keyof SVGElementTagNameMap>(
+  tag: K,
+  attrs: Record<string, string> = {},
+  ...children: Child[]
+): SVGElementTagNameMap[K] {
+  const node = document.createElementNS(SVG_NAMESPACE, tag);
+  for (const [name, value] of Object.entries(attrs)) node.setAttribute(name, value);
+  for (const child of children) {
+    if (child === null || child === undefined || child === false) continue;
+    node.append(typeof child === "string" ? document.createTextNode(child) : child);
+  }
+  return node;
+}

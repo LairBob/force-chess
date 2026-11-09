@@ -43,7 +43,7 @@ function edgeItems(state: ForceState, indices: readonly number[], named: "from" 
 function lookaheadItems(state: ForceState, indices: readonly number[]): PanelItem[] {
   return indices.flatMap((index) => {
     const entry = state.relations.lookaheads[index];
-    return entry ? [{ text: capitalise(lookaheadWords(state, entry)), tone: "plain" as const }] : [];
+    return entry ? [{ text: capitalise(lookaheadWords(state, entry)), tone: "lookahead" as const }] : [];
   });
 }
 
@@ -271,7 +271,7 @@ export function piecePanel(state: ForceState, square: Square): PanelScene | null
 
   return {
     title: capitalise(pieceOn(state, square)),
-    subtitle: "Current piece: everything the document says about it.",
+    subtitle: "Current piece",
     sections,
   };
 }
@@ -287,7 +287,7 @@ export function squarePanel(state: ForceState, square: Square): PanelScene {
   if (!record) {
     return {
       title: `Square ${square}`,
-      subtitle: "Current square: everything the document says about it.",
+      subtitle: "Current square",
       sections: [
         { title: "At a glance", pairs: glance },
         {
@@ -323,7 +323,7 @@ export function squarePanel(state: ForceState, square: Square): PanelScene {
   sections.push(reachSection(state, record, "black", "Black pieces reaching this square", "Black reach"));
   return {
     title: `Square ${square}`,
-    subtitle: "Current square: everything the document says about it.",
+    subtitle: "Current square",
     sections,
   };
 }
