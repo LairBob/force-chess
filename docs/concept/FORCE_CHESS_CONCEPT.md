@@ -1,6 +1,6 @@
 # Force Chess: top-level concept specification
 
-Version 0.5, 2026-11-09 (0.4, 2026-11-08). Concept bracketed: every position in this document is confirmed by Laurent or follows from one that is.
+Version 0.6, 2026-11-09 (0.5, 2026-11-09; 0.4, 2026-11-08). Concept bracketed: every position in this document is confirmed by Laurent or follows from one that is.
 
 How to read this: the positions in section 10 were first taken as defaults so the spec would be complete, and were all accepted by Laurent on 2026-11-08. They remain listed there so the reasoning behind each stays visible. This document says what the thing is. It does not say how to build it or in what order.
 
@@ -96,7 +96,7 @@ A projection is a pure mapping:
 
 The scene description is declarative data describing what to draw and what each drawn element means, not drawing calls. The shell renders it. Candidate projections, each a lens over the same state:
 
-- **Control heatmap.** One colour per square from the L0 or L1 attacker differential. The TypeScript repo's whole Phase 4 plan is this one lens.
+- **Control heatmap.** One colour per square from the L0 or L1 attacker differential. The TypeScript repo's whole Phase 4 plan is this one lens. Built on 2026-11-09 as the first designed lens, drawn over the raw values and never instead of them: it reads each square's control class and net attacker count at L0 or L1 and tints the square for the leading side in three steps, hatching a contested square.
 - **Corner indicators.** The vanilla-JS repo's four-corner scheme: reach pies, threat/protection pies, threat and legal-move marks.
 - **Info panels.** The current piece and current square, spelling out every state and listing every cause. Both panels derive from the same records, which gives the alignment Laurent asked for.
 - **Raw values.** Label-value pairs per square and per piece, every layer, no styling. See 7.1. Built first.
