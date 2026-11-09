@@ -38,8 +38,12 @@ export interface SquareScene {
 }
 
 export interface BoardScene {
-  /** The 64 squares in drawing order: rank 8 first, file a first, white at the bottom. */
+  /** The 64 squares in drawing order: the top row of the screen first, left to right, as the orientation places them. */
   readonly squares: readonly SquareScene[];
+  /** The file letters along the bottom edge, left to right. */
+  readonly files: readonly string[];
+  /** The rank digits along the left edge, top to bottom. */
+  readonly ranks: readonly string[];
 }
 
 export interface PanelItem {

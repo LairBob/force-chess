@@ -19,6 +19,7 @@ const context = (overrides: Partial<InteractionContext> = {}): InteractionContex
   selected: null,
   hovered: null,
   sideToMove: "white",
+  orientation: "white",
   ...overrides,
 });
 
