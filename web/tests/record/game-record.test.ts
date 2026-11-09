@@ -4,6 +4,7 @@ import {
   canGoForward,
   currentFen,
   first,
+  fullmoveNumber,
   jump,
   last,
   moveNumber,
@@ -11,8 +12,10 @@ import {
   play,
   previous,
   recordFromFen,
+  recordFromGame,
   sideToMove,
 } from "../../src/record/game-record.ts";
+import { parsedGame } from "../games.ts";
 
 const START = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 const AFTER_E4 = "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1";
@@ -83,5 +86,57 @@ describe("game record", () => {
     const fromBlack = play(recordFromFen(AFTER_E4), e5, AFTER_E5);
     expect(moveNumber(fromBlack, 0)).toBe(1);
     expect(moveNumber(play(fromBlack, nf3, AFTER_NF3), 1)).toBe(2);
+  });
+});
+
+describe("a record built from an imported game", () => {
+  const short = parsedGame("short-game");
+  const record = recordFromGame(short);
+
+  it("holds the start position and the position after each move, cursor on the start", () => {
+    expect(record.positions.length).toBe(8);
+    expect(record.positions[0]).toBe(short.startFen);
+    expect(record.positions[7]).toBe(short.moves[6]?.fenAfter);
+    expect(record.cursor).toBe(0);
+    expect(currentFen(record)).toBe(START);
+  });
+
+  it("carries the squares and the notation of every move", () => {
+    expect(record.moves[2]).toEqual({ from: "d1", to: "h5", promotion: null, san: "Qh5" });
+    expect(record.moves.map((m) => m.san)).toEqual(["e4", "e5", "Qh5", "Nc6", "Bc4", "Nf6", "Qxf7#"]);
+  });
+
+  it("keeps the headers and the game count for the shell", () => {
+    expect(record.imported?.headers.white).toBe("Alice");
+    expect(record.imported?.headers.result).toBe("1-0");
+    expect(record.imported?.gamesInText).toBe(1);
+    expect(recordFromGame(parsedGame("two-games")).imported?.gamesInText).toBe(2);
+  });
+
+  it("steps and jumps through the imported positions", () => {
+    const third = jump(record, 3);
+    expect(currentFen(third)).toBe(short.moves[2]?.fenAfter);
+    expect(currentFen(next(third))).toBe(short.moves[3]?.fenAfter);
+    expect(currentFen(previous(third))).toBe(short.moves[1]?.fenAfter);
+    expect(last(record).cursor).toBe(7);
+    expect(canGoForward(last(record))).toBe(false);
+  });
+
+  it("truncates the imported future when a move is played from the middle", () => {
+    const branched = play(jump(record, 2), nf3, AFTER_NF3);
+    expect(branched.positions).toEqual([START, short.moves[0]?.fenAfter, short.moves[1]?.fenAfter, AFTER_NF3]);
+    expect(branched.moves.map((m) => m.san)).toEqual(["e4", "e5", undefined]);
+    expect(branched.cursor).toBe(3);
+    expect(canGoForward(branched)).toBe(false);
+    expect(branched.imported?.headers.black).toBe("Bob");
+  });
+
+  it("numbers moves from the fullmove number of a FEN header", () => {
+    const fromHeader = recordFromGame(parsedGame("from-fen-header"));
+    expect(sideToMove(currentFen(fromHeader))).toBe("black");
+    expect(moveNumber(fromHeader, 0)).toBe(30);
+    expect(moveNumber(fromHeader, 1)).toBe(31);
+    expect(moveNumber(fromHeader, 2)).toBe(31);
+    expect(fullmoveNumber("8/8/8/8/8/8/8/8")).toBe(1);
   });
 });

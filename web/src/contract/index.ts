@@ -1,5 +1,5 @@
-// The contract as TypeScript. `force-state.ts` is generated from
-// contract/schema/force-state.schema.json by `npm run contract:types` and is
+// The contract as TypeScript. `force-state.ts` and `game.ts` are generated
+// from the schemas in contract/schema/ by `npm run contract:types` and are
 // not committed; everything here is a re-export or a fixed fact about the
 // board, never a computation about a position.
 
@@ -22,6 +22,7 @@ export type {
   Xray,
 } from "./force-state.ts";
 import type { ForceStateOfOneConfiguration } from "./force-state.ts";
+export type { Headers as GameHeaders, Move as ParsedMove, ParsedGame } from "./game.ts";
 
 /** The force-state document of one configuration. */
 export type ForceState = ForceStateOfOneConfiguration;

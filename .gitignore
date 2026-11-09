@@ -23,3 +23,4 @@ node_modules/
 
 # Generated from contract/schema by npm run contract:types
 /web/src/contract/force-state.ts
+/web/src/contract/game.ts

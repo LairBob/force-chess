@@ -6,7 +6,7 @@
   "license": "GPL-3.0-or-later",
   "type": "module",
   "scripts": {
-    "contract:types": "json2ts --input ../contract/schema/force-state.schema.json --output src/contract/force-state.ts --bannerComment \"/* Generated from contract/schema/force-state.schema.json by npm run contract:types. Do not edit. */\" --no-additionalProperties",
+    "contract:types": "json2ts --input ../contract/schema/force-state.schema.json --output src/contract/force-state.ts --bannerComment \"/* Generated from contract/schema/force-state.schema.json by npm run contract:types. Do not edit. */\" --no-additionalProperties && json2ts --input ../contract/schema/game.schema.json --output src/contract/game.ts --bannerComment \"/* Generated from contract/schema/game.schema.json by npm run contract:types. Do not edit. */\" --no-additionalProperties",
     "wasm": "wasm-pack build ../core/wasm --target web --release --out-dir pkg",
     "predev": "npm run contract:types",
     "dev": "vite",
