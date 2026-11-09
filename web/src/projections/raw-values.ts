@@ -6,7 +6,7 @@
 // Everything here is a lookup in the document: a count is the length of an
 // index list, a value is a number the document already holds.
 
-import type { Color, ForceState, Layer, Square, SquareRecord } from "../contract/index.ts";
+import type { Color, ForceState, Layer, Promotion, Square, SquareRecord } from "../contract/index.ts";
 import { FILES, RANKS } from "../contract/index.ts";
 import type { InteractionContext } from "./context.ts";
 import type { BoardScene, LabelValue, SquareScene, TallyRow } from "./scene.ts";
@@ -141,3 +141,17 @@ export function tallyLegend(): LabelValue[] {
 }
 
 export { capitalise };
+
+/** The pieces the pawn on `from` could become by moving to `to`, from its lookahead entries; empty when the move is not a promotion. */
+export function promotionChoices(state: ForceState, from: Square, to: Square): Promotion[] {
+  const piece = state.pieces[from];
+  if (!piece) return [];
+  const choices: Promotion[] = [];
+  for (const index of piece.lookaheads) {
+    const entry = state.relations.lookaheads[index];
+    if (entry && entry.move.from === from && entry.move.to === to && entry.move.promotion) {
+      choices.push(entry.move.promotion);
+    }
+  }
+  return choices;
+}

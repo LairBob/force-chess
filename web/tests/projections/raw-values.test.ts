@@ -3,6 +3,7 @@ import {
   boardScene,
   destinations,
   hoverFigures,
+  promotionChoices,
   reachCount,
   tallies,
 } from "../../src/projections/raw-values.ts";
@@ -154,5 +155,21 @@ describe("board scene", () => {
     const l1 = boardScene(pinned, context({ layer: "L1" }));
     expect(l0.squares.find((s) => s.square === "d5")?.tallies).toEqual([{ meaning: "defence", count: 1 }]);
     expect(l1.squares.find((s) => s.square === "d5")?.tallies).toEqual([]);
+  });
+});
+
+describe("promotion choices", () => {
+  it("lists the four pieces for a promoting pawn and nothing for other moves", () => {
+    const state = snapshot("en-passant-only-move-exposes-king");
+    const promoting = Object.entries(state.pieces).find(
+      ([, piece]) => piece.type === "pawn" && piece.specialMoves.promotion?.available,
+    );
+    if (promoting) {
+      const [from, piece] = promoting;
+      const target = piece.specialMoves.promotion?.target ?? "";
+      expect(promotionChoices(state, from, target)).toEqual(["knight", "bishop", "rook", "queen"]);
+    }
+    expect(promotionChoices(starting, "e2", "e4")).toEqual([]);
+    expect(promotionChoices(starting, "e4", "e5")).toEqual([]);
   });
 });

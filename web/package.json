@@ -17,10 +17,12 @@
     "preview": "vite preview --port 4173 --strictPort",
     "pretest": "npm run contract:types",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "pretest:e2e": "npm run build"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.0",
+    "@types/node": "^22.20.5",
     "json-schema-to-typescript": "^16.0.0",
     "typescript": "^7.0.2",
     "vite": "^8.3.6",

@@ -86,7 +86,7 @@ export function moveNotation(move: {
   from: Square;
   to: Square;
   promotion: string | null;
-  kind?: Move["kind"];
+  kind?: Move["kind"] | undefined;
 }): string {
   if (move.kind === "castle_kingside") return "O-O";
   if (move.kind === "castle_queenside") return "O-O-O";
