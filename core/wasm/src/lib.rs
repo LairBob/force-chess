@@ -1,26 +1,29 @@
 //! force-core-wasm: the thin WebAssembly face of force-core.
 //!
-//! Two functions cross the boundary, both taking and returning strings so the
-//! JSON contract in `contract/schema/` is the only shared shape:
+//! Three functions cross the boundary, all taking and returning strings so
+//! the JSON contracts in `contract/schema/` are the only shared shapes:
 //!
 //! - [`analyze`] turns a FEN into its force-state document.
 //! - [`apply_move`] plays one legal move on a FEN and returns the new FEN,
 //!   with the rules bought from shakmaty (P5, P7).
+//! - [`parse_game`] reads the first game of a PGN text into its parsed-game
+//!   document.
 //!
 //! Failures are thrown as a [`ForceError`] carrying a code and a plain-words
 //! sentence (P8). force-core itself knows nothing of this crate.
 
 use shakmaty::fen::Fen;
-use shakmaty::{CastlingMode, Chess, EnPassantMode, Move, Position, Role, Square};
+use shakmaty::{Chess, EnPassantMode, Move, Position, Role, Square};
 use wasm_bindgen::prelude::*;
 
 use force_core::words::{color_name, piece_on, sentence_case};
 
 /// Why a call could not be completed. `code` is one of `unreadable` (the
-/// text is not a FEN), `impossible` (the FEN describes a board no game can
-/// reach), `illegal_move` (the move is not legal in this position) or
-/// `bad_square` (a square name is not a square). `text` is a sentence for a
-/// reader with no chess vocabulary.
+/// text is not a FEN, or not PGN), `impossible` (the FEN describes a board no
+/// game can reach), `illegal_move` (the move is not legal in this position,
+/// or a move of a game cannot be played where it stands), `bad_square` (a
+/// square name is not a square) or `no_game` (the text holds no game).
+/// `text` is a sentence for a reader with no chess vocabulary.
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
 pub struct ForceError {
@@ -47,6 +50,12 @@ impl From<force_core::ConfigError> for ForceError {
     }
 }
 
+impl From<force_core::GameError> for ForceError {
+    fn from(err: force_core::GameError) -> Self {
+        ForceError::new(err.code(), err.to_string())
+    }
+}
+
 /// The contract version the documents follow.
 #[wasm_bindgen(js_name = contractVersion)]
 pub fn contract_version() -> String {
@@ -61,6 +70,16 @@ pub fn analyze(fen: &str) -> Result<String, ForceError> {
     Ok(serde_json::to_string(&state).expect("the force state always serialises"))
 }
 
+/// The parsed-game document of the first game in a PGN text, as minified
+/// JSON following `contract/schema/game.schema.json`. Variations, comments
+/// and annotation glyphs are skipped; the document says how many games the
+/// text held.
+#[wasm_bindgen(js_name = parseGame)]
+pub fn parse_game(pgn: &str) -> Result<String, ForceError> {
+    let game = force_core::parse_game(pgn)?;
+    Ok(serde_json::to_string(&game).expect("the parsed game always serialises"))
+}
+
 /// Plays the move from `from` to `to` (with `promotion` naming the piece a
 /// pawn becomes: `queen`, `rook`, `bishop` or `knight`) for the side the FEN
 /// says is to move, and returns the FEN of the position after it. Castling is
@@ -72,7 +91,7 @@ pub fn apply_move(
     to: &str,
     promotion: Option<String>,
 ) -> Result<String, ForceError> {
-    let position = position_from_fen(fen)?;
+    let position = force_core::config::position_from_fen(fen)?;
     let from_square = parse_square(from)?;
     let to_square = parse_square(to)?;
     let promotion_role = match promotion.as_deref() {
@@ -109,35 +128,6 @@ pub fn apply_move(
         )
     })?;
     Ok(Fen::from_position(&after, EnPassantMode::PseudoLegal).to_string())
-}
-
-/// The FEN as a shakmaty position, with the same two refusals ignored that
-/// force-core ignores (an "impossible" check and too much material), and
-/// force-core's own checks applied first so the sentences match.
-fn position_from_fen(fen: &str) -> Result<Chess, ForceError> {
-    force_core::config::parse(fen)?;
-    let parsed = Fen::from_ascii(fen.trim().as_bytes()).map_err(|err| {
-        ForceError::new(
-            "unreadable",
-            format!(
-                "This text cannot be read as a FEN position ({err}): \"{}\".",
-                fen.trim()
-            ),
-        )
-    })?;
-    let mut result = parsed.into_position::<Chess>(CastlingMode::Standard);
-    if let Err(err) = result {
-        result = err.ignore_impossible_check();
-    }
-    if let Err(err) = result {
-        result = err.ignore_too_much_material();
-    }
-    result.map_err(|err| {
-        ForceError::new(
-            "impossible",
-            format!("This position cannot be played from: {err}."),
-        )
-    })
 }
 
 fn parse_square(text: &str) -> Result<Square, ForceError> {
@@ -218,6 +208,28 @@ mod tests {
         assert!(err.text.contains("king"), "{}", err.text);
         let err = analyze("not a fen").unwrap_err();
         assert_eq!(err.code, "unreadable");
+    }
+
+    #[test]
+    fn parse_game_returns_the_document() {
+        let text = parse_game("1. e4 e5 2. Nf3 *").unwrap();
+        let value: serde_json::Value = serde_json::from_str(&text).unwrap();
+        assert_eq!(value["gameVersion"], force_core::GAME_VERSION);
+        assert_eq!(value["moves"].as_array().unwrap().len(), 3);
+        assert_eq!(value["moves"][2]["san"], "Nf3");
+        assert_eq!(value["gamesInText"], 1);
+    }
+
+    #[test]
+    fn parse_game_refuses_with_a_sentence() {
+        let err = parse_game("1. e4 e5 2. Qh5 Nc6 3. Qh8 *").unwrap_err();
+        assert_eq!(err.code, "illegal_move");
+        assert_eq!(
+            err.text,
+            "White's 3rd move, Qh8, is not legal in the position it is played from."
+        );
+        let err = parse_game("").unwrap_err();
+        assert_eq!(err.code, "no_game");
     }
 
     #[test]
