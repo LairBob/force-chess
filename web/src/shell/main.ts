@@ -32,6 +32,7 @@ import {
   sideToMove,
   type GameRecord,
 } from "../record/game-record.ts";
+import { createPositionCache } from "./cache.ts";
 import { el, replaceChildren } from "./dom.ts";
 import { renderBoard } from "./render-board.ts";
 import { renderPanel } from "./render-panels.ts";
@@ -65,7 +66,8 @@ async function start(): Promise<void> {
   if (!app) throw new Error("The page has no #app element.");
 
   const core: ForceCore = await loadForceCore();
-  const cache = new Map<string, Measured>();
+  // Bounded: a long game or an imported one would otherwise hold every position for good.
+  const cache = createPositionCache<Measured>();
   const analyse = (fen: string): Measured => {
     const cached = cache.get(fen);
     if (cached) return cached;
