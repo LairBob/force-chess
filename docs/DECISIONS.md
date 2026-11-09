@@ -162,3 +162,4 @@ Choices the concept left open, made while building the first shell and the raw-v
 ### What the smoke test checks against
 
 The task's example for the smoke test named e4 and d5 as squares that show side-coloured marks in the starting position at L0. The fixture `starting-position` says nothing reaches e4 at L0, and the snapshot says the same of d5. The test therefore asserts what the fixture asserts: two white marks on d3, three on f3, none on e4 and d5, four green on e2, one green on b1 and g1, none on a1. At L2 e4 shows three marks of each side.
+- **Screenshots are rewritten only with `FORCE_CHESS_SCREENSHOTS=1`.** They show the measured analysis time, so they differ on every run; like the core's snapshots, a rewrite is a deliberate act reviewed in git.

@@ -58,7 +58,13 @@ Runs Vitest. The contract types are regenerated first, so a schema change that b
 npm run test:e2e
 ```
 
-Builds the site, serves it with `vite preview` on port 4173, and runs the chromium smoke test. It rewrites the two screenshots under `docs/screenshots/` and prints a `MEASUREMENTS` line with the load time, document size and analysis time of the starting position.
+Builds the site, serves it with `vite preview` on port 4173, and runs the chromium smoke test. It prints a `MEASUREMENTS` line with the load time, document size and analysis time of the starting position.
+
+The two screenshots under `docs/screenshots/` show the measured analysis time, so they differ on every run. They are rewritten only on request, and the rewrite is reviewed in git like any other change in what the page shows:
+
+```bash
+FORCE_CHESS_SCREENSHOTS=1 npm run test:e2e
+```
 
 ## Build
 

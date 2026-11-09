@@ -8,6 +8,13 @@ import { expect, test, type Locator, type Page } from "@playwright/test";
 import { fileURLToPath } from "node:url";
 
 const SCREENSHOTS = fileURLToPath(new URL("../../docs/screenshots/", import.meta.url));
+// The screenshots carry the measured analysis time, so they differ on every
+// run; they are rewritten only on request, and the rewrite is reviewed in git.
+const WRITE_SCREENSHOTS = process.env["FORCE_CHESS_SCREENSHOTS"] === "1";
+
+async function screenshot(page: Page, name: string): Promise<void> {
+  if (WRITE_SCREENSHOTS) await page.screenshot({ path: `${SCREENSHOTS}${name}.png` });
+}
 const PINNED_ROOK = "4r3/8/8/8/8/1k6/4R1P1/4K3 w - - 0 1";
 
 function square(page: Page, name: string): Locator {
@@ -53,7 +60,7 @@ test("the starting position shows the L0 tallies the fixture describes", async (
   };
   console.log(`MEASUREMENTS ${JSON.stringify(measurements)}`);
 
-  await page.screenshot({ path: `${SCREENSHOTS}starting-position-L0.png` });
+  await screenshot(page, "starting-position-L0");
 });
 
 test("the layer selector changes the tallies", async ({ page }) => {
@@ -132,7 +139,7 @@ test("a pasted FEN loads, and a pinned rook loses its off-line reach at L1", asy
   expect(await marks(page, "a3", "black")).toBe(1);
   await square(page, "e2").click();
   await expect(page.locator("#piece-panel")).toContainText("Pinned by the black rook on e8 against its king on e1.");
-  await page.screenshot({ path: `${SCREENSHOTS}pinned-rook-L1.png` });
+  await screenshot(page, "pinned-rook-L1");
 });
 
 test("an impossible FEN is refused with the core's sentence", async ({ page }) => {
