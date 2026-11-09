@@ -3,6 +3,7 @@ import {
   canGoBack,
   canGoForward,
   currentFen,
+  describeImportedGame,
   first,
   fullmoveNumber,
   jump,
@@ -138,5 +139,25 @@ describe("a record built from an imported game", () => {
     expect(moveNumber(fromHeader, 1)).toBe(31);
     expect(moveNumber(fromHeader, 2)).toBe(31);
     expect(fullmoveNumber("8/8/8/8/8/8/8/8")).toBe(1);
+  });
+});
+
+describe("the line describing an imported game", () => {
+  it("names the players, event, date and result", () => {
+    expect(describeImportedGame(recordFromGame(parsedGame("short-game")).imported!)).toBe(
+      "Alice versus Bob, Casual game, 2026.11.09, 1-0.",
+    );
+  });
+
+  it("falls back to the sides and leaves out what the text did not say", () => {
+    expect(describeImportedGame(recordFromGame(parsedGame("from-fen-header")).imported!)).toBe(
+      "White versus Black, Endgame study, no result recorded.",
+    );
+  });
+
+  it("says when the text held more than one game", () => {
+    expect(describeImportedGame(recordFromGame(parsedGame("two-games")).imported!)).toBe(
+      "Alice versus Bob, Casual game, 2026.11.09, 1-0. The text held 2 games; this is the first.",
+    );
   });
 });

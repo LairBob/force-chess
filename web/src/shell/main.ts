@@ -29,6 +29,8 @@ import {
   play,
   previous,
   recordFromFen,
+  recordFromGame,
+  describeImportedGame,
   sideToMove,
   type GameRecord,
 } from "../record/game-record.ts";
@@ -104,12 +106,21 @@ async function start(): Promise<void> {
     placeholder: "Paste a FEN and press Load",
   }) as HTMLInputElement;
   const loadButton = el("button", { type: "submit", id: "load-fen" }, "Load");
+  const pgnInput = el("textarea", {
+    id: "pgn-input",
+    spellcheck: "false",
+    rows: "3",
+    "aria-label": "PGN of a game to load",
+    placeholder: "Paste a game in PGN and press Load game",
+  }) as HTMLTextAreaElement;
+  const loadPgnButton = el("button", { type: "submit", id: "load-pgn" }, "Load game");
   const messageLine = el("p", { id: "message", role: "status" });
   const statusLine = el("p", { id: "status" });
   const layerSelector = el("div", { id: "layer-selector", role: "radiogroup", "aria-label": "Layer" });
   const layerNote = el("p", { id: "layer-note" });
   const boardNode = el("div", { id: "board", role: "grid", "aria-label": "Board" });
   const navigation = el("div", { id: "navigation" });
+  const gameLine = el("p", { id: "game-headers" });
   const moveList = el("ol", { id: "move-list" });
   const promotionNode = el("div", { id: "promotion" });
   const piecePanelNode = el("section", { id: "piece-panel", className: "panel", "aria-label": "Current piece" });
@@ -130,7 +141,12 @@ async function start(): Promise<void> {
       { id: "top" },
       el("h1", {}, "Force Chess"),
       el("p", { className: "tagline" }, "The raw values: one mark per piece reaching each square, nothing scaled, nothing hidden."),
-      el("form", { id: "fen-form" }, fenInput, loadButton),
+      el(
+        "div",
+        { id: "inputs" },
+        el("form", { id: "fen-form" }, fenInput, loadButton),
+        el("form", { id: "pgn-form" }, pgnInput, loadPgnButton),
+      ),
       messageLine,
     ),
     el(
@@ -147,7 +163,7 @@ async function start(): Promise<void> {
       el(
         "div",
         { id: "side-column" },
-        el("section", { id: "record", "aria-label": "Game record" }, el("h2", {}, "Moves"), navigation, moveList, promotionNode),
+        el("section", { id: "record", "aria-label": "Game record" }, el("h2", {}, "Moves"), gameLine, navigation, moveList, promotionNode),
         piecePanelNode,
         squarePanelNode,
       ),
@@ -178,6 +194,27 @@ async function start(): Promise<void> {
     shell.pendingPromotion = null;
     shell.message = null;
     window.location.hash = encodeURIComponent(trimmed);
+    render();
+  }
+
+  function loadPgn(text: string): void {
+    if (text.trim().length === 0) return;
+    let record: GameRecord;
+    try {
+      record = recordFromGame(core.parseGame(text));
+      // The start position is analysed now; every other position waits
+      // until the cursor lands on it.
+      analyse(currentFen(record));
+    } catch (error) {
+      if (!isCoreError(error)) throw error;
+      shell.message = error.text;
+      render();
+      return;
+    }
+    shell.record = record;
+    shell.selected = null;
+    shell.pendingPromotion = null;
+    shell.message = null;
     render();
   }
 
@@ -288,22 +325,33 @@ async function start(): Promise<void> {
       button(">|", "Last position (End)", canGoForward(shell.record), () => navigate(last)),
     );
 
+    gameLine.textContent = shell.record.imported ? describeImportedGame(shell.record.imported) : "";
+    gameLine.hidden = !shell.record.imported;
+
     const items = shell.record.moves.map((move, index) => {
       const number = moveNumber(shell.record, index);
       const sideOfMove = sideToMove(shell.record.positions[index] ?? "");
       const prefix = sideOfMove === "white" ? `${number}. ` : index === 0 ? `${number}... ` : "";
-      const kind = analyse(shell.record.positions[index] ?? "").state.relations.lookaheads.find(
-        (entry) => entry.move.from === move.from && entry.move.to === move.to && entry.move.promotion === move.promotion,
-      )?.move.kind;
+      // An imported move is shown as the text wrote it. A move played on the
+      // board has no notation, so its kind is read from the force state of
+      // the position it was played from, which was analysed when shown.
+      const notation =
+        move.san ??
+        moveNotation({
+          ...move,
+          kind: analyse(shell.record.positions[index] ?? "").state.relations.lookaheads.find(
+            (entry) => entry.move.from === move.from && entry.move.to === move.to && entry.move.promotion === move.promotion,
+          )?.move.kind,
+        });
       const node = el(
         "li",
-        { className: index + 1 === shell.record.cursor ? "current" : "" },
-        el("button", { type: "button", className: "move" }, `${prefix}${moveNotation({ ...move, kind })}`),
+        { className: index + 1 === shell.record.cursor ? "current" : "", "data-move-index": String(index) },
+        el("button", { type: "button", className: "move" }, `${prefix}${notation}`),
       );
       node.querySelector("button")?.addEventListener("click", () => navigate((r) => jump(r, index + 1)));
       return node;
     });
-    replaceChildren(moveList, ...(items.length > 0 ? items : [el("li", { className: "placeholder" }, "No moves yet. Click a piece, then a square.")]));
+    replaceChildren(moveList, ...(items.length > 0 ? items : [el("li", { className: "placeholder" }, "No moves yet. Click a piece, then a square, or paste a game above.")]));
 
     if (shell.pendingPromotion) {
       const pending = shell.pendingPromotion;
@@ -323,6 +371,7 @@ async function start(): Promise<void> {
 
   function render(): void {
     const { state } = currentState();
+    document.documentElement.dataset["analysedPositions"] = String(cache.size);
     const toMove = sideToMove(currentFen(shell.record));
     renderBoard(
       boardNode,
@@ -347,8 +396,12 @@ async function start(): Promise<void> {
     event.preventDefault();
     loadFen(fenInput.value);
   });
+  document.getElementById("pgn-form")?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    loadPgn(pgnInput.value);
+  });
   document.addEventListener("keydown", (event) => {
-    if (event.target === fenInput) return;
+    if (event.target === fenInput || event.target === pgnInput) return;
     switch (event.key) {
       case "ArrowLeft":
         navigate(previous);

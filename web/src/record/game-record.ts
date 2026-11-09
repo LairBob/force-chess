@@ -135,3 +135,21 @@ export function moveNumber(record: GameRecord, index: number): number {
   const offset = sideToMove(startFen) === "black" ? 1 : 0;
   return fullmoveNumber(startFen) + Math.floor((index + offset) / 2);
 }
+
+/**
+ * One plain line about an imported game for the top of the move list:
+ * "Alice versus Bob, Casual game, 2026.11.09, 1-0." A missing name falls
+ * back to the side; a missing event or date is left out; a missing result
+ * is said to be missing. When the text held more than one game, says so.
+ */
+export function describeImportedGame(imported: ImportedGame): string {
+  const h = imported.headers;
+  const parts = [`${h.white ?? "White"} versus ${h.black ?? "Black"}`];
+  if (h.event) parts.push(h.event);
+  if (h.date) parts.push(h.date);
+  parts.push(h.result ?? "no result recorded");
+  const line = `${parts.join(", ")}.`;
+  return imported.gamesInText > 1
+    ? `${line} The text held ${imported.gamesInText} games; this is the first.`
+    : line;
+}
