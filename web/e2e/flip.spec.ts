@@ -126,6 +126,7 @@ test("the f key flips the board, but not while typing in the FEN or PGN box", as
   await expect(page.locator("#board-frame")).toHaveAttribute("data-bottom", "white");
   await expect(page.locator("#fen-input")).toHaveValue(/f$/);
 
+  await page.locator("#pgn-import > summary").click();
   await page.locator("#pgn-input").focus();
   await page.keyboard.type("f");
   await expect(page.locator("#board-frame")).toHaveAttribute("data-bottom", "white");

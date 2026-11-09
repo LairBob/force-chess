@@ -36,7 +36,7 @@ import {
   type GameRecord,
 } from "../record/game-record.ts";
 import { createPositionCache } from "./cache.ts";
-import { el, replaceChildren } from "./dom.ts";
+import { el, replaceChildren, svg } from "./dom.ts";
 import { markNode, renderBoard, renderReadout } from "./render-board.ts";
 import { renderPanel } from "./render-panels.ts";
 import "./fonts.ts";
@@ -112,7 +112,7 @@ async function start(): Promise<void> {
     "aria-label": "FEN of the position to load",
     placeholder: "Paste a FEN and press Load",
   }) as HTMLInputElement;
-  const loadButton = el("button", { type: "submit", id: "load-fen" }, "Load");
+  const loadButton = el("button", { type: "submit", id: "load-fen", className: "button-primary" }, "Load");
   const pgnInput = el("textarea", {
     id: "pgn-input",
     spellcheck: "false",
@@ -120,12 +120,12 @@ async function start(): Promise<void> {
     "aria-label": "PGN of a game to load",
     placeholder: "Paste a game in PGN and press Load game",
   }) as HTMLTextAreaElement;
-  const loadPgnButton = el("button", { type: "submit", id: "load-pgn" }, "Load game");
+  const loadPgnButton = el("button", { type: "submit", id: "load-pgn", className: "button-primary" }, "Load game");
   const messageLine = el("p", { id: "message", role: "status" });
   const statusLine = el("p", { id: "status" });
-  const layerSelector = el("div", { id: "layer-selector", role: "radiogroup", "aria-label": "Layer" });
+  const layerSelector = el("div", { id: "layer-selector", role: "radiogroup", "aria-label": "Analysis layer" });
   const layerNote = el("p", { id: "layer-note" });
-  const flipButton = el("button", { type: "button", id: "flip-board" }, "Flip board");
+  const flipButton = el("button", { type: "button", id: "flip-board", className: "button-secondary" }, "Flip board");
   const boardNode = el("div", { id: "board", role: "grid", "aria-label": "Board" });
   const boardFrame = el("div", { id: "board-frame" }, boardNode);
   const readoutStrip = el("div", { id: "readout", role: "status", "aria-label": "Figures of the square being read" });
@@ -146,24 +146,42 @@ async function start(): Promise<void> {
     el(
       "header",
       { id: "top" },
-      el("h1", {}, "Force Chess"),
-      el("p", { className: "tagline" }, "The raw values: one mark per piece reaching each square, nothing scaled, nothing hidden."),
       el(
         "div",
-        { id: "inputs" },
-        el("form", { id: "fen-form" }, fenInput, loadButton),
-        el("form", { id: "pgn-form" }, pgnInput, loadPgnButton),
+        { className: "shell-width" },
+        el(
+          "div",
+          { className: "title-block" },
+          el("h1", {}, "Force Chess"),
+          el("p", { className: "tagline" }, "The raw values: one mark per piece reaching each square, nothing scaled, nothing hidden."),
+        ),
+        el(
+          "form",
+          { id: "fen-form" },
+          el(
+            "div",
+            { className: "field-row" },
+            el("label", { className: "field" }, el("span", { className: "field-label" }, "Position (FEN)"), fenInput),
+            loadButton,
+          ),
+          messageLine,
+        ),
       ),
-      messageLine,
     ),
     el(
       "main",
-      { id: "layout" },
+      { id: "layout", className: "shell-width" },
       el(
         "div",
         { id: "board-column" },
-        el("div", { id: "toolbar" }, layerSelector, flipButton, layerNote),
-        boardFrame,
+        el(
+          "div",
+          { id: "toolbar" },
+          el("fieldset", { id: "layer-fieldset" }, el("legend", { className: "toolbar-legend" }, "Analysis layer"), layerSelector),
+          flipButton,
+        ),
+        layerNote,
+        el("div", { className: "board-scroll" }, boardFrame),
         readoutStrip,
         statusLine,
         legend,
@@ -171,9 +189,23 @@ async function start(): Promise<void> {
       el(
         "div",
         { id: "side-column" },
-        el("section", { id: "record", "aria-label": "Game record" }, el("h2", {}, "Moves"), gameLine, navigation, moveList, promotionNode),
         piecePanelNode,
         squarePanelNode,
+        el(
+          "section",
+          { id: "record", "aria-label": "Game record" },
+          el("h2", {}, "Moves"),
+          gameLine,
+          navigation,
+          moveList,
+          promotionNode,
+          el(
+            "details",
+            { id: "pgn-import" },
+            el("summary", { className: "toolbar-legend" }, "Load a game (PGN)"),
+            el("form", { id: "pgn-form" }, pgnInput, loadPgnButton),
+          ),
+        ),
       ),
     ),
   );
@@ -306,7 +338,8 @@ async function start(): Promise<void> {
             input.addEventListener("change", () => setLayer(layer));
             return input;
           })(),
-          LAYER_NAMES[layer],
+          el("span", { className: "layer-code" }, layer),
+          LAYER_NAMES[layer].slice(layer.length).replace(/^,\s*/, ", "),
         ),
       ),
     );
@@ -320,7 +353,11 @@ async function start(): Promise<void> {
     const sides = (["white", "black"] as const).map(
       (color) => `${color === "white" ? "White" : "Black"}: ${state.sides[color].status}, ${state.sides[color].legalMoveCount} legal moves`,
     );
-    statusLine.textContent = `${toMove === "white" ? "White" : "Black"} to move. ${sides.join(". ")}. Document: ${currentState().bytes.toLocaleString()} bytes, analysed in ${currentState().milliseconds.toFixed(1)} ms.`;
+    replaceChildren(
+      statusLine,
+      `${toMove === "white" ? "White" : "Black"} to move. ${sides.join(". ")}. `,
+      el("span", { className: "measure" }, `Document: ${currentState().bytes.toLocaleString()} bytes, analysed in ${currentState().milliseconds.toFixed(1)} ms.`),
+    );
     statusLine.dataset["sideToMove"] = toMove;
     messageLine.textContent = shell.message ?? "";
     messageLine.classList.toggle("has-message", shell.message !== null);
@@ -331,17 +368,25 @@ async function start(): Promise<void> {
       shownFen = fen;
     }
 
-    const button = (label: string, title: string, enabled: boolean, action: () => void) => {
-      const node = el("button", { type: "button", title, disabled: !enabled }, label);
+    const button = (path: string, label: string, title: string, enabled: boolean, action: () => void) => {
+      const node = el(
+        "button",
+        { type: "button", className: "button-secondary", title, "aria-label": label, disabled: !enabled },
+        svg(
+          "svg",
+          { width: "16", height: "16", viewBox: "0 0 16 16", fill: "none", stroke: "currentColor", "stroke-width": "1.5", "aria-hidden": "true" },
+          svg("path", { d: path }),
+        ),
+      );
       node.addEventListener("click", action);
       return node;
     };
     replaceChildren(
       navigation,
-      button("|<", "First position (Home)", canGoBack(shell.record), () => navigate(first)),
-      button("<", "Previous position (left arrow)", canGoBack(shell.record), () => navigate(previous)),
-      button(">", "Next position (right arrow)", canGoForward(shell.record), () => navigate(next)),
-      button(">|", "Last position (End)", canGoForward(shell.record), () => navigate(last)),
+      button("M4 3v10M12 3l-5 5 5 5", "First position", "First position (Home)", canGoBack(shell.record), () => navigate(first)),
+      button("M10 3l-5 5 5 5", "Previous position", "Previous position (left arrow)", canGoBack(shell.record), () => navigate(previous)),
+      button("M6 3l5 5-5 5", "Next position", "Next position (right arrow)", canGoForward(shell.record), () => navigate(next)),
+      button("M12 3v10M4 3l5 5-5 5", "Last position", "Last position (End)", canGoForward(shell.record), () => navigate(last)),
     );
 
     gameLine.textContent = shell.record.imported ? describeImportedGame(shell.record.imported) : "";
@@ -364,24 +409,31 @@ async function start(): Promise<void> {
         });
       const node = el(
         "li",
-        { className: index + 1 === shell.record.cursor ? "current" : "", "data-move-index": String(index) },
+        {
+          className: index + 1 === shell.record.cursor ? "current" : index + 1 > shell.record.cursor ? "ahead" : "",
+          "data-move-index": String(index),
+        },
         el("button", { type: "button", className: "move" }, `${prefix}${notation}`),
       );
       node.querySelector("button")?.addEventListener("click", () => navigate((r) => jump(r, index + 1)));
       return node;
     });
-    replaceChildren(moveList, ...(items.length > 0 ? items : [el("li", { className: "placeholder" }, "No moves yet. Click a piece, then a square, or paste a game above.")]));
+    replaceChildren(moveList, ...(items.length > 0 ? items : [el("li", { className: "placeholder" }, "No moves yet. Click a piece, then a square, or load a game below.")]));
 
     if (shell.pendingPromotion) {
       const pending = shell.pendingPromotion;
       replaceChildren(
         promotionNode,
         el("p", {}, `The pawn on ${pending.from} promotes on ${pending.to}. It becomes a:`),
-        ...pending.choices.map((choice) => {
-          const node = el("button", { type: "button", "data-promotion": choice }, choice);
-          node.addEventListener("click", () => makeMove(pending.from, pending.to, choice));
-          return node;
-        }),
+        el(
+          "div",
+          { className: "choices" },
+          ...pending.choices.map((choice) => {
+            const node = el("button", { type: "button", className: "button-secondary", "data-promotion": choice }, choice);
+            node.addEventListener("click", () => makeMove(pending.from, pending.to, choice));
+            return node;
+          }),
+        ),
       );
     } else {
       replaceChildren(promotionNode);

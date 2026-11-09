@@ -31,8 +31,11 @@ async function ready(page: Page): Promise<void> {
   await expect(page.locator("html[data-ready='true']")).toBeAttached({ timeout: 20_000 });
 }
 
+/** Opens the PGN disclosure in the Moves panel if it is folded, pastes the game and loads it. */
 async function loadGame(page: Page, id: string): Promise<void> {
-  await page.fill("#pgn-input", gameText(id));
+  const box = page.locator("#pgn-input");
+  if (!(await box.isVisible())) await page.locator("#pgn-import > summary").click();
+  await box.fill(gameText(id));
   await page.click("#load-pgn");
 }
 
