@@ -1,0 +1,22 @@
+# Rust
+/core/target/
+/core/pkg/
+Cargo.lock.bak
+
+# Node
+node_modules/
+/web/dist/
+/web/coverage/
+/web/playwright-report/
+/web/test-results/
+
+# Editors and OS
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Local agent state
+.claude/settings.local.json
+.claude/worktrees/
+.playwright-mcp/
