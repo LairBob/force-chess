@@ -16,7 +16,7 @@ The first projection is the raw-values projection (concept 7.1): red tallies for
 | `src/core/` | Loads the WebAssembly package from `core/wasm/pkg/` and wraps its three calls: analyse a FEN, apply a move, parse a game. The only module that knows the package exists. | Yes |
 | `src/shell/` | Renders scenes into the page and owns the state: board, layer selector, FEN and PGN inputs, panels, move list, keyboard navigation. | Yes |
 | `tests/` | Vitest: the game record against the game fixtures in `contract/fixtures/games/`, and the projections against the whole-board snapshots in `contract/fixtures/snapshots/`. | No |
-| `e2e/` | The Playwright smoke tests of the built site in chromium: `smoke.spec.ts` for the board, the FEN input and moves made by hand, `pgn.spec.ts` for an imported game, `flip.spec.ts` for the board seen from black's side. They also take the screenshots in `docs/screenshots/`. | - |
+| `e2e/` | The Playwright smoke tests of the built site in chromium: `smoke.spec.ts` for the board, the FEN input and moves made by hand, `pgn.spec.ts` for an imported game, `flip.spec.ts` for the board seen from black's side, `marks.spec.ts` for the shapes of the marks and the wrapping of a row. They also take the screenshots in `docs/screenshots/`. | - |
 
 `tsconfig.pure.json` typechecks `src/contract`, `src/record` and `src/projections` without the DOM library, so an import from the DOM there fails to compile.
 

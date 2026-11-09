@@ -227,7 +227,7 @@ button:disabled { cursor: default; }
 #move-list .move { font: inherit; padding: var(--space-1) 6px; background: transparent; border: 1px solid transparent; border-radius: 2px; color: var(--text); }
 #move-list li.current .move { background: var(--selected-tint); border-color: var(--selected); }
 #move-list li.ahead .move { color: var(--muted); }
-#move-list .placeholder { margin: 0; }
+#move-list .placeholder { margin: 0; font-family: var(--font-sans); }
 #promotion:empty { display: none; }
 #promotion p { margin: 0 0 var(--space-2); font-size: var(--fs-body); }
 #promotion .choices { display: flex; flex-wrap: wrap; gap: var(--space-1); }
