@@ -177,3 +177,39 @@ Found while reviewing the web shell's pinned-rook screenshot: in `4r3/8/8/8/8/1k
   - `through-enemy-king`: e3's L1 control is now `none`. The king's step there is excluded by `king_into_attack` and the rook's line through the king by `line_blocked`.
 - The earlier bullet "One L1 test for every edge" (v0.1.0) still holds, with the blocked-path check as the test's first step.
 - Contract version bumped to 0.4.0, a minor version because the reason enum widened. The fixture format stays at 0.1.
+
+## 2026-11-09, PGN import (game document v0.1.0, pgn-reader 0.29.1)
+
+A pasted game reaches the shell as a second contract document, parsed by the Rust core. Decisions made along the way; none touches the force-state contract, which stays at 0.4.0.
+
+### Crate
+
+- **pgn-reader 0.29.1, pinned exactly.** It is the PGN tokeniser from shakmaty's author and its shakmaty dependency is `0.30`, so it resolves to the exact pin `shakmaty = "=0.30.2"` without bumping anything. It pulls in `btoi` and `memchr`, both plain Rust that compile to WebAssembly, and it raises the crates' minimum Rust from 1.85 to 1.97 (the toolchain is 1.99.1). The alternative, a hand-written mainline tokeniser on shakmaty's SAN parser, was not needed.
+- **The tokeniser does not validate; shakmaty does.** pgn-reader hands over each move as parsed notation and every move is turned into a legal move and played by shakmaty, so the rules stay bought (P5, P7). A notation that matches no legal move, or more than one, is a refusal.
+- **One limitation accepted and recorded.** pgn-reader silently drops a move-text token it cannot read as notation (a typo such as `Nf33`), and tells its visitor nothing. Such a token therefore vanishes, and the game usually fails one move later with an illegal-move sentence about the next move, or imports with a move missing. A tokeniser of our own could name the bad token; revisit if Laurent meets it.
+
+### What is read, and what is skipped
+
+- **The main line only.** Variations are skipped with pgn-reader's skip fast path; comments, annotation glyphs (`!?`, `$6`) and the move numbers are dropped. The `annotated-game` fixture must parse to the very same document as the clean `short-game`.
+- **The first game only; the count is reported.** `gamesInText` says how many games the text held, and the shell's game line says "The text held 2 games; this is the first." Multi-game libraries are a concept non-goal.
+- **Seven headers, placeholders as null.** Event, Site, Date, Round, White, Black, Result. A value that is empty or made only of `?`, `.` and `-` (`?`, `????.??.??`, `-`) is null, so the shell never shows a question mark as a name. `Result` is taken from the header; when the header is missing the result token that ends the move text is used; `*` is null.
+- **A `FEN` header is honoured with or without `SetUp "1"`.** It passes the same configuration checks as a pasted FEN, and a refusal carries the configuration's own sentence after "The game's FEN header could not be used." Move numbers then count on from the FEN's fullmove number, so a study starting at black's 30th move is listed as `30... Kd7 31. e4`.
+- **Nothing is read from headers beyond these.** ECO, Elo, clocks and the rest wait for a consumer.
+
+### The parsed-game document
+
+- **A separate document, `contract/schema/game.schema.json`, versioned `gameVersion` 0.1.0.** It is about a record (concept section 6), not a configuration, so it does not belong in the force-state schema and does not move its version. It holds the headers, the full starting FEN, the moves and the game count.
+- **Each move carries its notation as written, its squares, the promotion piece and the full FEN after it.** The FEN is written as `applyMove` writes it: the en passant field is present only when an enemy pawn stands beside the pawn that just moved, the contract's own rule for keeping a target. The move's squares follow the force state: castling is the king's two-square move; a promotion names the piece in words. Nothing else is computed in the document; the shell numbers the moves from the starting FEN.
+- **The notation is the parsed move written back**, so `0-0` becomes `O-O` and a check sign is kept. A disambiguation the text wrote is kept too.
+- **Refusals are sentences naming the side, the move number and the move as written:** "Black's 3rd move, Nxe5, is not legal in the position it is played from." and "White's 3rd move, Nd2, could be made by more than one white knight, so it is not clear which is meant." A text with neither headers nor moves is refused with `no_game`; an unterminated tag or comment with `unreadable`. The codes join the WebAssembly `ForceError` codes.
+- **Fixtures pair a `.pgn` with the document or refusal it must produce**, in `contract/fixtures/games/`. The small ones were written by hand (Scholar's mate, the same game annotated, a study from a FEN header, two games in one text, an illegal move, an ambiguous move, an empty text, prose). `long-game` is a generated game of 70 moves, legal and meaningless, kept so a record of real length is exercised; its document was written by the reference implementation with `FORCE_CORE_UPDATE_GAMES=1`, like a snapshot. There is no ajv setup in the repository; the expected documents are checked against the game schema by the same jsonschema crate the force-state fixtures use. The runner compares results as JSON values, so formatting is free.
+- **The FEN-to-position reader moved into `force-core`** (`config::position_from_fen`) so the game reader and `applyMove` share one set of refusals and sentences.
+
+### Shell behaviour
+
+- **A PGN box with its own Load game button beside the FEN box.** Its refusals appear in the same line as a refused FEN. Loading a game puts the cursor on the start position and leaves the URL hash alone.
+- **The record carries notation and headers.** `GameMove.san` is optional: present for an imported move, absent for a move played on the board, which the record cannot name without the rules. The imported game's headers and count ride on the record (`imported`) and survive playing a move from the middle, which still truncates what followed.
+- **The move list shows an imported move as the text wrote it**, numbered from the starting FEN's fullmove number, and a hand-played move in the long notation it used before. Clicking a move jumps to the position after it; the current move is marked; the arrow keys, Home and End still step. The list scrolls past 220 px.
+- **Only the position the cursor lands on is analysed.** The shell used to analyse the position before every move on each render to find the move's kind for the notation; an imported move has its notation, so no analysis happens for it, and a 70-move game imports with the cache unchanged. The root element reports `data-analysed-positions` so the smoke test pins this.
+- **One plain line about the game** above the moves: "Alice versus Bob, Casual game, 2026.11.09, 1-0." A missing name falls back to the side, a missing event or date is left out, a missing result says "no result recorded".
+- **The smoke test checks the board against the core, not by eye.** `e2e/pgn.spec.ts` loads the same WebAssembly package in Node, analyses the fixture's FEN after the third move, runs the raw-values projection on all 64 squares, and compares pieces and mark counts with what the page shows. The third screenshot, `imported-game-L0`, is the short game after `3. Bc4`.

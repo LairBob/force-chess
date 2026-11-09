@@ -10,13 +10,13 @@ The first projection is the raw-values projection (concept 7.1): red tallies for
 
 | Path | What it is | Imports the DOM? |
 |---|---|---|
-| `src/contract/` | `force-state.ts` is generated from `contract/schema/force-state.schema.json` by `npm run contract:types` and is not committed. `index.ts` re-exports it and holds the 64 square names. | No |
-| `src/record/` | The game record (concept section 6): a list of FENs connected by moves, with a cursor. First, previous, next, last, jump; playing from the middle discards what followed. | No |
+| `src/contract/` | `force-state.ts` and `game.ts` are generated from the schemas in `contract/schema/` by `npm run contract:types` and are not committed. `index.ts` re-exports them and holds the 64 square names. | No |
+| `src/record/` | The game record (concept section 6): a list of FENs connected by moves, with a cursor. Built from one FEN or from a parsed game, whose notation and headers it keeps. First, previous, next, last, jump; playing from the middle discards what followed. | No |
 | `src/projections/` | Pure functions from (force state, interaction context) to scene descriptions: the raw-values board (`raw-values.ts`), the current-piece and current-square panels (`panels.ts`), and the plain words they use (`words.ts`). | No |
-| `src/core/` | Loads the WebAssembly package from `core/wasm/pkg/` and wraps its two calls. The only module that knows the package exists. | Yes |
-| `src/shell/` | Renders scenes into the page and owns the state: board, layer selector, FEN input, panels, move list, keyboard navigation. | Yes |
-| `tests/` | Vitest: the game record, and the projections against the whole-board snapshots in `contract/fixtures/snapshots/`. | No |
-| `e2e/` | The Playwright smoke test of the built site in chromium. It also takes the screenshots in `docs/screenshots/`. | - |
+| `src/core/` | Loads the WebAssembly package from `core/wasm/pkg/` and wraps its three calls: analyse a FEN, apply a move, parse a game. The only module that knows the package exists. | Yes |
+| `src/shell/` | Renders scenes into the page and owns the state: board, layer selector, FEN and PGN inputs, panels, move list, keyboard navigation. | Yes |
+| `tests/` | Vitest: the game record against the game fixtures in `contract/fixtures/games/`, and the projections against the whole-board snapshots in `contract/fixtures/snapshots/`. | No |
+| `e2e/` | The Playwright smoke tests of the built site in chromium: `smoke.spec.ts` for the board, the FEN input and moves made by hand, `pgn.spec.ts` for an imported game. They also take the screenshots in `docs/screenshots/`. | - |
 
 `tsconfig.pure.json` typechecks `src/contract`, `src/record` and `src/projections` without the DOM library, so an import from the DOM there fails to compile.
 
@@ -44,7 +44,7 @@ npm run wasm
 npm run dev
 ```
 
-Opens a dev server. Paste a FEN into the box and press Load, or put it in the URL after `#`. Click a piece of the side to move, then a destination, to play a move; the arrow keys, Home and End walk the record. Hover any square for its exact figures; click any square to fill the piece and square panels.
+Opens a dev server. Paste a FEN into the box and press Load, or put it in the URL after `#`. Paste a game in PGN into the larger box and press Load game: the Moves panel then names the players, event, date and result on one line and lists the moves as the text wrote them; click any move to see the position after it. Only the first game of a text is loaded, and the line says how many there were. Click a piece of the side to move, then a destination, to play a move; the arrow keys, Home and End walk the record. Hover any square for its exact figures; click any square to fill the piece and square panels.
 
 ## Test
 
@@ -58,9 +58,9 @@ Runs Vitest. The contract types are regenerated first, so a schema change that b
 npm run test:e2e
 ```
 
-Builds the site, serves it with `vite preview` on port 4173, and runs the chromium smoke test. It prints a `MEASUREMENTS` line with the load time, document size and analysis time of the starting position.
+Builds the site, serves it with `vite preview` on port 4173, and runs the chromium smoke tests. It prints a `MEASUREMENTS` line with the load time, document size and analysis time of the starting position. The PGN test loads the same WebAssembly package in Node to compute what the board at a chosen move must show, so the page is checked against the core and not by eye.
 
-The two screenshots under `docs/screenshots/` show the measured analysis time, so they differ on every run. They are rewritten only on request, and the rewrite is reviewed in git like any other change in what the page shows:
+The three screenshots under `docs/screenshots/` (`starting-position-L0`, `pinned-rook-L1`, and `imported-game-L0`, the short game of the fixtures three moves in) show the measured analysis time, so they differ on every run. They are rewritten only on request, and the rewrite is reviewed in git like any other change in what the page shows:
 
 ```bash
 FORCE_CHESS_SCREENSHOTS=1 npm run test:e2e
