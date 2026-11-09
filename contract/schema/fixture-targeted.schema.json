@@ -1,0 +1,374 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://force-chess.dev/contract/fixture-targeted.schema.json",
+  "title": "Targeted fixture",
+  "description": "A hand-written fixture (concept 4.5): one position and a list of assertions about specific squares, pieces and relations in its force state. Each assertion is checked against the force state produced for the position's configuration by any implementation under test. The format is described in contract/fixtures/README.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "id", "fen", "description", "decisions", "assertions"],
+  "properties": {
+    "format": { "type": "string", "const": "force-chess/targeted-fixture/0.1" },
+    "id": {
+      "description": "Matches the file name without extension.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "fen": {
+      "description": "The position in full FEN. The side to move, halfmove clock and fullmove number are not part of the configuration and are ignored; they are present so the FEN pastes into any chess tool.",
+      "type": "string",
+      "pattern": "^[pnbrqkPNBRQK1-8]+(/[pnbrqkPNBRQK1-8]+){7} [wb] (-|K?Q?k?q?) (-|[a-h][36]) [0-9]+ [0-9]+$"
+    },
+    "description": { "description": "One line saying what the position pins down.", "type": "string", "minLength": 1 },
+    "decisions": {
+      "description": "Every chess fine point this fixture decides, stated against the standard rules, so the decision is visible without reading the assertions.",
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "assertions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/Assertion" }
+    }
+  },
+  "$defs": {
+    "Square": { "type": "string", "pattern": "^[a-h][1-8]$" },
+    "Color": { "type": "string", "enum": ["white", "black"] },
+    "Layer": { "type": "string", "enum": ["L0", "L1", "L2"] },
+    "PieceRef": {
+      "description": "A piece named in words: colour, type, square. Example: 'white knight f3'.",
+      "type": "string",
+      "pattern": "^(white|black) (pawn|knight|bishop|rook|queen|king) [a-h][1-8]$"
+    },
+    "PieceRefList": { "type": "array", "items": { "$ref": "#/$defs/PieceRef" } },
+    "SquareList": { "type": "array", "items": { "$ref": "#/$defs/Square" } },
+    "ExclusionCode": { "type": "string", "enum": ["pinned", "king_in_check", "king_into_attack", "exposes_king"] },
+    "SpecialMoveCode": { "type": "string", "enum": ["no_right", "path_blocked", "in_check", "path_attacked", "no_target", "not_on_rank", "blocked", "pinned", "king_in_check", "exposes_king"] },
+    "NoLegalMovesCode": { "type": "string", "enum": ["blocked", "pinned", "king_in_check", "king_into_attack", "mixed"] },
+    "Note": { "description": "Plain-words reading of the assertion for a human. Not checked.", "type": "string" },
+    "Assertion": {
+      "oneOf": [
+        { "$ref": "#/$defs/ConfigurationAssertion" },
+        { "$ref": "#/$defs/AttacksAssertion" },
+        { "$ref": "#/$defs/AttackKindAssertion" },
+        { "$ref": "#/$defs/ExclusionAssertion" },
+        { "$ref": "#/$defs/SquareAttackersAssertion" },
+        { "$ref": "#/$defs/ControlAssertion" },
+        { "$ref": "#/$defs/ValuationAssertion" },
+        { "$ref": "#/$defs/PinAssertion" },
+        { "$ref": "#/$defs/BatteryAssertion" },
+        { "$ref": "#/$defs/XrayAssertion" },
+        { "$ref": "#/$defs/PieceConstraintAssertion" },
+        { "$ref": "#/$defs/MobilityAssertion" },
+        { "$ref": "#/$defs/SpecialMoveAssertion" },
+        { "$ref": "#/$defs/LookaheadAssertion" },
+        { "$ref": "#/$defs/SideStatusAssertion" },
+        { "$ref": "#/$defs/RelationCountAssertion" }
+      ]
+    },
+    "ConfigurationAssertion": {
+      "description": "Checks fields of the configuration record. Only the fields given are checked.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assert", "expect"],
+      "properties": {
+        "assert": { "const": "configuration" },
+        "note": { "$ref": "#/$defs/Note" },
+        "expect": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "canonical": { "type": "string" },
+            "castling": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "white": { "$ref": "#/$defs/CastlingExpect" },
+                "black": { "$ref": "#/$defs/CastlingExpect" }
+              }
+            },
+            "enPassant": {
+              "oneOf": [
+                { "type": "null" },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["square", "capturableBy", "pawnToCapture"],
+                  "properties": {
+                    "square": { "$ref": "#/$defs/Square" },
+                    "capturableBy": { "$ref": "#/$defs/Color" },
+                    "pawnToCapture": { "$ref": "#/$defs/Square" }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "CastlingExpect": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": { "kingside": { "type": "boolean" }, "queenside": { "type": "boolean" } }
+    },
+    "AttacksAssertion": {
+      "description": "Whether the piece reaches the square at the layer. At L0: an attack or defence edge exists. At L1: it exists and is legal. At L2: some lookahead entry by the piece reaches the square.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assert", "piece", "square", "layer", "expect"],
+      "properties": {
+        "assert": { "const": "attacks" },
+        "note": { "$ref": "#/$defs/Note" },
+        "piece": { "$ref": "#/$defs/PieceRef" },
+        "square": { "$ref": "#/$defs/Square" },
+        "layer": { "$ref": "#/$defs/Layer" },
+        "expect": { "type": "boolean" }
+      }
+    },
+    "AttackKindAssertion": {
+      "description": "The L0 edge from the piece to the square exists with this kind, and, when given, this through-square and this path.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assert", "piece", "square", "kind"],
+      "properties": {
+        "assert": { "const": "attackKind" },
+        "note": { "$ref": "#/$defs/Note" },
+        "piece": { "$ref": "#/$defs/PieceRef" },
+        "square": { "$ref": "#/$defs/Square" },
+        "kind": { "type": "string", "enum": ["direct", "battery", "xray", "through_king"] },
+        "through": { "$ref": "#/$defs/Square" },
+        "path": { "$ref": "#/$defs/SquareList" }
+      }
+    },
+    "ExclusionAssertion": {
+      "description": "The L0 edge from the piece to the square is excluded at L1 with this reason code, and its explanation text mentions every square listed in 'mentions'.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assert", "piece", "square", "reason"],
+      "properties": {
+        "assert": { "const": "exclusion" },
+        "note": { "$ref": "#/$defs/Note" },
+        "piece": { "$ref": "#/$defs/PieceRef" },
+        "square": { "$ref": "#/$defs/Square" },
+        "reason": { "$ref": "#/$defs/ExclusionCode" },
+        "mentions": { "$ref": "#/$defs/SquareList" }
+      }
+    },
+    "SquareAttackersAssertion": {
+      "description": "The set of pieces of one colour reaching the square at the layer. At L1 only legal attackers count. At L2 the set of distinct pieces with a lookahead entry on the square. 'equals' is set equality, order ignored.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assert", "square", "layer", "color", "expect"],
+      "properties": {
+        "assert": { "const": "squareAttackers" },
+        "note": { "$ref": "#/$defs/Note" },
+        "square": { "$ref": "#/$defs/Square" },
+        "layer": { "$ref": "#/$defs/Layer" },
+        "color": { "$ref": "#/$defs/Color" },
+        "expect": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "equals": { "$ref": "#/$defs/PieceRefList" },
+            "includes": { "$ref": "#/$defs/PieceRefList" },
+            "excludes": { "$ref": "#/$defs/PieceRefList" },
+            "count": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "ControlAssertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assert", "square", "layer", "expect"],
+      "properties": {
+        "assert": { "const": "control" },
+        "note": { "$ref": "#/$defs/Note" },
+        "square": { "$ref": "#/$defs/Square" },
+        "layer": { "type": "string", "enum": ["L0", "L1"] },
+        "expect": { "type": "string", "enum": ["white", "black", "contested", "none"] }
+      }
+    },
+    "ValuationAssertion": {
+      "description": "Checks the L3 quantities of a square at a layer. Only the fields given are checked.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assert", "square", "layer", "expect"],
+      "properties": {
+        "assert": { "const": "valuation" },
+        "note": { "$ref": "#/$defs/Note" },
+        "square": { "$ref": "#/$defs/Square" },
+        "layer": { "type": "string", "enum": ["L0", "L1"] },
+        "expect": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "white": { "$ref": "#/$defs/CountValueExpect" },
+            "black": { "$ref": "#/$defs/CountValueExpect" },
+            "net": { "$ref": "#/$defs/CountValueExpect" },
+            "occupantValue": { "oneOf": [{ "type": "null" }, { "type": "number" }] }
+          }
+        }
+      }
+    },
+    "CountValueExpect": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": { "count": { "type": "integer" }, "value": { "type": "number" } }
+    },
+    "PinAssertion": {
+      "description": "The pinned piece carries exactly this pin. 'line' when given is the full line from pinner to king inclusive.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assert", "pinned", "pinner", "king"],
+      "properties": {
+        "assert": { "const": "pin" },
+        "note": { "$ref": "#/$defs/Note" },
+        "pinned": { "$ref": "#/$defs/PieceRef" },
+        "pinner": { "$ref": "#/$defs/PieceRef" },
+        "king": { "$ref": "#/$defs/Square" },
+        "line": { "$ref": "#/$defs/SquareList" }
+      }
+    },
+    "BatteryAssertion": {
+      "description": "A battery relation with this front and back piece exists. 'covered' when given is the exact ordered list of squares the back piece reaches through the front piece.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assert", "front", "back"],
+      "properties": {
+        "assert": { "const": "battery" },
+        "note": { "$ref": "#/$defs/Note" },
+        "front": { "$ref": "#/$defs/PieceRef" },
+        "back": { "$ref": "#/$defs/PieceRef" },
+        "covered": { "$ref": "#/$defs/SquareList" }
+      }
+    },
+    "XrayAssertion": {
+      "description": "An x-ray relation from the piece through the enemy piece exists. 'beyond' when given is the exact ordered list of squares reached through it.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assert", "piece", "through"],
+      "properties": {
+        "assert": { "const": "xray" },
+        "note": { "$ref": "#/$defs/Note" },
+        "piece": { "$ref": "#/$defs/PieceRef" },
+        "through": { "$ref": "#/$defs/PieceRef" },
+        "beyond": { "$ref": "#/$defs/SquareList" }
+      }
+    },
+    "PieceConstraintAssertion": {
+      "description": "Checks the constraints block of a piece record. 'noLegalMoves' as a boolean checks presence; as a code checks the code.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assert", "piece", "expect"],
+      "properties": {
+        "assert": { "const": "pieceConstraint" },
+        "note": { "$ref": "#/$defs/Note" },
+        "piece": { "$ref": "#/$defs/PieceRef" },
+        "expect": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "pinned": { "type": "boolean" },
+            "inCheck": { "type": "boolean" },
+            "noLegalMoves": { "oneOf": [{ "type": "boolean" }, { "$ref": "#/$defs/NoLegalMovesCode" }] }
+          }
+        }
+      }
+    },
+    "MobilityAssertion": {
+      "description": "The piece's mobility count and, when given, the exact set of squares it can legally move to.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assert", "piece", "expect"],
+      "properties": {
+        "assert": { "const": "mobility" },
+        "note": { "$ref": "#/$defs/Note" },
+        "piece": { "$ref": "#/$defs/PieceRef" },
+        "expect": { "type": "integer", "minimum": 0 },
+        "destinations": { "$ref": "#/$defs/SquareList" }
+      }
+    },
+    "SpecialMoveAssertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assert", "piece", "move", "expect"],
+      "properties": {
+        "assert": { "const": "specialMove" },
+        "note": { "$ref": "#/$defs/Note" },
+        "piece": { "$ref": "#/$defs/PieceRef" },
+        "move": { "type": "string", "enum": ["castleKingside", "castleQueenside", "enPassant", "promotion"] },
+        "expect": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["available"],
+          "properties": {
+            "available": { "type": "boolean" },
+            "target": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/Square" }] },
+            "reason": { "$ref": "#/$defs/SpecialMoveCode" }
+          }
+        }
+      }
+    },
+    "LookaheadAssertion": {
+      "description": "After the piece moves to 'to' (becoming 'promotion' if given), the squares it attacks directly from there include or exclude the ones listed.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assert", "piece", "to", "attacks"],
+      "properties": {
+        "assert": { "const": "lookahead" },
+        "note": { "$ref": "#/$defs/Note" },
+        "piece": { "$ref": "#/$defs/PieceRef" },
+        "to": { "$ref": "#/$defs/Square" },
+        "promotion": { "type": "string", "enum": ["knight", "bishop", "rook", "queen"] },
+        "attacks": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "includes": { "$ref": "#/$defs/SquareList" },
+            "excludes": { "$ref": "#/$defs/SquareList" }
+          }
+        }
+      }
+    },
+    "SideStatusAssertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assert", "color", "expect"],
+      "properties": {
+        "assert": { "const": "sideStatus" },
+        "note": { "$ref": "#/$defs/Note" },
+        "color": { "$ref": "#/$defs/Color" },
+        "expect": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "inCheck": { "type": "boolean" },
+            "checkers": { "$ref": "#/$defs/PieceRefList" },
+            "status": { "type": "string", "enum": ["normal", "check", "checkmate", "stalemate"] },
+            "legalMoveCount": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "RelationCountAssertion": {
+      "description": "The number of relations of this type, optionally restricted to the colour of the acting piece (the attacker, pinner, x-raying piece, back piece of a battery, or moving piece).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assert", "type", "expect"],
+      "properties": {
+        "assert": { "const": "relationCount" },
+        "note": { "$ref": "#/$defs/Note" },
+        "type": { "type": "string", "enum": ["attack", "defence", "pin", "xray", "battery", "lookahead"] },
+        "color": { "$ref": "#/$defs/Color" },
+        "expect": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}
